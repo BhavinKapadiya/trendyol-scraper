@@ -1,7 +1,0 @@
-Script started
-File read, size: 404820
-Cheerio required
-Cheerio loaded
-Title: Arama Sonuçları - TrendyolmillaGroup 2Back ButtonSearch IconFilter Icon
-Found global var in script 7
-Found global var in script 23
