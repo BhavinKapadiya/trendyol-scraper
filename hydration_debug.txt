@@ -1,0 +1,5 @@
+HTML size: 404820
+Found window.__ at 10642: window.__STANDALONE = (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches)
+Found window.__ at 357884: window.__user_datalayer && window.__user_datalayer.user_customerid) { userId = window.__user_datalay
+Found window.__ at 357911: window.__user_datalayer.user_customerid) { userId = window.__user_datalayer.user_customerid.toString
+Found window.__ at 357963: window.__user_datalayer.user_customerid.toString(); } try { const userInfo = JSON.parse( window.sess

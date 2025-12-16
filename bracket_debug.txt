@@ -1,0 +1,3 @@
+Found key: __single-search-result_preload-images__PROPS
+Found key: isUserHasAuthCookie
+Confirmed __single...PROPS exists via string include

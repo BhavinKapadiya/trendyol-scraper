@@ -1,0 +1,124 @@
+[2025-12-16T04:14:58.634Z] [INFO] Starting Scraper Job
+[2025-12-16T04:14:58.649Z] [INFO] Starting browser...
+[2025-12-16T04:14:59.416Z] [INFO] Navigating to Bluz: https://www.trendyol.com/sr?q=trendyolmilla%20bluz&qt=trendyolmilla%20bluz&st=trendyolmilla%20bluz&os=1
+[2025-12-16T04:15:07.753Z] [WARN] No product cards found with selector .p-card-wrppr. HTML might be different or empty.
+[2025-12-16T04:15:07.754Z] [INFO] Extracted 0 products from Bluz
+[2025-12-16T04:15:08.119Z] [INFO] Saved 0 products to products.json
+[2025-12-16T04:27:57.566Z] [INFO] Starting Scraper Job
+[2025-12-16T04:27:57.571Z] [INFO] Starting browser...
+[2025-12-16T04:27:58.445Z] [INFO] Navigating to Bluz: https://www.trendyol.com/sr?q=trendyolmilla%20bluz&qt=trendyolmilla%20bluz&st=trendyolmilla%20bluz&os=1
+[2025-12-16T04:28:06.888Z] [WARN] No product cards found with selector .p-card-wrppr. HTML might be different or empty.
+[2025-12-16T04:28:06.889Z] [INFO] Extracted 0 products from Bluz
+[2025-12-16T04:28:07.211Z] [INFO] Saved 0 products to products.json
+[2025-12-16T04:35:25.582Z] [INFO] Starting Scraper Job
+[2025-12-16T04:35:25.587Z] [INFO] Starting browser...
+[2025-12-16T04:35:26.218Z] [INFO] Navigating to Bluz: https://www.trendyol.com/sr?q=trendyolmilla%20bluz&qt=trendyolmilla%20bluz&st=trendyolmilla%20bluz
+[2025-12-16T04:35:34.536Z] [WARN] No product cards found with selector .p-card-wrppr. HTML might be different or empty.
+[2025-12-16T04:35:34.537Z] [INFO] Extracted 0 products from Bluz
+[2025-12-16T04:35:34.944Z] [INFO] Starting browser...
+[2025-12-16T04:35:35.715Z] [INFO] Navigating to Kazak: https://www.trendyol.com/sr?q=trendyolmilla%20kazak&qt=trendyolmilla%20kazak&st=trendyolmilla%20kazak
+[2025-12-16T04:35:43.360Z] [WARN] No product cards found with selector .p-card-wrppr. HTML might be different or empty.
+[2025-12-16T04:35:43.361Z] [INFO] Extracted 0 products from Kazak
+[2025-12-16T04:35:43.746Z] [INFO] Starting browser...
+[2025-12-16T04:35:44.330Z] [INFO] Navigating to Hırka: https://www.trendyol.com/sr?q=trendyolmilla%20hırka&qt=trendyolmilla%20hırka&st=trendyolmilla%20hırka
+[2025-12-16T04:35:52.621Z] [WARN] No product cards found with selector .p-card-wrppr. HTML might be different or empty.
+[2025-12-16T04:35:52.623Z] [INFO] Extracted 0 products from Hırka
+[2025-12-16T04:35:52.955Z] [INFO] Starting browser...
+[2025-12-16T04:35:53.510Z] [INFO] Navigating to Jeans: https://www.trendyol.com/sr?q=trendyolmilla%20jeans&qt=trendyolmilla%20jeans&st=trendyolmilla%20jeans
+[2025-12-16T04:36:01.356Z] [WARN] No product cards found with selector .p-card-wrppr. HTML might be different or empty.
+[2025-12-16T04:36:01.358Z] [INFO] Extracted 0 products from Jeans
+[2025-12-16T04:36:01.724Z] [INFO] Starting browser...
+[2025-12-16T04:36:02.324Z] [INFO] Navigating to Elbise: https://www.trendyol.com/sr?q=trendyolmilla%20elbise&qt=trendyolmilla%20elbise&st=trendyolmilla%20elbise
+[2025-12-16T04:36:11.383Z] [WARN] No product cards found with selector .p-card-wrppr. HTML might be different or empty.
+[2025-12-16T04:36:11.384Z] [INFO] Extracted 0 products from Elbise
+[2025-12-16T04:36:11.711Z] [INFO] Starting browser...
+[2025-12-16T04:36:12.295Z] [INFO] Navigating to Pijama Takımı: https://www.trendyol.com/sr?q=trendyolmilla%20pijama&qt=trendyolmilla%20pijama&st=trendyolmilla%20pijama
+[2025-12-16T04:36:20.186Z] [WARN] No product cards found with selector .p-card-wrppr. HTML might be different or empty.
+[2025-12-16T04:36:20.187Z] [INFO] Extracted 0 products from Pijama Takımı
+[2025-12-16T04:36:20.537Z] [INFO] Starting browser...
+[2025-12-16T04:36:21.139Z] [INFO] Navigating to Pantolon: https://www.trendyol.com/sr?q=trendyolmilla%20pantolon&qt=trendyolmilla%20pantolon&st=trendyolmilla%20pantolon
+[2025-12-16T04:36:28.846Z] [WARN] No product cards found with selector .p-card-wrppr. HTML might be different or empty.
+[2025-12-16T04:36:28.848Z] [INFO] Extracted 0 products from Pantolon
+[2025-12-16T04:36:29.181Z] [INFO] Starting browser...
+[2025-12-16T04:36:29.716Z] [INFO] Navigating to Sweatshirt: https://www.trendyol.com/sr?q=trendyolmilla%20sweatshirt&qt=trendyolmilla%20sweatshirt&st=trendyolmilla%20sweatshirt
+[2025-12-16T04:36:38.239Z] [WARN] No product cards found with selector .p-card-wrppr. HTML might be different or empty.
+[2025-12-16T04:36:38.239Z] [INFO] Extracted 0 products from Sweatshirt
+[2025-12-16T04:36:38.708Z] [INFO] Saved 0 products to products.json
+[2025-12-16T04:49:46.787Z] [INFO] Starting Scraper Job
+[2025-12-16T04:49:46.803Z] [INFO] Starting browser...
+[2025-12-16T04:49:47.328Z] [INFO] Navigating to Bluz: https://www.trendyol.com/sr?q=trendyolmilla%20bluz&qt=trendyolmilla%20bluz&st=trendyolmilla%20bluz
+[2025-12-16T04:49:53.770Z] [INFO] Extracted 1 products from Bluz
+[2025-12-16T04:49:54.049Z] [INFO] Starting browser...
+[2025-12-16T04:49:54.493Z] [INFO] Navigating to Kazak: https://www.trendyol.com/sr?q=trendyolmilla%20kazak&qt=trendyolmilla%20kazak&st=trendyolmilla%20kazak
+[2025-12-16T04:50:00.456Z] [INFO] Extracted 1 products from Kazak
+[2025-12-16T04:50:00.716Z] [INFO] Starting browser...
+[2025-12-16T04:50:01.196Z] [INFO] Navigating to Hırka: https://www.trendyol.com/sr?q=trendyolmilla%20hırka&qt=trendyolmilla%20hırka&st=trendyolmilla%20hırka
+[2025-12-16T04:50:08.425Z] [INFO] Extracted 1 products from Hırka
+[2025-12-16T04:50:08.717Z] [INFO] Starting browser...
+[2025-12-16T04:50:09.358Z] [INFO] Navigating to Jeans: https://www.trendyol.com/sr?q=trendyolmilla%20jeans&qt=trendyolmilla%20jeans&st=trendyolmilla%20jeans
+[2025-12-16T04:50:15.814Z] [INFO] Extracted 1 products from Jeans
+[2025-12-16T04:50:16.209Z] [INFO] Starting browser...
+[2025-12-16T04:50:16.860Z] [INFO] Navigating to Elbise: https://www.trendyol.com/sr?q=trendyolmilla%20elbise&qt=trendyolmilla%20elbise&st=trendyolmilla%20elbise
+[2025-12-16T04:50:23.635Z] [INFO] Extracted 4 products from Elbise
+[2025-12-16T04:50:23.927Z] [INFO] Starting browser...
+[2025-12-16T04:50:24.697Z] [INFO] Navigating to Pijama Takımı: https://www.trendyol.com/sr?q=trendyolmilla%20pijama&qt=trendyolmilla%20pijama&st=trendyolmilla%20pijama
+[2025-12-16T04:50:31.077Z] [INFO] Extracted 1 products from Pijama Takımı
+[2025-12-16T04:50:31.373Z] [INFO] Starting browser...
+[2025-12-16T04:50:31.938Z] [INFO] Navigating to Pantolon: https://www.trendyol.com/sr?q=trendyolmilla%20pantolon&qt=trendyolmilla%20pantolon&st=trendyolmilla%20pantolon
+[2025-12-16T04:50:38.385Z] [INFO] Extracted 1 products from Pantolon
+[2025-12-16T04:50:38.630Z] [INFO] Starting browser...
+[2025-12-16T04:50:39.205Z] [INFO] Navigating to Sweatshirt: https://www.trendyol.com/sr?q=trendyolmilla%20sweatshirt&qt=trendyolmilla%20sweatshirt&st=trendyolmilla%20sweatshirt
+[2025-12-16T04:50:45.677Z] [INFO] Extracted 1 products from Sweatshirt
+[2025-12-16T04:50:46.006Z] [INFO] Saved 11 products to products.json
+[2025-12-16T05:09:05.633Z] [INFO] Starting Scraper Job
+[2025-12-16T05:09:05.636Z] [INFO] Starting browser...
+[2025-12-16T05:09:08.174Z] [INFO] Navigating to Bluz: https://www.trendyol.com/sr?q=trendyolmilla%20bluz&qt=trendyolmilla%20bluz&st=trendyolmilla%20bluz
+[2025-12-16T05:09:14.496Z] [INFO] Extracted 1 products from Bluz
+[2025-12-16T05:09:14.912Z] [INFO] Starting browser...
+[2025-12-16T05:09:15.436Z] [INFO] Navigating to Kazak: https://www.trendyol.com/sr?q=trendyolmilla%20kazak&qt=trendyolmilla%20kazak&st=trendyolmilla%20kazak
+[2025-12-16T05:09:25.560Z] [INFO] Extracted 1 products from Kazak
+[2025-12-16T05:09:25.888Z] [INFO] Starting browser...
+[2025-12-16T05:09:26.529Z] [INFO] Navigating to Hırka: https://www.trendyol.com/sr?q=trendyolmilla%20hırka&qt=trendyolmilla%20hırka&st=trendyolmilla%20hırka
+[2025-12-16T05:09:32.575Z] [INFO] Extracted 1 products from Hırka
+[2025-12-16T05:09:32.904Z] [INFO] Starting browser...
+[2025-12-16T05:09:33.361Z] [INFO] Navigating to Jeans: https://www.trendyol.com/sr?q=trendyolmilla%20jeans&qt=trendyolmilla%20jeans&st=trendyolmilla%20jeans
+[2025-12-16T05:09:39.296Z] [INFO] Extracted 1 products from Jeans
+[2025-12-16T05:09:39.637Z] [INFO] Starting browser...
+[2025-12-16T05:09:40.063Z] [INFO] Navigating to Elbise: https://www.trendyol.com/sr?q=trendyolmilla%20elbise&qt=trendyolmilla%20elbise&st=trendyolmilla%20elbise
+[2025-12-16T05:09:46.716Z] [INFO] Extracted 4 products from Elbise
+[2025-12-16T05:09:47.043Z] [INFO] Starting browser...
+[2025-12-16T05:09:47.574Z] [INFO] Navigating to Pijama Takımı: https://www.trendyol.com/sr?q=trendyolmilla%20pijama&qt=trendyolmilla%20pijama&st=trendyolmilla%20pijama
+[2025-12-16T05:09:53.788Z] [INFO] Extracted 1 products from Pijama Takımı
+[2025-12-16T05:09:54.100Z] [INFO] Starting browser...
+[2025-12-16T05:09:54.620Z] [INFO] Navigating to Pantolon: https://www.trendyol.com/sr?q=trendyolmilla%20pantolon&qt=trendyolmilla%20pantolon&st=trendyolmilla%20pantolon
+[2025-12-16T05:10:00.702Z] [INFO] Extracted 1 products from Pantolon
+[2025-12-16T05:10:01.080Z] [INFO] Starting browser...
+[2025-12-16T05:10:01.591Z] [INFO] Navigating to Sweatshirt: https://www.trendyol.com/sr?q=trendyolmilla%20sweatshirt&qt=trendyolmilla%20sweatshirt&st=trendyolmilla%20sweatshirt
+[2025-12-16T05:10:07.445Z] [INFO] Extracted 1 products from Sweatshirt
+[2025-12-16T05:10:07.803Z] [INFO] Saved 11 products to products.json
+[2025-12-16T05:55:16.420Z] [INFO] Starting Scraper Job
+[2025-12-16T05:55:16.425Z] [INFO] Starting browser...
+[2025-12-16T05:55:17.396Z] [INFO] Navigating to Bluz: https://www.trendyol-milla.com/sr?q=trendyolmilla%20bluz&qt=trendyolmilla%20bluz&st=trendyolmilla%20bluz
+[2025-12-16T05:55:27.249Z] [INFO] Extracted 24 products from Bluz
+[2025-12-16T05:55:27.907Z] [INFO] Starting browser...
+[2025-12-16T05:55:28.559Z] [INFO] Navigating to Kazak: https://www.trendyol-milla.com/sr?q=trendyolmilla%20kazak&qt=trendyolmilla%20kazak&st=trendyolmilla%20kazak
+[2025-12-16T05:55:37.006Z] [INFO] Extracted 24 products from Kazak
+[2025-12-16T05:55:37.315Z] [INFO] Starting browser...
+[2025-12-16T05:55:37.897Z] [INFO] Navigating to Hırka: https://www.trendyol-milla.com/sr?q=trendyolmilla%20hırka&qt=trendyolmilla%20hırka&st=trendyolmilla%20hırka
+[2025-12-16T05:55:46.227Z] [INFO] Extracted 24 products from Hırka
+[2025-12-16T05:55:46.656Z] [INFO] Starting browser...
+[2025-12-16T05:55:47.183Z] [INFO] Navigating to Jeans: https://www.trendyol-milla.com/sr?q=trendyolmilla%20jeans&qt=trendyolmilla%20jeans&st=trendyolmilla%20jeans
+[2025-12-16T05:55:55.568Z] [INFO] Extracted 24 products from Jeans
+[2025-12-16T05:55:55.983Z] [INFO] Starting browser...
+[2025-12-16T05:55:56.509Z] [INFO] Navigating to Elbise: https://www.trendyol-milla.com/sr?q=trendyolmilla%20elbise&qt=trendyolmilla%20elbise&st=trendyolmilla%20elbise
+[2025-12-16T05:56:04.655Z] [INFO] Extracted 24 products from Elbise
+[2025-12-16T05:56:05.096Z] [INFO] Starting browser...
+[2025-12-16T05:56:05.568Z] [INFO] Navigating to Pijama Takımı: https://www.trendyol-milla.com/sr?q=trendyolmilla%20pijama&qt=trendyolmilla%20pijama&st=trendyolmilla%20pijama
+[2025-12-16T05:56:13.633Z] [INFO] Extracted 24 products from Pijama Takımı
+[2025-12-16T05:56:14.541Z] [INFO] Starting browser...
+[2025-12-16T05:56:15.123Z] [INFO] Navigating to Pantolon: https://www.trendyol-milla.com/sr?q=trendyolmilla%20pantolon&qt=trendyolmilla%20pantolon&st=trendyolmilla%20pantolon
+[2025-12-16T05:56:24.997Z] [INFO] Extracted 24 products from Pantolon
+[2025-12-16T05:56:25.620Z] [INFO] Starting browser...
+[2025-12-16T05:56:26.143Z] [INFO] Navigating to Sweatshirt: https://www.trendyol-milla.com/sr?q=trendyolmilla%20sweatshirt&qt=trendyolmilla%20sweatshirt&st=trendyolmilla%20sweatshirt
+[2025-12-16T05:56:34.166Z] [INFO] Extracted 24 products from Sweatshirt
+[2025-12-16T05:56:34.565Z] [INFO] Saved 192 products to products.json
