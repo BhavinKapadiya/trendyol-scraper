@@ -21,7 +21,7 @@ async function syncProducts(scrapedProducts) {
 
             const searchResponse = await shopify.rest.Product.all({
                 session: shopify.session,
-                title: product.productName,
+                title: product.name,
                 limit: 1
             });
 
@@ -29,21 +29,21 @@ async function syncProducts(scrapedProducts) {
 
             if (existingProduct) {
                 // Update
-                logger.info(`Updating product: ${product.productName}`);
+                logger.info(`Updating product: ${product.name}`);
                 const updateData = {
                     id: existingProduct.id,
                     variants: [{
                         id: existingProduct.variants[0].id,
                         price: product.price.toString()
                     }],
-                    // images: [{ src: product.imageUrl }] // Updating images can be tricky, appending vs replacing
+                    // images: [{ src: product.image }] // Updating images can be tricky, appending vs replacing
                 };
                 await new shopify.rest.Product({ session: shopify.session }).save(updateData);
             } else {
                 // Create
-                logger.info(`Creating product: ${product.productName}`);
+                logger.info(`Creating product: ${product.name}`);
                 const newProduct = new shopify.rest.Product({ session: shopify.session });
-                newProduct.title = product.productName;
+                newProduct.title = product.name;
                 newProduct.body_html = `Category: ${product.category}`;
                 newProduct.vendor = "Trendyol Milla";
                 newProduct.product_type = product.category;
@@ -51,14 +51,14 @@ async function syncProducts(scrapedProducts) {
                     price: product.price.toString(),
                     inventory_management: null // unlimited
                 }];
-                newProduct.images = [{ src: product.imageUrl }];
+                newProduct.images = [{ src: product.image }];
 
                 await newProduct.save({
                     update: true,
                 });
             }
         } catch (error) {
-            logger.error(`Failed to sync product ${product.productName}: ${error.message}`);
+            logger.error(`Failed to sync product ${product.name}: ${error.message}`);
         }
     }
 }

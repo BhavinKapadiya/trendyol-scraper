@@ -1,6 +1,7 @@
 const { crawlCategory } = require('./src/scraper/crawler');
 const fs = require('fs');
 const logger = require('./src/utils/logger');
+const { syncProducts } = require('./src/shopify/sync');
 
 // Categories based on user input
 // Categories based on user input
@@ -28,6 +29,13 @@ async function main() {
     // Save to JSON
     fs.writeFileSync('products.json', JSON.stringify(allProducts, null, 2));
     logger.info(`Saved ${allProducts.length} products to products.json`);
+
+    // Sync to Shopify
+    try {
+        await syncProducts(allProducts);
+    } catch (error) {
+        logger.error(`Sync failed: ${error.message}`);
+    }
 }
 
 if (require.main === module) {

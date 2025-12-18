@@ -122,3 +122,29 @@
 [2025-12-16T05:56:26.143Z] [INFO] Navigating to Sweatshirt: https://www.trendyol-milla.com/sr?q=trendyolmilla%20sweatshirt&qt=trendyolmilla%20sweatshirt&st=trendyolmilla%20sweatshirt
 [2025-12-16T05:56:34.166Z] [INFO] Extracted 24 products from Sweatshirt
 [2025-12-16T05:56:34.565Z] [INFO] Saved 192 products to products.json
+[2025-12-17T08:45:31.200Z] [INFO] Starting Scraper Job
+[2025-12-17T08:45:31.204Z] [INFO] Starting browser...
+[2025-12-17T08:45:34.885Z] [INFO] Navigating to Bluz: https://www.trendyol-milla.com/sr?q=trendyolmilla%20bluz&qt=trendyolmilla%20bluz&st=trendyolmilla%20bluz
+[2025-12-17T08:45:48.963Z] [INFO] Extracted 24 products from Bluz
+[2025-12-17T08:45:49.665Z] [INFO] Starting browser...
+[2025-12-17T08:45:50.229Z] [INFO] Navigating to Kazak: https://www.trendyol-milla.com/sr?q=trendyolmilla%20kazak&qt=trendyolmilla%20kazak&st=trendyolmilla%20kazak
+[2025-12-17T08:45:59.173Z] [INFO] Extracted 24 products from Kazak
+[2025-12-17T08:45:59.468Z] [INFO] Starting browser...
+[2025-12-17T08:45:59.993Z] [INFO] Navigating to Hırka: https://www.trendyol-milla.com/sr?q=trendyolmilla%20hırka&qt=trendyolmilla%20hırka&st=trendyolmilla%20hırka
+[2025-12-17T08:46:07.774Z] [INFO] Extracted 24 products from Hırka
+[2025-12-17T08:46:08.070Z] [INFO] Starting browser...
+[2025-12-17T08:46:08.523Z] [INFO] Navigating to Jeans: https://www.trendyol-milla.com/sr?q=trendyolmilla%20jeans&qt=trendyolmilla%20jeans&st=trendyolmilla%20jeans
+[2025-12-17T08:46:16.427Z] [INFO] Extracted 24 products from Jeans
+[2025-12-17T08:46:16.810Z] [INFO] Starting browser...
+[2025-12-17T08:46:17.245Z] [INFO] Navigating to Elbise: https://www.trendyol-milla.com/sr?q=trendyolmilla%20elbise&qt=trendyolmilla%20elbise&st=trendyolmilla%20elbise
+[2025-12-17T08:46:25.752Z] [INFO] Extracted 24 products from Elbise
+[2025-12-17T08:46:26.035Z] [INFO] Starting browser...
+[2025-12-17T08:46:26.482Z] [INFO] Navigating to Pijama Takımı: https://www.trendyol-milla.com/sr?q=trendyolmilla%20pijama&qt=trendyolmilla%20pijama&st=trendyolmilla%20pijama
+[2025-12-17T08:46:34.705Z] [INFO] Extracted 24 products from Pijama Takımı
+[2025-12-17T08:46:35.020Z] [INFO] Starting browser...
+[2025-12-17T08:46:35.469Z] [INFO] Navigating to Pantolon: https://www.trendyol-milla.com/sr?q=trendyolmilla%20pantolon&qt=trendyolmilla%20pantolon&st=trendyolmilla%20pantolon
+[2025-12-17T08:46:43.990Z] [INFO] Extracted 24 products from Pantolon
+[2025-12-17T08:46:44.498Z] [INFO] Starting browser...
+[2025-12-17T08:46:45.571Z] [INFO] Navigating to Sweatshirt: https://www.trendyol-milla.com/sr?q=trendyolmilla%20sweatshirt&qt=trendyolmilla%20sweatshirt&st=trendyolmilla%20sweatshirt
+[2025-12-17T08:46:53.547Z] [INFO] Extracted 24 products from Sweatshirt
+[2025-12-17T08:46:53.938Z] [INFO] Saved 192 products to products.json
