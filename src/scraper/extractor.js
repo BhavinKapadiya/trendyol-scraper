@@ -5,7 +5,6 @@ function extractProductData(html, categoryName, hydrationData) {
     const $ = cheerio.load(html);
 
     // Check for hydration data (passed from crawler)
-    // hydrationData might be the full object or just the data property
     const data = hydrationData && hydrationData.data ? hydrationData.data : hydrationData;
 
     if (data && data.products) {
@@ -20,7 +19,7 @@ function extractProductData(html, categoryName, hydrationData) {
             }
 
             return {
-                category: p.category ? p.category.name : 'Unknown',
+                category: p.category ? p.category.name : categoryName,
                 name: p.name,
                 price: p.price ? p.price.current : 0,
                 rating: p.ratingScore ? p.ratingScore.averageRating : 0,
@@ -56,9 +55,7 @@ function extractProductData(html, categoryName, hydrationData) {
             const productName = `${brand} ${name}`;
 
             // Price
-            // Price often has discounted and selling price. We want the selling price.
             const priceText = el.find('.prc-box-vrntd').text().trim();
-            // Parse price (e.g., "129,99 TL")
             const price = parseFloat(priceText.replace('TL', '').replace(/\./g, '').replace(',', '.').trim());
 
             if (productName && price) {
@@ -80,4 +77,71 @@ function extractProductData(html, categoryName, hydrationData) {
     return products;
 }
 
-module.exports = { extractProductData };
+// Extract detailed product information from product detail page
+function extractProductDetails(detailData) {
+    try {
+        const product = detailData.product || detailData;
+        
+        if (!product) {
+            return null;
+        }
+
+        // Extract SKU/Product Code
+        const sku = product.productCode || null;
+
+        // Extract color from slicingAttributes
+        let color = null;
+        if (product.slicingAttributes) {
+            color = product.slicingAttributes.DsmColor || 
+                    product.slicingAttributes.color || 
+                    null;
+        }
+
+        // Extract sizes and availability from variants
+        const sizes = [];
+        let hasStock = false;
+
+        if (product.variants && Array.isArray(product.variants)) {
+            product.variants.forEach(variant => {
+                const sizeInfo = {
+                    name: variant.beautifiedValue || variant.attributeValue || 'Unknown',
+                    inStock: variant.inStock === true,
+                    barcode: variant.barcode || null
+                };
+                sizes.push(sizeInfo);
+                
+                if (sizeInfo.inStock) {
+                    hasStock = true;
+                }
+            });
+        }
+
+        // Get stock count if available
+        let stockCount = null;
+        if (product.winnerVariant && product.winnerVariant.quantity !== undefined) {
+            stockCount = product.winnerVariant.quantity;
+        }
+
+        // Get brand if available
+        const brand = product.brand ? product.brand.name : null;
+
+        // Get description if available
+        const description = product.description || null;
+
+        return {
+            sku,
+            color,
+            sizes,
+            availability: hasStock,
+            stockCount,
+            brand,
+            description
+        };
+
+    } catch (error) {
+        logger.error(`Error extracting product details: ${error.message}`);
+        return null;
+    }
+}
+
+module.exports = { extractProductData, extractProductDetails };

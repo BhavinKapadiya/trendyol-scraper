@@ -1,8 +1,14 @@
 const { startBrowser } = require('./browser');
-const { extractProductData } = require('./extractor');
+const { extractProductData, extractProductDetails } = require('./extractor');
 const logger = require('../utils/logger');
 
-async function crawlCategory(categoryUrl, categoryName) {
+// Extract product ID from URL
+function extractProductId(url) {
+    const match = url.match(/-p-(\d+)/);
+    return match ? match[1] : null;
+}
+
+async function crawlCategory(categoryUrl, categoryName, fetchDetails = false) {
     let browser;
     try {
         browser = await startBrowser();
@@ -14,7 +20,6 @@ async function crawlCategory(categoryUrl, categoryName) {
         logger.info(`Navigating to ${categoryName}: ${categoryUrl}`);
         await page.goto(categoryUrl, { waitUntil: 'networkidle2', timeout: 60000 });
 
-        // Handle Infinite Scroll
         // Wait for hydration or content
         try {
             await page.waitForFunction(() => window['__single-search-result__PROPS'] || document.querySelector('.p-card-wrppr'), { timeout: 15000 });
@@ -30,10 +35,39 @@ async function crawlCategory(categoryUrl, categoryName) {
         // Get HTML for legacy check
         const html = await page.content();
 
-        // Pass html and hydrationData separately
-        const products = extractProductData(html, categoryName, hydrationData);
+        // Extract basic product data from category page
+        let products = extractProductData(html, categoryName, hydrationData);
+
+        // Add productId to each product
+        products = products.map(p => ({
+            ...p,
+            productId: extractProductId(p.url)
+        }));
 
         logger.info(`Extracted ${products.length} products from ${categoryName}`);
+
+        // If fetchDetails is enabled, visit each product page for detailed data
+        if (fetchDetails && products.length > 0) {
+            logger.info(`Fetching details for ${products.length} products...`);
+            
+            for (let i = 0; i < products.length; i++) {
+                const product = products[i];
+                logger.info(`[${i + 1}/${products.length}] Fetching details for: ${product.name.substring(0, 50)}...`);
+                
+                try {
+                    const details = await crawlProductDetails(page, product.url);
+                    if (details) {
+                        products[i] = { ...product, ...details };
+                    }
+                } catch (error) {
+                    logger.error(`Failed to fetch details for ${product.url}: ${error.message}`);
+                }
+                
+                // Small delay between requests to be respectful
+                await new Promise(resolve => setTimeout(resolve, 1000));
+            }
+        }
+
         return products;
 
     } catch (error) {
@@ -41,6 +75,36 @@ async function crawlCategory(categoryUrl, categoryName) {
         return [];
     } finally {
         if (browser) await browser.close();
+    }
+}
+
+// Crawl individual product page for detailed data
+async function crawlProductDetails(page, productUrl) {
+    try {
+        await page.goto(productUrl, { waitUntil: 'networkidle2', timeout: 30000 });
+
+        // Wait for product detail data
+        try {
+            await page.waitForFunction(() => window['__envoy_product-detail__PROPS'], { timeout: 10000 });
+        } catch (e) {
+            logger.warn(`No product detail data found for ${productUrl}`);
+            return null;
+        }
+
+        // Extract hydration data from product detail page
+        const detailData = await page.evaluate(() => {
+            return window['__envoy_product-detail__PROPS'] || null;
+        });
+
+        if (!detailData) {
+            return null;
+        }
+
+        return extractProductDetails(detailData);
+
+    } catch (error) {
+        logger.error(`Error crawling product details: ${error.message}`);
+        return null;
     }
 }
 
@@ -54,10 +118,6 @@ async function autoScroll(page) {
                 window.scrollBy(0, distance);
                 totalHeight += distance;
 
-                // Stop scrolling if we reached the bottom or a limit
-                // For safety, let's limit to 5000px or logic to stop when repeated
-                // Trendyol is infinite, so we should probably stop after N products or strict finding end
-                // Here we scroll a bit for demo purposes. In production, check for 'no more products' or previous height.
                 if (totalHeight >= scrollHeight - window.innerHeight || totalHeight > 20000) {
                     clearInterval(timer);
                     resolve();
@@ -67,4 +127,4 @@ async function autoScroll(page) {
     });
 }
 
-module.exports = { crawlCategory };
+module.exports = { crawlCategory, crawlProductDetails, extractProductId };
