@@ -1,6 +1,70 @@
 const { shopify } = require('./client');
 const logger = require('../utils/logger');
 
+// Category to Tags mapping
+const CATEGORY_TAGS = {
+    'Bluz': ['category:bluz', 'category:tops'],
+    'Kazak': ['category:kazak', 'category:sweaters'],
+    'Hırka': ['category:hirka', 'category:cardigans'],
+    'Jeans': ['category:jeans', 'category:bottoms'],
+    'Elbise': ['category:elbise', 'category:dresses'],
+    'Pantolon': ['category:pantolon', 'category:pants'],
+    'Sweatshirt': ['category:sweatshirt', 'category:tops'],
+    'Pijama Takımı': ['category:pijama', 'category:sleepwear'],
+};
+
+// Fetch all existing products from Shopify (for deduplication)
+async function fetchAllShopifyProducts() {
+    const allProducts = [];
+    
+    logger.info('Fetching existing products from Shopify for deduplication...');
+    
+    try {
+        const response = await shopify.rest.Product.all({
+            session: shopify.session,
+            limit: 250,
+            fields: 'id,handle,title,variants'
+        });
+        
+        allProducts.push(...response.data);
+        logger.info(`Found ${allProducts.length} existing products in Shopify`);
+        
+    } catch (error) {
+        logger.warn(`Could not bulk-fetch products: ${error.message}`);
+        logger.warn('Will check each product individually...');
+    }
+    
+    return allProducts;
+}
+
+// Build lookup map by handle
+function buildProductLookup(products) {
+    const lookup = {};
+    for (const product of products) {
+        if (product.handle) {
+            lookup[product.handle] = product;
+        }
+    }
+    return lookup;
+}
+
+// Find existing product by handle (individual lookup)
+async function findProductByHandle(handle) {
+    try {
+        const response = await shopify.rest.Product.all({
+            session: shopify.session,
+            handle: handle,
+            limit: 1
+        });
+        if (response.data && response.data.length > 0) {
+            return response.data[0];
+        }
+    } catch (e) {
+        // Ignore errors, will try to create
+    }
+    return null;
+}
+
 async function syncProducts(scrapedProducts) {
     if (!scrapedProducts || scrapedProducts.length === 0) {
         logger.warn('No products to sync.');
@@ -9,58 +73,118 @@ async function syncProducts(scrapedProducts) {
 
     logger.info(`Starting sync for ${scrapedProducts.length} products...`);
 
-    // Create a session? No, we use the client directly usually or REST resource.
-    // Using Admin API usually requires a session or direct REST client.
-    // We'll assume custom app access token which uses specific header or client config.
+    // Fetch existing products for deduplication
+    const existingProducts = await fetchAllShopifyProducts();
+    const productLookup = buildProductLookup(existingProducts);
+    
+    // Stats
+    let created = 0;
+    let updated = 0;
+    let failed = 0;
 
-    for (const product of scrapedProducts) {
+    for (let i = 0; i < scrapedProducts.length; i++) {
+        const product = scrapedProducts[i];
         try {
-            // Check if product exists (by handle or title)
-            // Note: This is an expensive operation loop. In production, we'd fetch all products first or use GraphQL.
-            // We'll search by title for simplicity in this MVP.
+            // Create unique handle
+            const handle = `trendyol-${product.productId || product.sku || Math.floor(Math.random() * 1000000)}`;
+            
+            // Check if product already exists (from pre-fetch or individual lookup)
+            let existingProduct = productLookup[handle];
+            
+            // If not found in pre-fetch, try individual lookup
+            if (!existingProduct) {
+                existingProduct = await findProductByHandle(handle);
+                if (existingProduct) {
+                    productLookup[handle] = existingProduct; // Cache for future
+                }
+            }
 
-            const searchResponse = await shopify.rest.Product.all({
-                session: shopify.session,
-                title: product.name,
-                limit: 1
-            });
+            // Prepare tags from category
+            const categoryTags = CATEGORY_TAGS[product.category] || [`category:${product.category.toLowerCase()}`];
+            const allTags = [...categoryTags, 'trendyol', 'auto-imported'].join(', ');
 
-            const existingProduct = searchResponse.data[0];
+            // Prepare extra fields
+            const color = product.color || 'Default';
+            const variants = (product.sizes && product.sizes.length > 0) 
+                ? product.sizes.map(size => ({
+                    option1: size.name,
+                    option2: color,
+                    price: product.price.toString(),
+                    sku: size.barcode || `${product.sku}-${size.name}`,
+                    inventory_management: 'shopify', 
+                    inventory_policy: size.inStock ? 'continue' : 'deny',
+                    inventory_quantity: size.inStock ? (product.stockCount || 10) : 0 
+                }))
+                : [{
+                    option1: 'Default Title',
+                    price: product.price.toString(),
+                    sku: product.sku,
+                    inventory_management: 'shopify',
+                    inventory_quantity: product.stockCount || 10
+                }];
 
             if (existingProduct) {
-                // Update
-                logger.info(`Updating product: ${product.name}`);
-                const updateData = {
-                    id: existingProduct.id,
-                    variants: [{
+                // UPDATE existing product - just update tags and basic info
+                logger.info(`[${i+1}/${scrapedProducts.length}] Updating: ${product.name.substring(0, 50)}...`);
+                
+                const productToUpdate = new shopify.rest.Product({ session: shopify.session });
+                productToUpdate.id = existingProduct.id;
+                productToUpdate.tags = allTags;
+                
+                // Only update first variant price to avoid complexity
+                if (existingProduct.variants && existingProduct.variants.length > 0) {
+                    productToUpdate.variants = [{
                         id: existingProduct.variants[0].id,
                         price: product.price.toString()
-                    }],
-                    // images: [{ src: product.image }] // Updating images can be tricky, appending vs replacing
-                };
-                await new shopify.rest.Product({ session: shopify.session }).save(updateData);
+                    }];
+                }
+                
+                await productToUpdate.save({ update: true });
+                updated++;
+                
             } else {
-                // Create
-                logger.info(`Creating product: ${product.name}`);
+                // CREATE new product
+                logger.info(`[${i+1}/${scrapedProducts.length}] Creating: ${product.name.substring(0, 50)}...`);
+                
                 const newProduct = new shopify.rest.Product({ session: shopify.session });
+                
                 newProduct.title = product.name;
-                newProduct.body_html = `Category: ${product.category}`;
-                newProduct.vendor = "Trendyol Milla";
+                newProduct.body_html = (product.description || '') + `<br><br>Category: ${product.category}<br>Brand: ${product.brand || 'Trendyol'}`;
+                newProduct.vendor = product.brand || "TRENDYOLMİLLA";
                 newProduct.product_type = product.category;
-                newProduct.variants = [{
-                    price: product.price.toString(),
-                    inventory_management: null // unlimited
-                }];
-                newProduct.images = [{ src: product.image }];
+                newProduct.handle = handle;
+                newProduct.tags = allTags;
+                newProduct.images = product.image ? [{ src: product.image }] : [];
+                newProduct.variants = variants;
+                
+                if (product.sizes && product.sizes.length > 0) {
+                    newProduct.options = [
+                        { name: "Size" },
+                        { name: "Color" }
+                    ];
+                }
 
-                await newProduct.save({
-                    update: true,
-                });
+                await newProduct.save({ update: true });
+                
+                // Add to lookup to prevent duplicates within same batch
+                productLookup[handle] = { handle, id: 'new' };
+                created++;
             }
+            
+            // Rate limit handling
+            await new Promise(r => setTimeout(r, 300));
+
         } catch (error) {
-            logger.error(`Failed to sync product ${product.name}: ${error.message}`);
+            logger.error(`Failed to sync ${product.name}: ${error.message}`);
+            failed++;
         }
     }
+    
+    logger.info(`\n========== Sync Summary ==========`);
+    logger.info(`Created: ${created}`);
+    logger.info(`Updated: ${updated}`);
+    logger.info(`Failed: ${failed}`);
+    logger.info(`Total: ${scrapedProducts.length}`);
 }
 
-module.exports = { syncProducts };
+module.exports = { syncProducts, fetchAllShopifyProducts };

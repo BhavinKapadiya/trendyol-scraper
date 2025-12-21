@@ -1,11 +1,13 @@
 const { crawlCategory } = require('./src/scraper/crawler');
+const { syncProducts } = require('./src/shopify/sync');
 const fs = require('fs');
 const logger = require('./src/utils/logger');
 
 // Configuration
-const FETCH_PRODUCT_DETAILS = true; // Set to true to scrape SKU, sizes, colors, availability
+const FETCH_PRODUCT_DETAILS = true;
+const SYNC_TO_SHOPIFY = true; // Set to false to only scrape without syncing
 
-// Categories based on user input
+// Categories
 const CATEGORIES = [
     { name: 'Bluz', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20bluz&qt=trendyolmilla%20bluz&st=trendyolmilla%20bluz' },
     { name: 'Kazak', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20kazak&qt=trendyolmilla%20kazak&st=trendyolmilla%20kazak' },
@@ -17,9 +19,44 @@ const CATEGORIES = [
     { name: 'Sweatshirt', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20sweatshirt&qt=trendyolmilla%20sweatshirt&st=trendyolmilla%20sweatshirt' },
 ];
 
+// Merge new products with existing (deduplication by productId)
+function mergeProducts(existingProducts, newProducts) {
+    const productMap = {};
+    
+    // Add existing products to map
+    for (const p of existingProducts) {
+        if (p.productId) {
+            productMap[p.productId] = p;
+        }
+    }
+    
+    // Merge/overwrite with new products
+    let newCount = 0;
+    let updatedCount = 0;
+    
+    for (const p of newProducts) {
+        if (p.productId) {
+            if (productMap[p.productId]) {
+                updatedCount++;
+            } else {
+                newCount++;
+            }
+            productMap[p.productId] = {
+                ...productMap[p.productId],
+                ...p,
+                lastUpdated: new Date().toISOString()
+            };
+        }
+    }
+    
+    logger.info(`Merged: ${newCount} new, ${updatedCount} updated`);
+    return Object.values(productMap);
+}
+
 async function main() {
     logger.info('Starting Scraper Job');
-    logger.info(`Detailed product scraping: ${FETCH_PRODUCT_DETAILS ? 'ENABLED' : 'DISABLED'}`);
+    logger.info(`Detailed scraping: ${FETCH_PRODUCT_DETAILS ? 'ENABLED' : 'DISABLED'}`);
+    logger.info(`Shopify sync: ${SYNC_TO_SHOPIFY ? 'ENABLED' : 'DISABLED'}`);
 
     const allProducts = [];
     const startTime = Date.now();
@@ -36,23 +73,42 @@ async function main() {
 
     const duration = ((Date.now() - startTime) / 1000 / 60).toFixed(2);
     
+    // Load existing products and merge (deduplication)
+    let mergedProducts = allProducts;
+    if (fs.existsSync('products.json')) {
+        try {
+            const existing = JSON.parse(fs.readFileSync('products.json', 'utf8'));
+            mergedProducts = mergeProducts(existing, allProducts);
+        } catch (e) {
+            logger.warn('Could not load existing products.json, saving fresh');
+        }
+    }
+    
     // Save to JSON
-    fs.writeFileSync('products.json', JSON.stringify(allProducts, null, 2));
+    fs.writeFileSync('products.json', JSON.stringify(mergedProducts, null, 2));
     logger.info(`\n========================================`);
     logger.info(`Scraping completed in ${duration} minutes`);
-    logger.info(`Saved ${allProducts.length} products to products.json`);
+    logger.info(`Saved ${mergedProducts.length} products to products.json`);
     
-    // Log sample of extracted data
+    // Sample output
     if (allProducts.length > 0 && FETCH_PRODUCT_DETAILS) {
         const sample = allProducts[0];
-        logger.info(`\nSample product data:`);
+        logger.info(`\nSample product:`);
         logger.info(`  SKU: ${sample.sku || 'N/A'}`);
         logger.info(`  Color: ${sample.color || 'N/A'}`);
         logger.info(`  Sizes: ${sample.sizes ? sample.sizes.map(s => s.name).join(', ') : 'N/A'}`);
-        logger.info(`  Availability: ${sample.availability !== undefined ? sample.availability : 'N/A'}`);
+    }
+
+    // Sync to Shopify
+    if (SYNC_TO_SHOPIFY) {
+        logger.info(`\n========================================`);
+        logger.info(`Starting Shopify Sync...`);
+        await syncProducts(mergedProducts);
     }
 }
 
 if (require.main === module) {
     main();
 }
+
+module.exports = { main, CATEGORIES };
