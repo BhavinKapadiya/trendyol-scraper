@@ -128,6 +128,21 @@ function extractProductDetails(detailData) {
         // Get description if available
         const description = product.description || null;
 
+        // Extract all images
+        const images = [];
+        if (product.images && Array.isArray(product.images)) {
+            product.images.forEach(img => {
+                let imageUrl = img.url || img;
+                // Handle relative URLs
+                if (imageUrl && !imageUrl.startsWith('http')) {
+                    imageUrl = 'https://cdn.dsmcdn.com' + imageUrl;
+                }
+                if (imageUrl) {
+                    images.push(imageUrl);
+                }
+            });
+        }
+
         return {
             sku,
             color,
@@ -135,7 +150,8 @@ function extractProductDetails(detailData) {
             availability: hasStock,
             stockCount,
             brand,
-            description
+            description,
+            images
         };
 
     } catch (error) {

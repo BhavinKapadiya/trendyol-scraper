@@ -124,14 +124,25 @@ async function syncProducts(scrapedProducts) {
                 }];
 
             if (existingProduct) {
-                // UPDATE existing product - just update tags and basic info
+                // UPDATE existing product - update ALL fields to match scraped data
                 logger.info(`[${i+1}/${scrapedProducts.length}] Updating: ${product.name.substring(0, 50)}...`);
                 
                 const productToUpdate = new shopify.rest.Product({ session: shopify.session });
                 productToUpdate.id = existingProduct.id;
+                
+                // Update all fields
+                productToUpdate.title = product.name;
+                productToUpdate.body_html = (product.description || '') + `<br><br>Category: ${product.category}<br>Brand: ${product.brand || 'Trendyol'}`;
+                productToUpdate.vendor = product.brand || "TRENDYOLMİLLA";
+                productToUpdate.product_type = product.category; // THIS IS THE TYPE/CATEGORY FIELD
                 productToUpdate.tags = allTags;
                 
-                // Only update first variant price to avoid complexity
+                // Update images
+                if (product.images && product.images.length > 0) {
+                    productToUpdate.images = product.images.map(url => ({ src: url }));
+                }
+                
+                // Update first variant price (variant management is complex, so just update price)
                 if (existingProduct.variants && existingProduct.variants.length > 0) {
                     productToUpdate.variants = [{
                         id: existingProduct.variants[0].id,
@@ -154,7 +165,9 @@ async function syncProducts(scrapedProducts) {
                 newProduct.product_type = product.category;
                 newProduct.handle = handle;
                 newProduct.tags = allTags;
-                newProduct.images = product.image ? [{ src: product.image }] : [];
+                newProduct.images = product.images && product.images.length > 0
+                    ? product.images.map(url => ({ src: url }))
+                    : (product.image ? [{ src: product.image }] : []);
                 newProduct.variants = variants;
                 
                 if (product.sizes && product.sizes.length > 0) {

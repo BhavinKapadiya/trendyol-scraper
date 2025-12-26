@@ -57,7 +57,15 @@ async function crawlCategory(categoryUrl, categoryName, fetchDetails = false) {
                 try {
                     const details = await crawlProductDetails(page, product.url);
                     if (details) {
-                        products[i] = { ...product, ...details };
+                        // Merge detail data, prioritize images from details
+                        products[i] = { 
+                            ...product, 
+                            ...details,
+                            // Use detail images if available, otherwise fall back to category image as array
+                            images: details.images && details.images.length > 0 
+                                ? details.images 
+                                : (product.image ? [product.image] : [])
+                        };
                     }
                 } catch (error) {
                     logger.error(`Failed to fetch details for ${product.url}: ${error.message}`);
