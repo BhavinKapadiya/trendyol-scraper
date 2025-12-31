@@ -21,6 +21,11 @@ const logger = require('./src/utils/logger');
 
 const FETCH_PRODUCT_DETAILS = true; // Always fetch full details
 
+// Price Multiplier - reads from .env file (default is 1 if not set)
+// Example: If PRICE_MULTIPLIER=3, then 100 TL becomes 300 SR
+const PRICE_MULTIPLIER = parseFloat(process.env.PRICE_MULTIPLIER) || 1;
+
+
 const CATEGORIES = [
     { name: 'Bluz', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20bluz&qt=trendyolmilla%20bluz&st=trendyolmilla%20bluz' },
     { name: 'Kazak', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20kazak&qt=trendyolmilla%20kazak&st=trendyolmilla%20kazak' },
@@ -256,7 +261,7 @@ async function syncToShopify(products) {
                 ? product.sizes.map(size => ({
                     option1: size.name,
                     option2: color,
-                    price: product.price.toString(),
+                    price: (product.price * PRICE_MULTIPLIER).toFixed(2),
                     sku: size.barcode || `${product.sku}-${size.name}`,
                     inventory_management: 'shopify',
                     inventory_policy: size.inStock ? 'continue' : 'deny',
@@ -264,7 +269,7 @@ async function syncToShopify(products) {
                 }))
                 : [{
                     option1: 'Default Title',
-                    price: product.price.toString(),
+                    price: (product.price * PRICE_MULTIPLIER).toFixed(2),
                     sku: product.sku,
                     inventory_management: 'shopify',
                     inventory_quantity: 10
@@ -292,7 +297,7 @@ async function syncToShopify(products) {
                 if (existingProduct.variants && existingProduct.variants.length > 0) {
                     productToUpdate.variants = existingProduct.variants.map(v => ({
                         id: v.id,
-                        price: product.price.toString()
+                        price: (product.price * PRICE_MULTIPLIER).toFixed(2)
                     }));
                 }
                 
@@ -374,7 +379,8 @@ async function main() {
     const startTime = Date.now();
     
     logger.info('\n🚀 TRENDYOL SCRAPER + SHOPIFY SYNC - STARTING\n');
-    logger.info(`Started at: ${new Date().toISOString()}\n`);
+    logger.info(`Started at: ${new Date().toISOString()}`);
+    logger.info(`💰 Price Multiplier: ${PRICE_MULTIPLIER}x (set in .env file)\n`);
     
     try {
         // Step 1: Scrape
