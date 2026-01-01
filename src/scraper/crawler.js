@@ -130,48 +130,90 @@ async function crawlCategory(categoryUrl, categoryName, fetchDetails = false) {
 }
 
 // Crawl individual product page for detailed data
-async function crawlProductDetails(page, productUrl) {
+async function crawlProductDetails(url) {
+    let browser;
     try {
-        await page.goto(productUrl, { waitUntil: 'networkidle2', timeout: 30000 });
+        browser = await startBrowser();
+        const page = await browser.newPage();
 
-        // Wait for product detail data
+        // Block images/fonts to save bandwidth
+        await page.setRequestInterception(true);
+        page.on('request', (req) => {
+            if (['image', 'font', 'stylesheet'].includes(req.resourceType())) {
+                req.abort();
+            } else {
+                req.continue();
+            }
+        });
+
+        await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36');
+
+        logger.info(`Fetching details for: ${url.substring(0, 50)}...`);
+        await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60000 });
+
+        // 1. Try to close "Select Country" popup if it exists
         try {
-            await page.waitForFunction(() => window['__envoy_product-detail__PROPS'], { timeout: 10000 });
-        } catch (e) {
-            logger.warn(`No product detail data found for ${productUrl}`);
-            return null;
-        }
+            const popupClose = await page.$('.country-selection-modal-close, .modal-close, .onboarding-popover__close');
+            if (popupClose) {
+                await popupClose.click();
+                await new Promise(r => setTimeout(r, 1000));
+            }
+        } catch (e) { /* ignore */ }
 
-        // Extract hydration data from product detail page
+        // 2. Extract Data (Try JSON first, then DOM fallback)
         const detailData = await page.evaluate(() => {
-            return window['__envoy_product-detail__PROPS'] || null;
+            // Try different valid variables
+            const jsonData = window.__PRODUCT_DETAIL_APP_INITIAL_STATE__ || window.__PRELOADED_STATE__ || window.__SEARCH_APP_INITIAL_STATE__;
+
+            if (jsonData && jsonData.product) {
+                return { product: jsonData.product };
+            }
+
+            // FALLBACK: Manual DOM extraction (If JSON fails)
+            const getMeta = (name) => document.querySelector(`meta[property="og:${name}"]`)?.content;
+            const getText = (sel) => document.querySelector(sel)?.innerText?.trim();
+            const getPrice = () => {
+                const el = document.querySelector('.product-price-container, .prc-dsc, .price-box');
+                return el ? parseFloat(el.innerText.replace(/[^0-9.,]/g, '').replace(',', '.')) : 0;
+            };
+
+            const domProduct = {
+                name: getMeta('title') || getText('.pr-new-br') || document.title,
+                description: getMeta('description') || getText('.product-desc'),
+                images: Array.from(document.querySelectorAll('.product-slide img, .gallery-modal-content img')).map(img => img.src),
+                price: { sellingPrice: { value: getPrice() } },
+                variants: [], // Hard to get variants from DOM without interaction
+                brand: { name: getText('.pr-new-br a') || 'Trendyol' }
+            };
+
+            return { product: domProduct, isFallback: true };
         });
 
-        if (!detailData) {
-            return null;
+        await browser.close();
+
+        if (detailData && (detailData.product || detailData.isFallback)) {
+            // Normalize fallback data structure match expected extractor format
+            if (detailData.isFallback) {
+                return {
+                    product: {
+                        name: detailData.product.name,
+                        images: detailData.product.images,
+                        price: detailData.product.price,
+                        brand: detailData.product.brand,
+                        description: detailData.product.description,
+                        isFallback: true
+                    }
+                };
+            }
+            return detailData;
         }
 
-        // Extract description from DOM since JSON often has it as null
-        const domDescription = await page.evaluate(() => {
-            const el = document.querySelector('.content-description-container');
-            if (el) return el.innerText.trim();
-
-            // Fallback to iterating list contents (sometimes structure varies)
-            const contents = Array.from(document.querySelectorAll('.product-description-content'))
-                .map(e => e.innerText.trim())
-                .join('\n\n');
-
-            return contents || null;
-        });
-
-        if (detailData.product) {
-            detailData.product.domDescription = domDescription;
-        }
-
-        return extractProductDetails(detailData);
+        logger.warn(`No product detail data found for ${url}`);
+        return null;
 
     } catch (error) {
-        logger.error(`Error crawling product details: ${error.message}`);
+        logger.error(`Failed to fetch details for ${url}: ${error.message}`);
+        if (browser) await browser.close();
         return null;
     }
 }
