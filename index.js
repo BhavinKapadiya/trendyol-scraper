@@ -333,8 +333,8 @@ async function syncToShopify(products) {
                 created++;
             }
 
-            // Rate limit
-            await new Promise(r => setTimeout(r, 500));
+            // Rate limit (Safe for Basic Plan: 1s delay)
+            await new Promise(r => setTimeout(r, 1000));
 
         } catch (error) {
             logger.error(`[${i + 1}/${products.length}] FAILED: ${error.message}`);

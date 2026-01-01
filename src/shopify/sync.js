@@ -190,8 +190,8 @@ async function syncProducts(scrapedProducts) {
                 created++;
             }
 
-            // Rate limit handling
-            await new Promise(r => setTimeout(r, 300));
+            // Rate limit handling (Safe for Basic Plan: 1s delay)
+            await new Promise(r => setTimeout(r, 1000));
 
         } catch (error) {
             logger.error(`Failed to sync ${product.name}: ${error.message}`);
