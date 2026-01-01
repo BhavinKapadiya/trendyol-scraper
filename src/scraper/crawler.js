@@ -83,7 +83,7 @@ async function crawlCategory(categoryUrl, categoryName, fetchDetails = false) {
                         logger.info(`[Page ${pageIndex}] [${i + 1}/${newProducts.length}] Fetching details for: ${product.name.substring(0, 50)}...`);
 
                         try {
-                            const details = await crawlProductDetails(page, product.url);
+                            const details = await crawlProductDetails(product.url);
                             if (details) {
                                 // Merge detail data, prioritize images from details
                                 newProducts[i] = {
