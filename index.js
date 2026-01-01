@@ -44,8 +44,6 @@ if (!global.File) {
 
 const { crawlCategory } = require('./src/scraper/crawler');
 const { shopify } = require('./src/shopify/client');
-const https = require('https');
-const logger = require('./src/utils/logger');
 
 // ==================== CONFIGURATION ====================
 
