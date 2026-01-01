@@ -11,8 +11,10 @@
  * 7. Removing products with no images
  */
 
-const { crawlCategory } = require('./src/scraper/crawler');
-const { shopify } = require('./src/shopify/client');
+const fs = require('fs');
+const https = require('https');
+const logger = require('./src/utils/logger');
+
 // Polyfill for Node 18+ compatibility (Must be first)
 if (!global.crypto) {
     global.crypto = require('crypto');
@@ -40,7 +42,8 @@ if (!global.File) {
     }
 }
 
-const fs = require('fs');
+const { crawlCategory } = require('./src/scraper/crawler');
+const { shopify } = require('./src/shopify/client');
 const https = require('https');
 const logger = require('./src/utils/logger');
 
