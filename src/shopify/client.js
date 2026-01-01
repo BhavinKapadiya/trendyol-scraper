@@ -1,4 +1,8 @@
 const path = require('path');
+// Polyfill crypto for Node 18+ and Shopify API
+if (!global.crypto) {
+    global.crypto = require('crypto');
+}
 require('dotenv').config({ path: path.resolve(__dirname, '../../.env') });
 require('@shopify/shopify-api/adapters/node');
 
