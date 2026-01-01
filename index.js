@@ -13,6 +13,33 @@
 
 const { crawlCategory } = require('./src/scraper/crawler');
 const { shopify } = require('./src/shopify/client');
+// Polyfill for Node 18+ compatibility (Must be first)
+if (!global.crypto) {
+    global.crypto = require('crypto');
+}
+if (!global.File) {
+    try {
+        const { File } = require('node:buffer');
+        global.File = File || class File {
+            constructor(parts, filename, properties) {
+                this.parts = parts;
+                this.name = filename;
+                this.type = properties?.type || '';
+                this.lastModified = properties?.lastModified || Date.now();
+            }
+        };
+    } catch (e) {
+        global.File = class File {
+            constructor(parts, filename, properties) {
+                this.parts = parts;
+                this.name = filename;
+                this.type = properties?.type || '';
+                this.lastModified = properties?.lastModified || Date.now();
+            }
+        };
+    }
+}
+
 const fs = require('fs');
 const https = require('https');
 const logger = require('./src/utils/logger');
