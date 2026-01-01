@@ -3,6 +3,28 @@ const path = require('path');
 if (!global.crypto) {
     global.crypto = require('crypto');
 }
+
+// Polyfill File for Node 18 (required by undici/Shopify)
+if (!global.File) {
+    try {
+        const { File } = require('node:buffer');
+        if (File) {
+            global.File = File;
+        } else {
+            // Minimal fallback if node:buffer doesn't have File (older Node 18)
+            global.File = class File {
+                constructor(parts, filename, properties) {
+                    this.parts = parts;
+                    this.name = filename;
+                    this.type = properties?.type || '';
+                    this.lastModified = properties?.lastModified || Date.now();
+                }
+            };
+        }
+    } catch (e) {
+        console.warn('Failed to polyfill File:', e.message);
+    }
+}
 require('dotenv').config({ path: path.resolve(__dirname, '../../.env') });
 require('@shopify/shopify-api/adapters/node');
 
