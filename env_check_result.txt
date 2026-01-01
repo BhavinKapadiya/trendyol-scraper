@@ -1,0 +1,3 @@
+Checking .env at: C:\Users\Bhavin Kapadiya\OneDrive\Documents\GitHub\trendyol-scraper\.env
+SHOPIFY_SHOP_NAME found: false
+SHOPIFY_ACCESS_TOKEN found: false

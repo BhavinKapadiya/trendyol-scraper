@@ -81,7 +81,7 @@ function extractProductData(html, categoryName, hydrationData) {
 function extractProductDetails(detailData) {
     try {
         const product = detailData.product || detailData;
-        
+
         if (!product) {
             return null;
         }
@@ -92,9 +92,9 @@ function extractProductDetails(detailData) {
         // Extract color from slicingAttributes
         let color = null;
         if (product.slicingAttributes) {
-            color = product.slicingAttributes.DsmColor || 
-                    product.slicingAttributes.color || 
-                    null;
+            color = product.slicingAttributes.DsmColor ||
+                product.slicingAttributes.color ||
+                null;
         }
 
         // Extract sizes and availability from variants
@@ -109,7 +109,7 @@ function extractProductDetails(detailData) {
                     barcode: variant.barcode || null
                 };
                 sizes.push(sizeInfo);
-                
+
                 if (sizeInfo.inStock) {
                     hasStock = true;
                 }
@@ -125,8 +125,8 @@ function extractProductDetails(detailData) {
         // Get brand if available
         const brand = product.brand ? product.brand.name : null;
 
-        // Get description if available
-        const description = product.description || null;
+        // Get description if available (prioritize DOM extraction)
+        const description = product.domDescription || product.description || null;
 
         // Extract all images
         const images = [];
