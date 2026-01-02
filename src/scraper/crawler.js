@@ -256,13 +256,6 @@ async function crawlProductDetails(url) {
                     productData.color = colorAttr.value;
                 }
 
-                // DEBUG LOG: Show user what we found immediately
-                const imgCount = (productData.images || []).length;
-                const descLen = (productData.description || '').length;
-                // Use console.log or logger.info to show immediate feedback in PM2 logs
-                // We use a special prefix "🔍 DATA CHECK:" so user can spot it
-                console.log(`🔍 DATA CHECK: [${groupCode || 'NoGroup'}] Color: ${productData.color} | Images: ${imgCount} | Desc: ${descLen} chars`);
-
                 return { product: productData };
             }
 
