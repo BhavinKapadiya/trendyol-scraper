@@ -103,10 +103,23 @@ function extractProductDetails(detailData) {
 
         if (product.variants && Array.isArray(product.variants)) {
             product.variants.forEach(variant => {
+                // Handle different variant structures (Envoy vs legacy)
+                const sizeName = variant.beautifiedValue || 
+                               variant.value || 
+                               variant.attributeValue || 
+                               variant.name || 
+                               'Unknown';
+                
+                const variantPrice = variant.price?.value || 
+                                   variant.price?.sellingPrice?.value || 
+                                   product.winnerVariant?.price?.sellingPrice?.value || 
+                                   null;
+                
                 const sizeInfo = {
-                    name: variant.beautifiedValue || variant.attributeValue || 'Unknown',
+                    name: sizeName,
                     inStock: variant.inStock === true,
-                    barcode: variant.barcode || null
+                    barcode: variant.barcode || null,
+                    price: variantPrice
                 };
                 sizes.push(sizeInfo);
 
@@ -128,15 +141,23 @@ function extractProductDetails(detailData) {
         // Get description if available (prioritize DOM extraction)
         const description = product.domDescription || product.description || null;
 
-        // Extract all images
+        // Extract all images with high-resolution URLs
         const images = [];
         if (product.images && Array.isArray(product.images)) {
             product.images.forEach(img => {
                 let imageUrl = img.url || img;
+                
                 // Handle relative URLs
                 if (imageUrl && !imageUrl.startsWith('http')) {
                     imageUrl = 'https://cdn.dsmcdn.com' + imageUrl;
                 }
+                
+                // Convert thumbnail URLs to full resolution
+                if (imageUrl && imageUrl.includes('/mnresize/')) {
+                    imageUrl = imageUrl.replace('/mnresize/400/-/', '/');
+                    imageUrl = imageUrl.replace('/mnresize/600/-/', '/');
+                }
+                
                 if (imageUrl) {
                     images.push(imageUrl);
                 }

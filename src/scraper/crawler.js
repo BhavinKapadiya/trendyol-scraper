@@ -189,13 +189,43 @@ async function crawlProductDetails(url) {
             const getText = (sel) => document.querySelector(sel)?.innerText?.trim();
             const getAllText = (sel) => Array.from(document.querySelectorAll(sel)).map(e => e.innerText.trim()).join('\n');
 
-            // --- STRATEGY 1: JSON Data ---
-            const jsonData = window.__PRODUCT_DETAIL_APP_INITIAL_STATE__ || window.__PRELOADED_STATE__ || window.__SEARCH_APP_INITIAL_STATE__;
+            // --- STRATEGY 1: JSON Data (Updated for new Trendyol Envoy architecture) ---
+            // Trendyol now uses Envoy micro-frontend architecture with different window variables
+            let jsonData = null;
             let productData = null;
 
-            if (jsonData && jsonData.product) {
-                productData = jsonData.product;
+            // Try new Envoy variables first
+            const envoyProductDetail = window['__envoy_product-detail__PROPS'];
+            const envoyProductInfo = window['__envoy_product-info__PROPS'];
+            const envoyImageGallery = window['__envoy_product-image-gallery__PROPS'];
+            
+            // Fallback to older variable names
+            const legacyData = window.__PRODUCT_DETAIL_APP_INITIAL_STATE__ || 
+                             window.__PRELOADED_STATE__ || 
+                             window.__SEARCH_APP_INITIAL_STATE__;
+
+            // Extract product data from Envoy structure
+            if (envoyProductDetail && envoyProductDetail.product) {
+                productData = envoyProductDetail.product;
+                console.log('[Scraper] Using __envoy_product-detail__PROPS');
+            } else if (legacyData && legacyData.product) {
+                productData = legacyData.product;
+                console.log('[Scraper] Using legacy window variable');
             }
+
+            // If we found product data, enhance it with additional Envoy sources
+            if (productData) {
+                // Add additional image data from gallery if available
+                if (envoyImageGallery && envoyImageGallery.images && productData.images.length === 0) {
+                    productData.images = envoyImageGallery.images.map(img => img.url || img);
+                }
+                
+                // Add additional product info if available
+                if (envoyProductInfo && envoyProductInfo.productFeatures) {
+                    productData.features = envoyProductInfo.productFeatures;
+                }
+            }
+
 
             // --- STRATEGY 2: DOM Description (The User's Request) ---
             // Look for specific containers or "Product Information" headers
@@ -224,19 +254,47 @@ async function crawlProductDetails(url) {
                     productData.description = domDescription;
                 }
 
-                // NORMALIZE IMAGES: Ensure it's an array of strings
+                // NORMALIZE IMAGES: Ensure it's an array of strings with full resolution URLs
                 if (Array.isArray(productData.images)) {
                     productData.images = productData.images.map(img => {
-                        if (typeof img === 'string') return img;
-                        return img.url || img.src || img.large || ''; // Handle potential object structure
+                        let imageUrl = '';
+                        
+                        // Handle different image formats
+                        if (typeof img === 'string') {
+                            imageUrl = img;
+                        } else if (img && typeof img === 'object') {
+                            // Try different possible properties
+                            imageUrl = img.url || img.src || img.large || img.original || '';
+                        }
+                        
+                        // Ensure full URL (handle relative URLs)
+                        if (imageUrl && !imageUrl.startsWith('http')) {
+                            imageUrl = 'https://cdn.dsmcdn.com' + imageUrl;
+                        }
+                        
+                        // Convert to high-res URLs if they're thumbnail versions
+                        if (imageUrl && imageUrl.includes('/mnresize/')) {
+                            imageUrl = imageUrl.replace('/mnresize/400/-/', '/');
+                            imageUrl = imageUrl.replace('/mnresize/600/-/', '/');
+                        }
+                        
+                        return imageUrl;
                     }).filter(url => url && url.startsWith('http')); // Remove empty/invalid
                 }
 
-                // If JSON images are empty, try DOM images
+                // If JSON images are empty or not found, try DOM images
                 if (!productData.images || productData.images.length === 0) {
-                    productData.images = Array.from(document.querySelectorAll('.product-slide img, .gallery-modal-content img, .detail-section-img'))
-                        .map(img => img.getAttribute('src') || img.getAttribute('data-src'))
-                        .filter(src => src);
+                    productData.images = Array.from(document.querySelectorAll('.product-slide img, .gallery-modal-content img, .detail-section-img, .gallery-container img'))
+                        .map(img => {
+                            let src = img.getAttribute('src') || img.getAttribute('data-src');
+                            // Convert to high-res
+                            if (src && src.includes('/mnresize/')) {
+                                src = src.replace('/mnresize/400/-/', '/');
+                                src = src.replace('/mnresize/600/-/', '/');
+                            }
+                            return src;
+                        })
+                        .filter(src => src && src.startsWith('http'));
                 }
 
                 // EXTRACT GROUP CODE (For merging color variants)
