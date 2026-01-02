@@ -239,6 +239,23 @@ async function crawlProductDetails(url) {
                         .filter(src => src);
                 }
 
+                // EXTRACT GROUP CODE (For merging color variants)
+                // Try to find a common ID that is shared across all colors of this product
+                const groupCode = productData.productGroupId ||
+                    productData.productCode ||
+                    productData.contentGroup ||
+                    productData.modelCode ||
+                    (productData.attributes ? productData.attributes.find(a => a.key === 'modelCode')?.value : null);
+
+                // Add to product data
+                productData.groupCode = groupCode;
+
+                // Also extract the COLOR name explicitly if possible
+                const colorAttr = productData.attributes ? productData.attributes.find(a => a.shareableKey === 'Renk' || a.key === 'Ren') : null;
+                if (colorAttr) {
+                    productData.color = colorAttr.value;
+                }
+
                 return { product: productData };
             }
 

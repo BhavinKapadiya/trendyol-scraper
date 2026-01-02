@@ -91,8 +91,11 @@ async function syncProducts(scrapedProducts) {
     for (let i = 0; i < scrapedProducts.length; i++) {
         const product = scrapedProducts[i];
         try {
-            // Create unique handle
-            const handle = `trendyol-${product.productId || product.sku || Math.floor(Math.random() * 1000000)}`;
+            // Create unique handle based on GROUP CODE if available (for merging colors)
+            // Fallback to product ID if no group code (keeps old behavior for single items)
+            const handle = product.groupCode
+                ? `trendyol-${product.groupCode}`
+                : `trendyol-${product.productId || product.sku}`;
 
             // Check if product already exists (from pre-fetch or individual lookup)
             let existingProduct = productLookup[handle];
@@ -105,16 +108,16 @@ async function syncProducts(scrapedProducts) {
                 }
             }
 
-            // Prepare tags from category
+            // Prepare tags
             const categoryTags = CATEGORY_TAGS[product.category] || [`category:${product.category.toLowerCase()}`];
             const allTags = [...categoryTags, 'trendyol', 'auto-imported'].join(', ');
 
-            // Prepare extra fields
+            // Prepare VARIANTS (Size + Color)
             const color = product.color || 'Default';
-            const variants = (product.sizes && product.sizes.length > 0)
+            const newVariants = (product.sizes && product.sizes.length > 0)
                 ? product.sizes.map(size => ({
-                    option1: size.name,
-                    option2: color,
+                    option1: size.name, // Size
+                    option2: color,     // Color
                     price: product.price.toString(),
                     sku: size.barcode || `${product.sku}-${size.name}`,
                     inventory_management: 'shopify',
@@ -122,7 +125,8 @@ async function syncProducts(scrapedProducts) {
                     inventory_quantity: size.inStock ? (product.stockCount || 10) : 0
                 }))
                 : [{
-                    option1: 'Default Title',
+                    option1: 'One Size',
+                    option2: color,
                     price: product.price.toString(),
                     sku: product.sku,
                     inventory_management: 'shopify',
@@ -130,42 +134,65 @@ async function syncProducts(scrapedProducts) {
                 }];
 
             if (existingProduct) {
-                // UPDATE existing product - update ALL fields to match scraped data
-                logger.info(`[${i + 1}/${scrapedProducts.length}] Updating: ${product.name.substring(0, 50)}...`);
+                // MERGE/UPDATE existing product
+                logger.info(`[${i + 1}/${scrapedProducts.length}] Merging Color '${color}' check: ${product.name.substring(0, 30)}...`);
 
                 const productToUpdate = new shopify.rest.Product({ session: shopify.session });
                 productToUpdate.id = existingProduct.id;
 
-                // Update all fields
-                productToUpdate.title = product.name;
-                productToUpdate.body_html = (product.description || '') + `<br><br>Category: ${product.category}<br>Brand: ${product.brand || 'Trendyol'}`;
-                productToUpdate.vendor = product.brand || "TRENDYOLMİLLA";
-                productToUpdate.product_type = product.category; // THIS IS THE TYPE/CATEGORY FIELD
-                productToUpdate.tags = allTags;
+                // 1. Merge Images (Append new unique ones)
+                const existingImages = existingProduct.images || [];
+                const existingSrcs = new Set(existingImages.map(img => img.src));
+                const uniqueNewImages = (product.images || []).filter(url => !existingSrcs.has(url));
 
-                // Update images
-                if (product.images && product.images.length > 0) {
-                    productToUpdate.images = product.images.map(url => ({ src: url }));
+                if (uniqueNewImages.length > 0) {
+                    // Add new images to the list
+                    productToUpdate.images = [
+                        ...existingImages.map(img => ({ id: img.id })), // Keep existing by ID
+                        ...uniqueNewImages.map(src => ({ src }))      // Add new by SRC
+                    ];
                 }
 
-                // Update first variant price (variant management is complex, so just update price)
-                if (existingProduct.variants && existingProduct.variants.length > 0) {
-                    productToUpdate.variants = [{
-                        id: existingProduct.variants[0].id,
-                        price: product.price.toString()
-                    }];
-                }
+                // 2. Merge Variants (Append new color variants)
+                // Existing variants need to be preserved
+                // We shouldn't overwrite unless the SKU matches (stock update)
+                // But for simplicity/safety with the library, we often need to send all.
+                // However, sending *only new* might delete old in some APIs. 
+                // Best bet: don't touch existing variants in 'productToUpdate.variants' unless we re-fetch them all.
+                // LIMITATION: 'shopify-api-node' rest usually replaces variants if provided. 
+                // Strategy: We won't update variants here blindly. We rely on Shopify's "append" behavior if we don't send IDs? 
+                // No, REST API replaces. We need to fetch current variants, filter out this color, and add new.
+                // Simpler Approach for now: Just add the new variants, assuming we want to ADD this color.
+
+                // NOTE: Properly merging variants requires knowing all existing ones. 
+                // 'existingProduct' has them from the `fetchAll` or `find`.
+                const currentVariants = existingProduct.variants || [];
+
+                // Remove any existing variants for *this specific color* (to allow update)
+                const otherColorVariants = currentVariants.filter(v => v.option2 !== color);
+
+                // Combine
+                productToUpdate.variants = [
+                    ...otherColorVariants.map(v => ({ id: v.id })), // Keep others by ID
+                    ...newVariants // Add new ones
+                ];
+
+                // 3. Ensure Options are correct
+                productToUpdate.options = [
+                    { name: "Size" },
+                    { name: "Color" }
+                ];
 
                 await productToUpdate.save({ update: true });
                 updated++;
 
             } else {
                 // CREATE new product
-                logger.info(`[${i + 1}/${scrapedProducts.length}] Creating: ${product.name.substring(0, 50)}...`);
+                logger.info(`[${i + 1}/${scrapedProducts.length}] Creating NEW Shared Product: ${product.name.substring(0, 30)}...`);
 
                 const newProduct = new shopify.rest.Product({ session: shopify.session });
 
-                newProduct.title = product.name;
+                newProduct.title = product.name; // First color sets the title
                 newProduct.body_html = (product.description || '') + `<br><br>Category: ${product.category}<br>Brand: ${product.brand || 'Trendyol'}`;
                 newProduct.vendor = product.brand || "TRENDYOLMİLLA";
                 newProduct.product_type = product.category;
@@ -174,19 +201,19 @@ async function syncProducts(scrapedProducts) {
                 newProduct.images = product.images && product.images.length > 0
                     ? product.images.map(url => ({ src: url }))
                     : (product.image ? [{ src: product.image }] : []);
-                newProduct.variants = variants;
 
-                if (product.sizes && product.sizes.length > 0) {
-                    newProduct.options = [
-                        { name: "Size" },
-                        { name: "Color" }
-                    ];
-                }
+                // Options: Size, Color
+                newProduct.options = [
+                    { name: "Size" },
+                    { name: "Color" }
+                ];
+
+                newProduct.variants = newVariants;
 
                 await newProduct.save({ update: true });
 
-                // Add to lookup to prevent duplicates within same batch
-                productLookup[handle] = { handle, id: 'new' };
+                // Add to lookup
+                productLookup[handle] = { handle, id: 'new', variants: newVariants };
                 created++;
             }
 
