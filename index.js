@@ -245,17 +245,28 @@ async function syncToShopify(products) {
     logger.info('STEP 3: SYNCING PRODUCTS TO SHOPIFY');
     logger.info('========================================\n');
 
-    // Fetch existing Shopify products
-    logger.info('Fetching existing Shopify products...');
-    const response = await shopify.rest.Product.all({
-        session: shopify.session,
-        limit: 250
-    });
-    logger.info(`Found ${response.data.length} existing products\n`);
+    // Fetch ALL existing Shopify products (Pagination)
+    logger.info('Fetching ALL existing Shopify products to check for duplicates...');
+    let allShopifyProducts = [];
+    let params = { limit: 250 };
+
+    do {
+        const response = await shopify.rest.Product.all({
+            session: shopify.session,
+            ...params,
+        });
+
+        allShopifyProducts = allShopifyProducts.concat(response.data);
+        params = response.page_info ? response.page_info.nextPage : null;
+        logger.info(`   Fetched ${allShopifyProducts.length} products so far...`);
+
+    } while (params);
+
+    logger.info(`✅ Found ${allShopifyProducts.length} total existing products\n`);
 
     // Build lookup by title
     const shopifyByTitle = {};
-    for (const p of response.data) {
+    for (const p of allShopifyProducts) {
         shopifyByTitle[p.title] = p;
     }
 
@@ -432,7 +443,14 @@ async function main() {
         logger.info('========================================');
         logger.info('🎉 ALL DONE!');
         logger.info(`Total time: ${duration} minutes`);
+
+        // REST PERIOD: Wait 1 hour before letting PM2 restart the process
+        // This prevents server overload and API spam
+        const REST_MINUTES = 60;
+        logger.info(`\n😴 Resting for ${REST_MINUTES} minutes before next run...`);
         logger.info('========================================\n');
+
+        await new Promise(r => setTimeout(r, REST_MINUTES * 60 * 1000));
 
     } catch (error) {
         logger.error(`\n❌ FATAL ERROR: ${error.message}`);
