@@ -160,18 +160,76 @@ async function crawlProductDetails(url) {
             }
         } catch (e) { /* ignore */ }
 
+        // 1.5. Scroll down to trigger lazy loading of description/reviews
+        try {
+            await page.evaluate(async () => {
+                await new Promise((resolve) => {
+                    let totalHeight = 0;
+                    const distance = 100;
+                    const timer = setInterval(() => {
+                        const scrollHeight = document.body.scrollHeight;
+                        window.scrollBy(0, distance);
+                        totalHeight += distance;
+
+                        // Scroll until we hit the bottom or 2000px (enough for description)
+                        if (totalHeight >= 2000 || totalHeight >= scrollHeight) {
+                            clearInterval(timer);
+                            resolve();
+                        }
+                    }, 100);
+                });
+            });
+            // Wait a bit for content to render after scrolling
+            await new Promise(r => setTimeout(r, 1500));
+        } catch (e) { /* ignore scroll errors */ }
+
         // 2. Extract Data (Try JSON first, then DOM fallback)
         const detailData = await page.evaluate(() => {
-            // Try different valid variables
+            // Helper to get text safely
+            const getText = (sel) => document.querySelector(sel)?.innerText?.trim();
+            const getAllText = (sel) => Array.from(document.querySelectorAll(sel)).map(e => e.innerText.trim()).join('\n');
+
+            // --- STRATEGY 1: JSON Data ---
             const jsonData = window.__PRODUCT_DETAIL_APP_INITIAL_STATE__ || window.__PRELOADED_STATE__ || window.__SEARCH_APP_INITIAL_STATE__;
+            let productData = null;
 
             if (jsonData && jsonData.product) {
-                return { product: jsonData.product };
+                productData = jsonData.product;
             }
 
-            // FALLBACK: Manual DOM extraction (If JSON fails)
+            // --- STRATEGY 2: DOM Description (The User's Request) ---
+            // Look for specific containers or "Product Information" headers
+            let domDescription = '';
+
+            // Try specific selectors for "Ürün Bilgileri" / "Product Details"
+            const descContainer = document.querySelector('.product-detail-wrapper') ||
+                document.querySelector('.attributes-list') ||
+                document.querySelector('.product-desc-content');
+
+            if (descContainer) {
+                domDescription = descContainer.innerText.trim();
+            } else {
+                // Fallback: Search for headers
+                const headings = Array.from(document.querySelectorAll('h3, h4, .text-heading'));
+                const infoHeading = headings.find(h => h.innerText.includes('Ürün Bilgileri') || h.innerText.includes('Product Information'));
+                if (infoHeading && infoHeading.nextElementSibling) {
+                    domDescription = infoHeading.nextElementSibling.innerText.trim();
+                }
+            }
+
+            // If we found a DOM description, use it (it's usually better/formatted)
+            if (productData) {
+                // Attach it to a special field or overwrite description if DOM is longer
+                if (domDescription && domDescription.length > (productData.description || '').length) {
+                    // Prepend standard HTML formatting if needed, or just raw text
+                    // The extractor will sanitize it. 
+                    productData.description = domDescription;
+                }
+                return { product: productData };
+            }
+
+            // --- STRATEGY 3: Full DOM Fallback (If JSON Failed) ---
             const getMeta = (name) => document.querySelector(`meta[property="og:${name}"]`)?.content;
-            const getText = (sel) => document.querySelector(sel)?.innerText?.trim();
             const getPrice = () => {
                 const el = document.querySelector('.product-price-container, .prc-dsc, .price-box');
                 return el ? parseFloat(el.innerText.replace(/[^0-9.,]/g, '').replace(',', '.')) : 0;
@@ -179,10 +237,10 @@ async function crawlProductDetails(url) {
 
             const domProduct = {
                 name: getMeta('title') || getText('.pr-new-br') || document.title,
-                description: getMeta('description') || getText('.product-desc'),
+                description: domDescription || getMeta('description') || getText('.product-desc'), // Use our new DOM desc first
                 images: Array.from(document.querySelectorAll('.product-slide img, .gallery-modal-content img')).map(img => img.src),
                 price: { sellingPrice: { value: getPrice() } },
-                variants: [], // Hard to get variants from DOM without interaction
+                variants: [],
                 brand: { name: getText('.pr-new-br a') || 'Trendyol' }
             };
 
