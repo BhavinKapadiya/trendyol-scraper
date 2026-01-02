@@ -217,28 +217,47 @@ async function crawlProductDetails(url) {
                 }
             }
 
-            // If we found a DOM description, use it (it's usually better/formatted)
+            // If we found a DOM description, use it
             if (productData) {
-                // Attach it to a special field or overwrite description if DOM is longer
+                // Attach new DOM description if better
                 if (domDescription && domDescription.length > (productData.description || '').length) {
-                    // Prepend standard HTML formatting if needed, or just raw text
-                    // The extractor will sanitize it. 
                     productData.description = domDescription;
                 }
+
+                // NORMALIZE IMAGES: Ensure it's an array of strings
+                if (Array.isArray(productData.images)) {
+                    productData.images = productData.images.map(img => {
+                        if (typeof img === 'string') return img;
+                        return img.url || img.src || img.large || ''; // Handle potential object structure
+                    }).filter(url => url && url.startsWith('http')); // Remove empty/invalid
+                }
+
+                // If JSON images are empty, try DOM images
+                if (!productData.images || productData.images.length === 0) {
+                    productData.images = Array.from(document.querySelectorAll('.product-slide img, .gallery-modal-content img, .detail-section-img'))
+                        .map(img => img.getAttribute('src') || img.getAttribute('data-src'))
+                        .filter(src => src);
+                }
+
                 return { product: productData };
             }
 
-            // --- STRATEGY 3: Full DOM Fallback (If JSON Failed) ---
+            // --- STRATEGY 3: Full DOM Fallback ---
             const getMeta = (name) => document.querySelector(`meta[property="og:${name}"]`)?.content;
             const getPrice = () => {
                 const el = document.querySelector('.product-price-container, .prc-dsc, .price-box');
                 return el ? parseFloat(el.innerText.replace(/[^0-9.,]/g, '').replace(',', '.')) : 0;
             };
 
+            // Improved Image Selector for Fallback
+            const domImages = Array.from(document.querySelectorAll('.product-slide img, .gallery-modal-content img, .detail-section-img, .gallery-container img'))
+                .map(img => img.getAttribute('src') || img.getAttribute('data-src')) // Get 'src' or lazy-load 'data-src'
+                .filter(src => src && src.startsWith('http'));
+
             const domProduct = {
                 name: getMeta('title') || getText('.pr-new-br') || document.title,
-                description: domDescription || getMeta('description') || getText('.product-desc'), // Use our new DOM desc first
-                images: Array.from(document.querySelectorAll('.product-slide img, .gallery-modal-content img')).map(img => img.src),
+                description: domDescription || getMeta('description') || getText('.product-desc'),
+                images: domImages.length > 0 ? domImages : (getMeta('image') ? [getMeta('image')] : []),
                 price: { sellingPrice: { value: getPrice() } },
                 variants: [],
                 brand: { name: getText('.pr-new-br a') || 'Trendyol' }
