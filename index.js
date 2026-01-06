@@ -301,10 +301,48 @@ async function syncToShopify(products) {
 
             let shopifyImages = [];
             if (jsonImages.length > 0) {
-                // Use URLs directly - much faster and lighter payload
-                // Shopify will download them from the CDN
-                for (const url of jsonImages.slice(0, 10)) {
-                    shopifyImages.push({ src: url });
+                // Modified: Download images and send as base64 to bypass Trendyol CDN blocking Shopify
+                // Limit to 5 high-res images to avoid payload limits
+                for (const url of jsonImages.slice(0, 5)) {
+                    let attempts = 0;
+                    const maxRetries = 3;
+                    let success = false;
+
+                    while (attempts < maxRetries && !success) {
+                        try {
+                            const controller = new AbortController();
+                            const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout per image
+
+                            const imageRes = await fetch(url, {
+                                headers: {
+                                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                                    'Referer': 'https://www.trendyol.com/'
+                                },
+                                signal: controller.signal
+                            });
+                            clearTimeout(timeoutId);
+
+                            if (imageRes.ok) {
+                                const arrayBuffer = await imageRes.arrayBuffer();
+                                const base64 = Buffer.from(arrayBuffer).toString('base64');
+                                shopifyImages.push({ attachment: base64 });
+                                success = true;
+                            } else {
+                                throw new Error(`Status ${imageRes.status}`);
+                            }
+                        } catch (err) {
+                            attempts++;
+                            const isLastAttempt = attempts === maxRetries;
+                            if (!isLastAttempt) {
+                                logger.warn(`   [Image Retry] ${url.substring(0, 30)}... failed (${err.message}). Retrying ${attempts}/${maxRetries}...`);
+                                await new Promise(r => setTimeout(r, 2000)); // Wait 2s before retry
+                            } else {
+                                logger.error(`   [Image Fail] ${url.substring(0, 30)}... failed after ${maxRetries} attempts: ${err.message}`);
+                                // Fallback to URL only if everything else fails (though likely will fail on Shopify too)
+                                shopifyImages.push({ src: url });
+                            }
+                        }
+                    }
                 }
             }
 
@@ -385,8 +423,8 @@ async function syncToShopify(products) {
                 created++;
             }
 
-            // Rate limit (Safe for Basic Plan: 1s delay)
-            await new Promise(r => setTimeout(r, 1000));
+            // Rate limit (Safe for massive uploads: 10s delay)
+            await new Promise(r => setTimeout(r, 10000));
 
         } catch (error) {
             logger.error(`[${i + 1}/${products.length}] FAILED: ${error.message}`);
@@ -471,7 +509,8 @@ async function main() {
         await syncToShopify(products);
 
         // Step 4: Cleanup
-        await cleanupNoImageProducts();
+        // DISABLED FOR DEBUGGING: Prevent deletion of products if image upload fails
+        // await cleanupNoImageProducts();
 
         const duration = Math.round((Date.now() - startTime) / 1000 / 60);
         logger.info('========================================');
