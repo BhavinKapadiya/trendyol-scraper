@@ -79,21 +79,32 @@ async function crawlCategory(categoryUrl, categoryName, fetchDetails = false) {
                     logger.info(`Fetching details for ${newProducts.length} new products...`);
 
                     for (let i = 0; i < newProducts.length; i++) {
+                        // TEST LIMIT: Stop IMMEDIATELY if we hit 100
+                        if (allProducts.length + i >= 100) {
+                            logger.info('🛑 TEST LIMIT REACHED: Stopped at exactly 100 products.');
+                            newProducts.splice(i);
+                            hasMore = false;
+                            break;
+                        }
+
                         const product = newProducts[i];
                         logger.info(`[Page ${pageIndex}] [${i + 1}/${newProducts.length}] Fetching details for: ${product.name.substring(0, 50)}...`);
 
                         try {
-                            const details = await crawlProductDetails(product.url);
+                            const details = await crawlProductDetails(product.url, browser);
                             if (details) {
                                 // Merge detail data, prioritize images from details
                                 newProducts[i] = {
                                     ...product,
                                     ...details,
                                     // Use detail images if available, otherwise fall back to category image as array
+                                    // Use detail images if available, otherwise fall back to category image as array
                                     images: details.images && details.images.length > 0
                                         ? details.images
                                         : (product.image ? [product.image] : [])
                                 };
+
+
                             }
                         } catch (error) {
                             logger.error(`Failed to fetch details for ${product.url}: ${error.message}`);
@@ -106,10 +117,6 @@ async function crawlCategory(categoryUrl, categoryName, fetchDetails = false) {
 
                 allProducts.push(...newProducts);
                 pageIndex++;
-
-                // Optional: Safety break for testing so we don't go forever if user wants to test quickly
-                // remove this for production
-                // if (pageIndex > 3) break; 
 
             } catch (pageError) {
                 logger.error(`Error processing page ${pageIndex}: ${pageError.message}`);
@@ -130,14 +137,26 @@ async function crawlCategory(categoryUrl, categoryName, fetchDetails = false) {
 }
 
 // Crawl individual product page for detailed data
-async function crawlProductDetails(url) {
+async function crawlProductDetails(url, existingBrowser = null) {
     let browser;
+    let page;
     try {
-        browser = await startBrowser();
-        const page = await browser.newPage();
+        // Use existing browser if provided, otherwise start a new one
+        if (existingBrowser) {
+            browser = existingBrowser;
+        } else {
+            browser = await startBrowser();
+        }
+
+        page = await browser.newPage();
+
+        // Increase navigation timeout to 90 seconds
+        await page.setDefaultNavigationTimeout(90000);
 
         // Block images/fonts to save bandwidth
-        await page.setRequestInterception(true);
+        // DISABLED FOR DEBUGGING: Page seems broken without resources
+        // await page.setRequestInterception(true);
+        /*
         page.on('request', (req) => {
             if (['image', 'font', 'stylesheet'].includes(req.resourceType())) {
                 req.abort();
@@ -145,6 +164,7 @@ async function crawlProductDetails(url) {
                 req.continue();
             }
         });
+        */
 
         await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36');
 
@@ -171,8 +191,12 @@ async function crawlProductDetails(url) {
                         window.scrollBy(0, distance);
                         totalHeight += distance;
 
-                        // Scroll until we hit the bottom or 2000px (enough for description)
-                        if (totalHeight >= 2000 || totalHeight >= scrollHeight) {
+                        // Click "Show More" if found while scrolling
+                        const showMoreBtn = document.querySelector('.show-more-button');
+                        if (showMoreBtn) showMoreBtn.click();
+
+                        // Scroll until we hit the bottom or 2500px 
+                        if (totalHeight >= 2500 || totalHeight >= scrollHeight) {
                             clearInterval(timer);
                             resolve();
                         }
@@ -180,7 +204,7 @@ async function crawlProductDetails(url) {
                 });
             });
             // Wait a bit for content to render after scrolling
-            await new Promise(r => setTimeout(r, 1500));
+            await new Promise(r => setTimeout(r, 10000));
         } catch (e) { /* ignore scroll errors */ }
 
         // 2. Extract Data (Try JSON first, then DOM fallback)
@@ -198,11 +222,11 @@ async function crawlProductDetails(url) {
             const envoyProductDetail = window['__envoy_product-detail__PROPS'];
             const envoyProductInfo = window['__envoy_product-info__PROPS'];
             const envoyImageGallery = window['__envoy_product-image-gallery__PROPS'];
-            
+
             // Fallback to older variable names
-            const legacyData = window.__PRODUCT_DETAIL_APP_INITIAL_STATE__ || 
-                             window.__PRELOADED_STATE__ || 
-                             window.__SEARCH_APP_INITIAL_STATE__;
+            const legacyData = window.__PRODUCT_DETAIL_APP_INITIAL_STATE__ ||
+                window.__PRELOADED_STATE__ ||
+                window.__SEARCH_APP_INITIAL_STATE__;
 
             // Extract product data from Envoy structure
             if (envoyProductDetail && envoyProductDetail.product) {
@@ -219,7 +243,7 @@ async function crawlProductDetails(url) {
                 if (envoyImageGallery && envoyImageGallery.images && productData.images.length === 0) {
                     productData.images = envoyImageGallery.images.map(img => img.url || img);
                 }
-                
+
                 // Add additional product info if available
                 if (envoyProductInfo && envoyProductInfo.productFeatures) {
                     productData.features = envoyProductInfo.productFeatures;
@@ -227,30 +251,87 @@ async function crawlProductDetails(url) {
             }
 
 
-            // --- STRATEGY 2: DOM Description (The User's Request) ---
-            // Look for specific containers or "Product Information" headers
+            // --- STRATEGY 2: DOM Description (Aggressive Search) ---
             let domDescription = '';
 
-            // Try specific selectors for "Ürün Bilgileri" / "Product Details"
-            const descContainer = document.querySelector('.product-detail-wrapper') ||
+            // 1. Try EXACT Verified Selectors first
+            const descContainer = document.querySelector('.content-description-container') ||
+                document.querySelector('.product-description-content') ||
+                document.querySelector('.product-desc-content') ||
+                document.querySelector('.product-detail-wrapper') ||
                 document.querySelector('.attributes-list') ||
-                document.querySelector('.product-desc-content');
+                document.querySelector('ul.detail-attr-container');
 
             if (descContainer) {
-                domDescription = descContainer.innerText.trim();
-            } else {
-                // Fallback: Search for headers
-                const headings = Array.from(document.querySelectorAll('h3, h4, .text-heading'));
-                const infoHeading = headings.find(h => h.innerText.includes('Ürün Bilgileri') || h.innerText.includes('Product Information'));
-                if (infoHeading && infoHeading.nextElementSibling) {
-                    domDescription = infoHeading.nextElementSibling.innerText.trim();
+                // Formatting: if it's the verified container, map the p tags
+                if (descContainer.classList.contains('content-description-container')) {
+                    const contents = Array.from(descContainer.querySelectorAll('.product-description-content'));
+
+                    if (contents.length > 0) {
+                        domDescription = contents.map(p => p.innerHTML).join('<br>');
+                    } else {
+                        // Fallback using direct innerHTML if structured content is missing
+                        domDescription = descContainer.innerHTML;
+                    }
+                } else if (descContainer.tagName === 'UL') {
+                    domDescription = Array.from(descContainer.querySelectorAll('li'))
+                        .map(li => `• ${li.innerText.trim()}`)
+                        .join('<br>');
+                } else {
+                    domDescription = descContainer.innerHTML;
                 }
+            }
+
+            // 2. Fallback: Header Hunting (English & Turkish)
+            if (!domDescription || domDescription.length < 50) {
+                // ADDED h1, h2 to selectors (Previously missing, causing failure on some pages)
+                const headings = Array.from(document.querySelectorAll('h1, h2, h3, h4, .text-heading, strong, b, div, font'));
+                const targetHeaders = ['Ürün Bilgileri', 'Ürün Açıklaması', 'Product Information', 'Product Description', 'Additional Information'];
+
+                const infoHeading = headings.find(h => targetHeaders.some(t => h.innerText.includes(t)));
+                if (infoHeading) {
+                    // Strategy: The header is usually inside the content container.
+                    // Grab the parent element's HTML to capture the context.
+                    // Check if parent is reasonable (not body/html)
+                    const parent = infoHeading.parentElement;
+                    if (parent && parent.tagName !== 'BODY' && parent.tagName !== 'HTML') {
+                        // Use the parent's content (removing the header itself if possible, but keeping it is also fine)
+                        domDescription = parent.innerHTML;
+                    } else {
+                        // Fallback to siblings if parent is too generic
+                        let contentEl = infoHeading.nextElementSibling;
+                        while (contentEl && (contentEl.tagName === 'P' || contentEl.tagName === 'UL' || contentEl.tagName === 'DIV')) {
+                            domDescription += contentEl.outerHTML;
+                            contentEl = contentEl.nextElementSibling;
+                        }
+                    }
+                }
+            }
+
+            // 3. Fallback: User specific 'font' tag hint (if Google Translate artifacts exist)
+            if (!domDescription) {
+                const fonts = Array.from(document.querySelectorAll('font'));
+                const descFont = fonts.find(f => f.innerText.includes('Product Description'));
+                if (descFont && descFont.parentElement) {
+                    domDescription = descFont.parentElement.innerHTML;
+                }
+            }
+
+            // Final Sanity Check: If description looks like footer SEO junk, kill it
+            if (domDescription && (domDescription.includes('internal-linking') || domDescription.includes('Popüler Marka'))) {
+                domDescription = '';
+            }
+
+            // Clean up description (remove script tags, etc if raw HTML)
+            if (domDescription) {
+                domDescription = domDescription.replace(/<script\b[^>]*>([\s\S]*?)<\/script>/gm, "");
             }
 
             // If we found a DOM description, use it
             if (productData) {
-                // Attach new DOM description if better
-                if (domDescription && domDescription.length > (productData.description || '').length) {
+                // Attach new DOM description if it exists and is meaningful
+                // We prioritize DOM because JSON is often empty for description
+                if (domDescription && domDescription.length > 10) {
                     productData.description = domDescription;
                 }
 
@@ -258,7 +339,7 @@ async function crawlProductDetails(url) {
                 if (Array.isArray(productData.images)) {
                     productData.images = productData.images.map(img => {
                         let imageUrl = '';
-                        
+
                         // Handle different image formats
                         if (typeof img === 'string') {
                             imageUrl = img;
@@ -266,18 +347,18 @@ async function crawlProductDetails(url) {
                             // Try different possible properties
                             imageUrl = img.url || img.src || img.large || img.original || '';
                         }
-                        
+
                         // Ensure full URL (handle relative URLs)
                         if (imageUrl && !imageUrl.startsWith('http')) {
                             imageUrl = 'https://cdn.dsmcdn.com' + imageUrl;
                         }
-                        
+
                         // Convert to high-res URLs if they're thumbnail versions
                         if (imageUrl && imageUrl.includes('/mnresize/')) {
                             imageUrl = imageUrl.replace('/mnresize/400/-/', '/');
                             imageUrl = imageUrl.replace('/mnresize/600/-/', '/');
                         }
-                        
+
                         return imageUrl;
                     }).filter(url => url && url.startsWith('http')); // Remove empty/invalid
                 }
@@ -314,11 +395,48 @@ async function crawlProductDetails(url) {
                     productData.color = colorAttr.value;
                 }
 
+                // CRITICAL FIX: Extract price from alternative locations if missing
+                if (!productData.price) {
+                    // 1. Try merchantListing
+                    if (productData.merchantListing?.listing?.price) {
+                        productData.price = productData.merchantListing.listing.price;
+                    }
+                    // 2. Try first variant
+                    else if (productData.variants && productData.variants.length > 0 && productData.variants[0].price) {
+                        productData.price = productData.variants[0].price;
+                    }
+                }
+
+                // CRITICAL FIX: If price is STILL missing, force scrape from DOM
+                if (!productData.price) {
+                    const getMetaPrice = () => {
+                        const p = document.querySelector('meta[property="product:price:amount"]')?.content ||
+                            document.querySelector('meta[property="og:price:amount"]')?.content;
+                        return p ? parseFloat(p) : 0;
+                    };
+
+                    const getDomPrice = () => {
+                        const el = document.querySelector('.product-price-container span') ||
+                            document.querySelector('.prc-dsc') ||
+                            document.querySelector('.price-box') ||
+                            document.querySelector('.ps-product__price');
+                        if (!el) return 0;
+                        const text = el.innerText;
+                        return parseFloat(text.replace(/[^0-9.,]/g, '').replace(',', '.'));
+                    };
+
+                    const domPriceVal = getMetaPrice() || getDomPrice();
+
+                    if (domPriceVal > 0) {
+                        productData.price = { sellingPrice: { value: domPriceVal } };
+                    }
+                }
+
                 return { product: productData };
             }
 
             // --- STRATEGY 3: Full DOM Fallback ---
-            const getMeta = (name) => document.querySelector(`meta[property="og:${name}"]`)?.content;
+            const getMeta = (name) => document.querySelector(`meta[property = "og:${name}"]`)?.content;
             const getPrice = () => {
                 const el = document.querySelector('.product-price-container, .prc-dsc, .price-box');
                 return el ? parseFloat(el.innerText.replace(/[^0-9.,]/g, '').replace(',', '.')) : 0;
@@ -341,31 +459,71 @@ async function crawlProductDetails(url) {
             return { product: domProduct, isFallback: true };
         });
 
-        await browser.close();
+        if (page) await page.close();
+        if (!existingBrowser && browser) await browser.close();
 
         if (detailData && (detailData.product || detailData.isFallback)) {
-            // Normalize fallback data structure match expected extractor format
-            if (detailData.isFallback) {
-                return {
-                    product: {
-                        name: detailData.product.name,
-                        images: detailData.product.images,
-                        price: detailData.product.price,
-                        brand: detailData.product.brand,
-                        description: detailData.product.description,
-                        isFallback: true
-                    }
-                };
+            const prod = detailData.product || {};
+
+            // CLEAN DATA EXTRACTION
+            // 1. Description: DOM > Product Description > Empty
+            let finalDescription = prod.description || '';
+
+            // 2. Images: Product Images > Fallback Image
+            let finalImages = [];
+            if (prod.images && Array.isArray(prod.images)) {
+                finalImages = prod.images;
+            } else if (prod.image) {
+                finalImages = [prod.image];
             }
-            return detailData;
+
+            // 3. Sizes/Variants
+            let finalSizes = [];
+            if (prod.variants && Array.isArray(prod.variants)) {
+                finalSizes = prod.variants.map(v => ({
+                    name: v.value,
+                    inStock: v.inStock,
+                    barcode: v.barcode,
+                    price: v.price?.value
+                }));
+            }
+
+            // Return CLEAN structure
+            // domDescription is not available here, it's used inside evaluate to populate prod.description
+            const descriptionToUse = prod.description || '';
+
+            // 4. Price: Robust extraction
+
+            let finalPrice = 0;
+            if (typeof prod.price === 'number') {
+                finalPrice = prod.price;
+            } else if (prod.price) {
+                finalPrice = prod.price.sellingPrice?.value
+                    || prod.price.discountedPrice?.value
+                    || prod.price.value
+                    || 0;
+            }
+
+            return {
+                productId: prod.productId || prod.id,
+                name: prod.name,
+                category: prod.category?.name || 'Unknown',
+                brand: prod.brand?.name || "Trendyol",
+                price: finalPrice,
+                description: descriptionToUse,
+                images: finalImages,
+                sizes: finalSizes,
+                url: url
+            };
         }
 
         logger.warn(`No product detail data found for ${url}`);
         return null;
 
     } catch (error) {
-        logger.error(`Failed to fetch details for ${url}: ${error.message}`);
-        if (browser) await browser.close();
+        logger.error(`Failed to fetch details for ${url}: ${error.message} `);
+        if (page) await page.close();
+        if (!existingBrowser && browser) await browser.close();
         return null;
     }
 }

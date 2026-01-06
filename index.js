@@ -55,13 +55,13 @@ const PRICE_MULTIPLIER = parseFloat(process.env.PRICE_MULTIPLIER) || 1;
 
 
 const CATEGORIES = [
-    // { name: 'Bluz', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20bluz&qt=trendyolmilla%20bluz&st=trendyolmilla%20bluz' },
-    // { name: 'Kazak', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20kazak&qt=trendyolmilla%20kazak&st=trendyolmilla%20kazak' },
-    // { name: 'Hırka', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20h%C4%B1rka&qt=trendyolmilla%20h%C4%B1rka&st=trendyolmilla%20h%C4%B1rka' },
-    // { name: 'Jeans', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20jean&qt=trendyolmilla%20jean&st=trendyolmilla%20jean' },
-    // { name: 'Elbise', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20elbise&qt=trendyolmilla%20elbise&st=trendyolmilla%20elbise' },
-    // { name: 'Pijama Takımı', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20pijama%20tak%C4%B1m%C4%B1&qt=trendyolmilla%20pijama%20tak%C4%B1m%C4%B1&st=trendyolmilla%20pijama%20tak%C4%B1m%C4%B1' },
-    // { name: 'Pantolon', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20pantolon&qt=trendyolmilla%20pantolon&st=trendyolmilla%20pantolon' },
+    { name: 'Bluz', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20bluz&qt=trendyolmilla%20bluz&st=trendyolmilla%20bluz' },
+    { name: 'Kazak', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20kazak&qt=trendyolmilla%20kazak&st=trendyolmilla%20kazak' },
+    { name: 'Hırka', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20h%C4%B1rka&qt=trendyolmilla%20h%C4%B1rka&st=trendyolmilla%20h%C4%B1rka' },
+    { name: 'Jeans', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20jean&qt=trendyolmilla%20jean&st=trendyolmilla%20jean' },
+    { name: 'Elbise', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20elbise&qt=trendyolmilla%20elbise&st=trendyolmilla%20elbise' },
+    { name: 'Pijama Takımı', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20pijama%20tak%C4%B1m%C4%B1&qt=trendyolmilla%20pijama%20tak%C4%B1m%C4%B1&st=trendyolmilla%20pijama%20tak%C4%B1m%C4%B1' },
+    { name: 'Pantolon', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20pantolon&qt=trendyolmilla%20pantolon&st=trendyolmilla%20pantolon' },
     { name: 'Sweatshirt', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20sweatshirt&qt=trendyolmilla%20sweatshirt&st=trendyolmilla%20sweatshirt' },
 ];
 
@@ -277,21 +277,34 @@ async function syncToShopify(products) {
         const existingProduct = shopifyByTitle[product.name];
 
         try {
-            // Prepare images (try base64 first, then URL)
-            const jsonImages = product.images?.length > 0
-                ? product.images
-                : (product.image ? [product.image] : []);
+            // SMART GETTERS: Extract data from deep nested structure if missing at top level
+
+            // 1. IMAGES
+            // Priority: Top-level array > Nested raw array > Single top-level image
+            let jsonImages = [];
+            if (product.images && product.images.length > 0) {
+                jsonImages = product.images;
+            } else if (product.product && product.product.images && product.product.images.length > 0) {
+                jsonImages = product.product.images;
+            } else if (product.image) {
+                jsonImages = [product.image];
+            }
+
+            // 2. DESCRIPTION
+            // Priority: Top-level description > Nested description > Fallback
+            let description = product.description;
+            if (!description && product.product && product.product.description) {
+                description = product.product.description;
+            }
+            // Log for debugging
+            // logger.info(`   Description found: ${description ? 'YES (' + description.length + ' chars)' : 'NO'}`);
 
             let shopifyImages = [];
             if (jsonImages.length > 0) {
-                // Try first 4 images with base64
-                for (const url of jsonImages.slice(0, 4)) {
-                    try {
-                        const base64 = await downloadImageAsBase64(url);
-                        shopifyImages.push({ attachment: base64 });
-                    } catch {
-                        shopifyImages.push({ src: url });
-                    }
+                // Use URLs directly - much faster and lighter payload
+                // Shopify will download them from the CDN
+                for (const url of jsonImages.slice(0, 10)) {
+                    shopifyImages.push({ src: url });
                 }
             }
 
@@ -300,7 +313,7 @@ async function syncToShopify(products) {
             const allTags = [...categoryTags, 'trendyol', 'auto-imported'].join(', ');
 
             // Prepare variants
-            const color = product.color || 'Default';
+            const color = product.color || product.product?.slicingAttributes?.DsmColor || 'Default';
             const variants = (product.sizes && product.sizes.length > 0)
                 ? product.sizes.map(size => ({
                     option1: size.name,
@@ -326,7 +339,7 @@ async function syncToShopify(products) {
                 const productToUpdate = new shopify.rest.Product({ session: shopify.session });
                 productToUpdate.id = existingProduct.id;
                 productToUpdate.title = product.name;
-                productToUpdate.body_html = `Category: ${product.category}<br>Brand: ${product.brand || 'Trendyol'}`;
+                productToUpdate.body_html = product.description || `Category: ${product.category}<br>Brand: ${product.brand || 'Trendyol'}`;
                 productToUpdate.vendor = product.brand || "TRENDYOLMİLLA";
                 productToUpdate.product_type = product.category;
                 productToUpdate.tags = allTags;
@@ -356,7 +369,7 @@ async function syncToShopify(products) {
 
                 const newProduct = new shopify.rest.Product({ session: shopify.session });
                 newProduct.title = product.name;
-                newProduct.body_html = `Category: ${product.category}<br>Brand: ${product.brand || 'Trendyol'}`;
+                newProduct.body_html = product.description || `Category: ${product.category}<br>Brand: ${product.brand || 'Trendyol'}`;
                 newProduct.vendor = product.brand || "TRENDYOLMİLLA";
                 newProduct.product_type = product.category;
                 newProduct.handle = handle;
@@ -427,8 +440,29 @@ async function main() {
     logger.info(`💰 Price Multiplier: ${PRICE_MULTIPLIER}x (set in .env file)\n`);
 
     try {
-        // Step 1: Scrape
-        const products = await scrapeAllCategories();
+        let products = [];
+
+        // Check for manual sync flag
+        if (process.argv.includes('--sync-only')) {
+            logger.info('🔄 MANUAL SYNC MODE DETECTED');
+
+            // Prefer clean file if it exists
+            if (fs.existsSync('products_clean.json')) {
+                logger.info('   Loading from CLEAN file (products_clean.json)...');
+                const rawData = fs.readFileSync('products_clean.json', 'utf8');
+                products = JSON.parse(rawData);
+            } else if (fs.existsSync('products.json')) {
+                logger.info('   Loading from RAW file (products.json)...');
+                const rawData = fs.readFileSync('products.json', 'utf8');
+                products = JSON.parse(rawData);
+            } else {
+                throw new Error('No products file found! Cannot sync.');
+            }
+            logger.info(`   Loaded ${products.length} products to sync.`);
+        } else {
+            // Step 1: Normal Scrape
+            products = await scrapeAllCategories();
+        }
 
         // Step 2: Create collections
         await createCollections();
