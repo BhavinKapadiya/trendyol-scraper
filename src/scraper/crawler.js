@@ -78,33 +78,57 @@ async function crawlCategory(categoryUrl, categoryName, fetchDetails = false) {
                 if (fetchDetails && newProducts.length > 0) {
                     logger.info(`Fetching details for ${newProducts.length} new products...`);
 
-                    for (let i = 0; i < newProducts.length; i++) {
-                        // TEST LIMIT: Stop IMMEDIATELY if we hit 100
-                        if (allProducts.length + i >= 100) {
-                            logger.info('🛑 TEST LIMIT REACHED: Stopped at exactly 100 products.');
-                            newProducts.splice(i);
-                            hasMore = false;
-                            break;
-                        }
+                    // Use a dynamic queue to handle discovered variants
+                    const productQueue = [...newProducts];
+                    const processedUrls = new Set(productQueue.map(p => p.url));
 
-                        const product = newProducts[i];
-                        logger.info(`[Page ${pageIndex}] [${i + 1}/${newProducts.length}] Fetching details for: ${product.name.substring(0, 50)}...`);
+                    for (let i = 0; i < productQueue.length; i++) {
+                        // LIMIT REMOVED: User requested to scrape the entire category.
+                        // if (allProducts.length + i >= 100) { ... }
+
+                        const product = productQueue[i];
+                        logger.info(`[Page ${pageIndex}] [${i + 1}/${productQueue.length}] Fetching details for: ${product.name ? product.name.substring(0, 50) : product.url}...`);
 
                         try {
                             const details = await crawlProductDetails(product.url, browser);
                             if (details) {
-                                // Merge detail data, prioritize images from details
-                                newProducts[i] = {
+                                // Merge detail data
+                                // Update the product object in the queue (or create a new one if it was just a raw variant)
+                                const failedProduct = {
                                     ...product,
                                     ...details,
-                                    // Use detail images if available, otherwise fall back to category image as array
                                     // Use detail images if available, otherwise fall back to category image as array
                                     images: details.images && details.images.length > 0
                                         ? details.images
                                         : (product.image ? [product.image] : [])
                                 };
 
+                                // Update the item in the queue with full details
+                                productQueue[i] = failedProduct;
 
+                                // HANDLE DISCOVERED COLOR VARIANTS
+                                if (details.colorVariants && details.colorVariants.length > 0) {
+                                    logger.info(`   🎨 Found ${details.colorVariants.length} color variants.`);
+
+                                    for (const variant of details.colorVariants) {
+                                        // Check if we've already seen this variant URL
+                                        if (!processedUrls.has(variant.url)) {
+                                            logger.info(`      -> Adding new variant to queue: ${variant.color} (${variant.url})`);
+
+                                            // Add to queue
+                                            productQueue.push({
+                                                url: variant.url,
+                                                name: `${product.name} - ${variant.color}`, // Temporary name until scraped
+                                                productId: extractProductId(variant.url),
+                                                image: product.image, // Temporary placeholder
+                                                price: product.price  // Temporary placeholder
+                                            });
+
+                                            // Mark as seen
+                                            processedUrls.add(variant.url);
+                                        }
+                                    }
+                                }
                             }
                         } catch (error) {
                             logger.error(`Failed to fetch details for ${product.url}: ${error.message}`);
@@ -113,6 +137,12 @@ async function crawlCategory(categoryUrl, categoryName, fetchDetails = false) {
                         // Small delay between requests to be respectful
                         await new Promise(resolve => setTimeout(resolve, 1000));
                     }
+
+                    // Replace newProducts with the fully processed productQueue
+                    // This ensures all discovered variants are included in the batch
+                    // We need to clear the original array and push the new items
+                    newProducts.length = 0;
+                    newProducts.push(...productQueue);
                 }
 
                 allProducts.push(...newProducts);
@@ -379,21 +409,49 @@ async function crawlProductDetails(url, existingBrowser = null) {
                 }
 
                 // EXTRACT GROUP CODE (For merging color variants)
-                // Try to find a common ID that is shared across all colors of this product
-                const groupCode = productData.productGroupId ||
-                    productData.productCode ||
-                    productData.contentGroup ||
-                    productData.modelCode ||
-                    (productData.attributes ? productData.attributes.find(a => a.key === 'modelCode')?.value : null);
+                // Priority: 1. Name Regex (Most reliable based on inspection) 2. JSON attributes
+                let groupCode = productData.modelCode || productData.productGroupId;
+
+                // Try to extract from Name (e.g. "Bluz TWOAW26BZ00138")
+                // Regex looks for 8+ uppercase alphanumeric chars at the end of string or usually appearing as a code
+                const nameModelMatch = productData.name ? productData.name.match(/\b([A-Z0-9]{8,})\b/) : null;
+                if (nameModelMatch) {
+                    groupCode = nameModelMatch[1];
+                }
+
+                // Fallbacks from JSON
+                if (!groupCode) {
+                    groupCode = productData.productCode ||
+                        productData.contentGroup ||
+                        (productData.attributes ? productData.attributes.find(a => a.key === 'modelCode')?.value : null);
+                }
 
                 // Add to product data
                 productData.groupCode = groupCode;
 
-                // Also extract the COLOR name explicitly if possible
-                const colorAttr = productData.attributes ? productData.attributes.find(a => a.shareableKey === 'Renk' || a.key === 'Ren') : null;
-                if (colorAttr) {
-                    productData.color = colorAttr.value;
+                // EXTRACT COLOR
+                // 1. Try JSON
+                let extractedColor = productData.color || (productData.attributes ? productData.attributes.find(a => a.key === 'Renk' || a.key === 'Color' || a.shareableKey === 'Renk')?.value : null);
+
+                // 2. Try DOM (Renk: X)
+                if (!extractedColor) {
+                    // Look for elements containing "Renk:"
+                    const colorLabel = Array.from(document.querySelectorAll('span, div, p, label')).find(el => el.innerText.includes('Renk:'));
+                    if (colorLabel) {
+                        // Likely "Renk: Siyah" or sibling
+                        const text = colorLabel.innerText;
+                        const parts = text.split(':');
+                        if (parts.length > 1) {
+                            extractedColor = parts[1].trim();
+                        } else {
+                            // Maybe sibling?
+                            const sibling = colorLabel.nextElementSibling;
+                            if (sibling) extractedColor = sibling.innerText.trim();
+                        }
+                    }
                 }
+
+                productData.color = extractedColor || 'Default';
 
                 // CRITICAL FIX: Extract price from alternative locations if missing
                 if (!productData.price) {
@@ -432,7 +490,34 @@ async function crawlProductDetails(url, existingBrowser = null) {
                     }
                 }
 
-                return { product: productData };
+                // --- CRITICAL FIX: Extract Color Variants from JSON-LD ---
+                const colorVariants = [];
+                try {
+                    const scripts = Array.from(document.querySelectorAll('script[type="application/ld+json"]'));
+                    const productGroupScript = scripts.find(s => s.innerText.includes('"@type":"ProductGroup"') || s.innerText.includes('"@type": "ProductGroup"'));
+
+                    if (productGroupScript) {
+                        const jsonLd = JSON.parse(productGroupScript.innerText);
+                        const hasVariant = jsonLd.hasVariant || jsonLd['hasVariant'];
+
+                        if (hasVariant && Array.isArray(hasVariant)) {
+                            hasVariant.forEach(v => {
+                                if (v.offers && v.offers.url) {
+                                    colorVariants.push({
+                                        url: v.offers.url,
+                                        color: v.color,
+                                        name: v.name,
+                                        sku: v.sku
+                                    });
+                                }
+                            });
+                        }
+                    }
+                } catch (e) {
+                    // console.error('Error parsing JSON-LD for variants', e);
+                }
+
+                return { product: productData, colorVariants };
             }
 
             // --- STRATEGY 3: Full DOM Fallback ---
@@ -513,7 +598,8 @@ async function crawlProductDetails(url, existingBrowser = null) {
                 description: descriptionToUse,
                 images: finalImages,
                 sizes: finalSizes,
-                url: url
+                url: url,
+                colorVariants: detailData.colorVariants || []
             };
         }
 

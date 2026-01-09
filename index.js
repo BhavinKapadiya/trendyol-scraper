@@ -92,7 +92,7 @@ const COLLECTIONS = [
 // Download image as base64 (for when Shopify can't access CDN URLs)
 function downloadImageAsBase64(url) {
     return new Promise((resolve, reject) => {
-        const timeout = setTimeout(() => reject(new Error('Timeout')), 15000);
+        const timeout = setTimeout(() => reject(new Error('Timeout')), 30000); // Increased to 30s
 
         https.get(url, {
             headers: {
@@ -238,202 +238,316 @@ async function createCollections() {
     logger.info('');
 }
 
-// ==================== STEP 3: SYNC TO SHOPIFY ====================
+// ==================== STEP 3: SYNC TO SHOPIFY (SPLIT PRODUCTS STRATEGY) ====================
 
 async function syncToShopify(products) {
     logger.info('========================================');
-    logger.info('STEP 3: SYNCING PRODUCTS TO SHOPIFY');
+    logger.info('STEP 3: SYNCING PRODUCTS TO SHOPIFY (SPLIT STRATEGY)');
     logger.info('========================================\n');
 
-    // Fetch ALL existing Shopify products (Pagination)
+    // 1. Fetching Existing Products to avoid duplicates
     logger.info('Fetching ALL existing Shopify products to check for duplicates...');
-    let allShopifyProducts = [];
+    let existingShopifyProducts = [];
     let params = { limit: 250 };
 
     do {
-        const response = await shopify.rest.Product.all({
+        const productsPage = await shopify.rest.Product.all({
             session: shopify.session,
             ...params,
         });
-
-        allShopifyProducts = allShopifyProducts.concat(response.data);
-        params = response.page_info ? response.page_info.nextPage : null;
-        logger.info(`   Fetched ${allShopifyProducts.length} products so far...`);
-
+        existingShopifyProducts = existingShopifyProducts.concat(productsPage.data);
+        params = productsPage.pageInfo?.nextPage?.query;
+        if (existingShopifyProducts.length % 500 === 0) {
+            logger.info(`   Fetched ${existingShopifyProducts.length} products so far...`);
+        }
     } while (params);
 
-    logger.info(`✅ Found ${allShopifyProducts.length} total existing products\n`);
+    logger.info(`✅ Found ${existingShopifyProducts.length} total existing products\n`);
 
-    // Build lookup by title
-    const shopifyByTitle = {};
-    for (const p of allShopifyProducts) {
-        shopifyByTitle[p.title] = p;
+    // Create a Map for quick lookup by Handle
+    const shopifyByHandle = new Map();
+    existingShopifyProducts.forEach(p => shopifyByHandle.set(p.handle, p));
+
+    // 2. Group Products by Connectivity (The Fix for Missing GroupCode)
+    // We strictly need to know which other products belong to the same "Style" to generate links.
+    const productsByModel = new Map();
+
+    for (const product of products) {
+        // LOGIC: Use the sorted list of ALL related Product IDs to form a unique Group Key.
+        // This ensures Product A and Product B land in the same bucket if they are related.
+        const allIds = [String(product.productId)];
+        if (product.colorVariants) {
+            product.colorVariants.forEach(v => {
+                if (v.sku) allIds.push(String(v.sku));
+            });
+        }
+        // Dedupe and Sort
+        const uniqueIds = [...new Set(allIds)].sort();
+        const groupKey = `GROUP-${uniqueIds.join('-')}`;
+
+        if (!productsByModel.has(groupKey)) {
+            productsByModel.set(groupKey, []);
+        }
+        productsByModel.get(groupKey).push(product);
     }
 
-    let created = 0, updated = 0, failed = 0;
+    logger.info(`📋 Grouped ${products.length} scraped items into ${productsByModel.size} unique Model Groups for linking.`);
 
-    for (let i = 0; i < products.length; i++) {
-        const product = products[i];
-        const existingProduct = shopifyByTitle[product.name];
+
+    let created = 0;
+    let updated = 0;
+    let failed = 0;
+    let index = 0;
+
+    // 3. Iterate Over EVERY Scraped Product (Individual Sync)
+    for (const product of products) {
+        index++;
 
         try {
-            // SMART GETTERS: Extract data from deep nested structure if missing at top level
+            // A. Determine Color Name
+            let colorName = product.color;
 
-            // 1. IMAGES
-            // Priority: Top-level array > Nested raw array > Single top-level image
-            let jsonImages = [];
-            if (product.images && product.images.length > 0) {
-                jsonImages = product.images;
-            } else if (product.product && product.product.images && product.product.images.length > 0) {
-                jsonImages = product.product.images;
-            } else if (product.image) {
-                jsonImages = [product.image];
+            // Find Peers for this product
+            let myGroupKey = null;
+            // EFFICIENT LOOKUP: Re-calculate key for current product
+            const allIds = [String(product.productId)];
+            if (product.colorVariants) {
+                product.colorVariants.forEach(v => {
+                    if (v.sku) allIds.push(String(v.sku));
+                });
             }
+            const uniqueIds = [...new Set(allIds)].sort();
+            myGroupKey = `GROUP-${uniqueIds.join('-')}`;
 
-            // 2. DESCRIPTION
-            // Priority: Top-level description > Nested description > Fallback
-            let description = product.description;
-            if (!description && product.product && product.product.description) {
-                description = product.product.description;
-            }
-            // Log for debugging
-            // logger.info(`   Description found: ${description ? 'YES (' + description.length + ' chars)' : 'NO'}`);
+            const peers = productsByModel.get(myGroupKey) || [product];
 
-            let shopifyImages = [];
-            if (jsonImages.length > 0) {
-                // Modified: Download images and send as base64 to bypass Trendyol CDN blocking Shopify
-                // Limit to 5 high-res images to avoid payload limits
-                for (const url of jsonImages.slice(0, 5)) {
-                    let attempts = 0;
-                    const maxRetries = 3;
-                    let success = false;
-
-                    while (attempts < maxRetries && !success) {
-                        try {
-                            const controller = new AbortController();
-                            const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout per image
-
-                            const imageRes = await fetch(url, {
-                                headers: {
-                                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-                                    'Referer': 'https://www.trendyol.com/'
-                                },
-                                signal: controller.signal
-                            });
-                            clearTimeout(timeoutId);
-
-                            if (imageRes.ok) {
-                                const arrayBuffer = await imageRes.arrayBuffer();
-                                const base64 = Buffer.from(arrayBuffer).toString('base64');
-                                shopifyImages.push({ attachment: base64 });
-                                success = true;
-                            } else {
-                                throw new Error(`Status ${imageRes.status}`);
-                            }
-                        } catch (err) {
-                            attempts++;
-                            const isLastAttempt = attempts === maxRetries;
-                            if (!isLastAttempt) {
-                                logger.warn(`   [Image Retry] ${url.substring(0, 30)}... failed (${err.message}). Retrying ${attempts}/${maxRetries}...`);
-                                await new Promise(r => setTimeout(r, 2000)); // Wait 2s before retry
-                            } else {
-                                logger.error(`   [Image Fail] ${url.substring(0, 30)}... failed after ${maxRetries} attempts: ${err.message}`);
-                                // Fallback to URL only if everything else fails (though likely will fail on Shopify too)
-                                shopifyImages.push({ src: url });
-                            }
-                        }
+            // Fallback: Peer Lookup
+            if (!colorName) {
+                if (peers) {
+                    for (const peer of peers) {
+                        if (peer.productId === product.productId) continue;
+                        const match = peer.colorVariants?.find(cv => cv.sku == product.productId);
+                        if (match && match.color) { colorName = match.color; break; }
                     }
                 }
             }
+            // Fallback: Title Extraction
+            if (!colorName && product.name) {
+                colorName = product.name.split(' ')[0];
+            }
+            colorName = colorName || 'Default';
+            colorName = colorName.charAt(0).toUpperCase() + colorName.slice(1); // "Siyah"
 
-            // Prepare tags
-            const categoryTags = CATEGORY_TAGS[product.category] || [`category:${product.category?.toLowerCase()}`];
-            const allTags = [...categoryTags, 'trendyol', 'auto-imported'].join(', ');
+            // B. Generate Unique Handle for THIS product
+            let baseHandle = product.url.split('/').pop().split('?')[0];
+            baseHandle = baseHandle.replace(/-p-\d+$/, '');
+            const handle = `${baseHandle}-${colorName.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
 
-            // Prepare variants
-            const color = product.color || product.product?.slicingAttributes?.DsmColor || 'Default';
-            const variants = (product.sizes && product.sizes.length > 0)
-                ? product.sizes.map(size => ({
-                    option1: size.name,
-                    option2: color,
+
+            // C. Generate HTML Links (Styled like Buttons)
+            const peerLinks = peers.map(peer => {
+                let pColor = peer.color;
+
+                // Resolving color for PEER
+                if (!pColor) {
+                    // Check MY variants to see what I call the peer? YES.
+                    const variantEntry = product.colorVariants?.find(cv => cv.sku == peer.productId);
+                    if (variantEntry && variantEntry.color) pColor = variantEntry.color;
+                }
+                // Check peer's title
+                if (!pColor && peer.name) pColor = peer.name.split(' ')[0];
+                pColor = pColor || 'Default';
+                pColor = pColor.charAt(0).toUpperCase() + pColor.slice(1);
+
+                // Peer Handle
+                let pBase = peer.url.split('/').pop().split('?')[0].replace(/-p-\d+$/, '');
+                const pHandle = `${pBase}-${pColor.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
+
+                const isActive = (peer.productId === product.productId);
+
+                // BUTTON STYLE (pill/capsule)
+                return `<a href="/products/${pHandle}" title="${pColor}" style="
+                    display: inline-block;
+                    margin-right: 10px;
+                    margin-bottom: 10px;
+                    padding: 8px 16px;
+                    border: 1px solid ${isActive ? '#000' : '#e5e5e5'};
+                    background-color: ${isActive ? '#f5f5f5' : '#fff'};
+                    color: ${isActive ? '#000' : '#333'};
+                    text-decoration: none;
+                    border-radius: 20px;
+                    font-size: 14px;
+                    font-family: inherit;
+                    transition: all 0.2s ease;
+                    text-transform: capitalize;
+                    cursor: ${isActive ? 'default' : 'pointer'};
+                    ${isActive ? 'font-weight: 600; pointer-events: none;' : ''}
+                " 
+                onmouseover="this.style.borderColor='#999'" 
+                onmouseout="this.style.borderColor='${isActive ? '#000' : '#e5e5e5'}'"
+                >${pColor}</a>`;
+            }).join('');
+
+            const colorSwatchesHtml = `
+                <div style="margin-bottom: 25px;">
+                    <p style="margin-bottom: 12px; font-weight: 600; font-size: 15px;">Colors:</p>
+                    <div style="display: flex; flex-wrap: wrap; align-items: center;">
+                        ${peerLinks}
+                    </div>
+                </div>
+            `;
+
+            // D. Description
+            const finalDescription = colorSwatchesHtml + (product.description || `Category: ${product.category}`);
+
+
+            // E. Images (Upload ALL images for this product)
+            const shopifyImagesPayload = [];
+            let allImages = [];
+            if (product.images) allImages.push(...product.images);
+            if (product.image) allImages.push(product.image);
+            allImages = [...new Set(allImages)]; // Dedupe
+
+            // FILTER: Remove images from other variants using "Majority Vote"
+            // Problem: Sometimes the scraper picks up images from "similar products" sliders (wrong color).
+            // Solution: Group images by their "Variant ID" (from URL). Keep only the majority group.
+            if (allImages.length > 2) {
+                try {
+                    // Extract Variant ID from URL (usually 3rd segment from end)
+                    const getVariantId = (url) => {
+                        const parts = url.split('/');
+                        if (parts.length < 5) return 'unknown';
+                        // Typical: .../PROD_ID/VARIANT_ID/UUID/file.jpg
+                        // We check the 3rd to last segment.
+                        return parts[parts.length - 3];
+                    };
+
+                    const idCounts = {};
+                    allImages.forEach(url => {
+                        const vId = getVariantId(url);
+                        idCounts[vId] = (idCounts[vId] || 0) + 1;
+                    });
+
+                    // Find the ID with the most images
+                    let bestId = null;
+                    let maxCount = 0;
+                    for (const [vId, count] of Object.entries(idCounts)) {
+                        if (count > maxCount) {
+                            maxCount = count;
+                            bestId = vId;
+                        }
+                    }
+
+                    // If we have a clear winner, filter others
+                    if (bestId && bestId !== 'unknown') {
+                        // Only filter if the winner has at least 2 images, to avoid accidental deletion of everything
+                        // forcing single image products to become 0 images.
+                        if (maxCount >= 1) {
+                            allImages = allImages.filter(url => getVariantId(url) === bestId);
+                        }
+                    }
+                } catch (err) {
+                    // Safety: Do nothing if parsing fails
+                }
+            }
+
+            let imgPosition = 1;
+            for (const url of allImages) {
+                // Try upload
+                try {
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 10000);
+                    const imageRes = await fetch(url, {
+                        signal: controller.signal,
+                        headers: { 'User-Agent': 'Mozilla/5.0' }
+                    });
+                    clearTimeout(timeoutId);
+                    if (imageRes.ok) {
+                        const buf = await imageRes.arrayBuffer();
+                        const base64 = Buffer.from(buf).toString('base64');
+                        shopifyImagesPayload.push({
+                            position: imgPosition++,
+                            attachment: base64,
+                            filename: `img-${handle}-${imgPosition}-${Date.now()}.jpg`
+                        });
+                    } else {
+                        shopifyImagesPayload.push({ position: imgPosition++, src: url });
+                    }
+                } catch (e) {
+                    shopifyImagesPayload.push({ position: imgPosition++, src: url });
+                }
+            }
+
+
+            // F. Variants (Only Sizes)
+            const variantsPayload = [];
+            const sizeList = product.sizes && product.sizes.length > 0 ? product.sizes : [{ name: 'One Size', inStock: true, price: product.price, barcode: product.sku }];
+
+            for (const size of sizeList) {
+                variantsPayload.push({
+                    option1: size.name,    // Size
                     price: (product.price * PRICE_MULTIPLIER).toFixed(2),
-                    sku: size.barcode || `${product.sku}-${size.name}`,
+                    sku: size.barcode || `${product.productId}-${size.name}`,
                     inventory_management: 'shopify',
                     inventory_policy: size.inStock ? 'continue' : 'deny',
                     inventory_quantity: size.inStock ? 10 : 0
-                }))
-                : [{
-                    option1: 'Default Title',
-                    price: (product.price * PRICE_MULTIPLIER).toFixed(2),
-                    sku: product.sku,
-                    inventory_management: 'shopify',
-                    inventory_quantity: 10
-                }];
+                });
+            }
+
+
+            // G. Tags
+            const categoryTags = CATEGORY_TAGS[product.category] || [`category:${product.category?.toLowerCase()}`];
+            const allTags = [...categoryTags, 'trendyol', 'auto-imported', `model:${product.groupCode}`, `color:${colorName}`].join(', ');
+
+            // H. Save to Shopify
+            const existingProduct = shopifyByHandle.get(handle);
 
             if (existingProduct) {
-                // UPDATE existing product
-                logger.info(`[${i + 1}/${products.length}] UPDATING: ${product.name.substring(0, 50)}...`);
-
+                logger.info(`[${index}/${products.length}] UPDATING Product: ${handle}`);
                 const productToUpdate = new shopify.rest.Product({ session: shopify.session });
                 productToUpdate.id = existingProduct.id;
-                productToUpdate.title = product.name;
-                productToUpdate.body_html = product.description || `Category: ${product.category}<br>Brand: ${product.brand || 'Trendyol'}`;
-                productToUpdate.vendor = product.brand || "TRENDYOLMİLLA";
-                productToUpdate.product_type = product.category;
+                productToUpdate.body_html = finalDescription;
+                productToUpdate.variants = variantsPayload;
                 productToUpdate.tags = allTags;
-
-                // Update images if we have more than Shopify
-                const existingImageCount = existingProduct.images?.length || 0;
-                if (shopifyImages.length > existingImageCount) {
-                    productToUpdate.images = shopifyImages;
+                if (shopifyImagesPayload.length > 0) {
+                    productToUpdate.images = shopifyImagesPayload;
                 }
-
-                // Update ALL variant prices
-                if (existingProduct.variants && existingProduct.variants.length > 0) {
-                    productToUpdate.variants = existingProduct.variants.map(v => ({
-                        id: v.id,
-                        price: (product.price * PRICE_MULTIPLIER).toFixed(2)
-                    }));
-                }
-
                 await productToUpdate.save({ update: true });
                 updated++;
-
             } else {
-                // CREATE new product
-                logger.info(`[${i + 1}/${products.length}] CREATING: ${product.name.substring(0, 50)}...`);
-
-                const handle = `trendyol-${product.productId}`;
-
+                logger.info(`[${index}/${products.length}] CREATING Product: ${handle}`);
                 const newProduct = new shopify.rest.Product({ session: shopify.session });
-                newProduct.title = product.name;
-                newProduct.body_html = product.description || `Category: ${product.category}<br>Brand: ${product.brand || 'Trendyol'}`;
+                newProduct.title = product.name; // Keep full title including color
+                newProduct.body_html = finalDescription;
                 newProduct.vendor = product.brand || "TRENDYOLMİLLA";
                 newProduct.product_type = product.category;
                 newProduct.handle = handle;
                 newProduct.tags = allTags;
-                newProduct.images = shopifyImages;
-                newProduct.variants = variants;
-
-                if (product.sizes && product.sizes.length > 0) {
-                    newProduct.options = [{ name: "Size" }, { name: "Color" }];
-                }
+                newProduct.images = shopifyImagesPayload;
+                newProduct.variants = variantsPayload;
+                newProduct.options = [{ name: "Size" }]; // Only Size option
 
                 await newProduct.save({ update: true });
                 created++;
             }
 
-            // Rate limit (Safe for massive uploads: 10s delay)
-            await new Promise(r => setTimeout(r, 10000));
+            // Sync Delay
+            await new Promise(r => setTimeout(r, 2000)); // 2s is enough for individual items
 
         } catch (error) {
-            logger.error(`[${i + 1}/${products.length}] FAILED: ${error.message}`);
+            logger.error(`[${index}/${products.length}] FAILED Product ${product.productId}: ${error.message}`);
             failed++;
         }
     }
 
     logger.info(`\n✅ Created: ${created}, Updated: ${updated}, Failed: ${failed}\n`);
+
+    // No explicit cleanup needed as we want to keep all
 }
+
+logger.info('========================================');
+logger.info('STEP 4: CLEANUP - REMOVING 0-IMAGE PRODUCTS');
+logger.info('========================================\n');
 
 // ==================== STEP 4: CLEANUP (Remove products with 0 images) ====================
 
@@ -475,6 +589,7 @@ async function main() {
 
     logger.info('\n🚀 TRENDYOL SCRAPER + SHOPIFY SYNC - STARTING\n');
     logger.info(`Started at: ${new Date().toISOString()}`);
+    logger.info(`Command Args: ${JSON.stringify(process.argv)}`);
     logger.info(`💰 Price Multiplier: ${PRICE_MULTIPLIER}x (set in .env file)\n`);
 
     try {

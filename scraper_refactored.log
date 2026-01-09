@@ -1,0 +1,138 @@
+[dotenv@17.2.3] injecting env (3) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+[2026-01-08T03:20:54.036Z] [INFO] Loaded REST resources: 74 resources
+[2026-01-08T03:20:54.042Z] [INFO] ========================================
+[2026-01-08T03:20:54.043Z] [INFO] STEP 4: CLEANUP - REMOVING 0-IMAGE PRODUCTS
+[2026-01-08T03:20:54.043Z] [INFO] ========================================
+
+[2026-01-08T03:20:54.044Z] [INFO] 
+🚀 TRENDYOL SCRAPER + SHOPIFY SYNC - STARTING
+
+[2026-01-08T03:20:54.044Z] [INFO] Started at: 2026-01-08T03:20:54.044Z
+[2026-01-08T03:20:54.044Z] [INFO] Command Args: ["C:\\Program Files\\nodejs\\node.exe","C:\\Users\\Bhavin Kapadiya\\OneDrive\\Documents\\GitHub\\trendyol-scraper\\index.js","--sync-only"]
+[2026-01-08T03:20:54.045Z] [INFO] 💰 Price Multiplier: 3x (set in .env file)
+
+[2026-01-08T03:20:54.045Z] [INFO] 🔄 MANUAL SYNC MODE DETECTED
+[2026-01-08T03:20:54.046Z] [INFO]    Loading from RAW file (products.json)...
+[2026-01-08T03:20:54.049Z] [INFO]    Loaded 90 products to sync.
+[2026-01-08T03:20:54.049Z] [INFO] ========================================
+[2026-01-08T03:20:54.050Z] [INFO] STEP 2: CREATING SHOPIFY COLLECTIONS
+[2026-01-08T03:20:54.050Z] [INFO] ========================================
+
+[2026-01-08T03:20:54.801Z] [INFO] ⏭️  Bluz - Already exists
+[2026-01-08T03:20:55.270Z] [INFO] ⏭️  Kazak - Already exists
+[2026-01-08T03:20:55.749Z] [INFO] ⏭️  Hırka - Already exists
+[2026-01-08T03:20:56.179Z] [INFO] ⏭️  Jeans - Already exists
+[2026-01-08T03:20:56.693Z] [INFO] ⏭️  Elbise - Already exists
+[2026-01-08T03:20:57.187Z] [INFO] ⏭️  Pijama Takımı - Already exists
+[2026-01-08T03:20:57.669Z] [INFO] ⏭️  Pantolon - Already exists
+[2026-01-08T03:20:58.104Z] [INFO] ⏭️  Sweatshirt - Already exists
+[2026-01-08T03:20:58.105Z] [INFO] 
+[2026-01-08T03:20:58.107Z] [INFO] ========================================
+[2026-01-08T03:20:58.107Z] [INFO] STEP 3: SYNCING PRODUCTS TO SHOPIFY (SPLIT STRATEGY)
+[2026-01-08T03:20:58.107Z] [INFO] ========================================
+
+[2026-01-08T03:20:58.108Z] [INFO] Fetching ALL existing Shopify products to check for duplicates...
+[2026-01-08T03:21:02.247Z] [INFO] ✅ Found 113 total existing products
+
+[2026-01-08T03:21:02.249Z] [INFO] 📋 Grouped 90 scraped items into 23 unique Model Groups for linking.
+[2026-01-08T03:21:08.934Z] [INFO] [1/90] UPDATING Product: kahverengi-kolsuz-kusakli-dokuma-bluz-twoaw26bz00057-kahverengi
+[2026-01-08T03:21:34.379Z] [INFO] [2/90] UPDATING Product: siyah-fitted-vucuda-oturan-asimetrik-yaka-detayli-yumusak-kumasli-esnek-orme-bluz-twoaw26bz00088-siyah
+[2026-01-08T03:21:54.326Z] [INFO] [3/90] UPDATING Product: ekru-dantelli-baglamali-v-yaka-dokuma-bluz-twoaw26bz00053-ekru
+[2026-01-08T03:22:12.803Z] [INFO] [4/90] CREATING Product: tas-pamuklu-esnek-kayik-yaka-fitted-vucuda-oturan-esnek-orme-bluz-twoaw24bz00166-tas
+[2026-01-08T03:22:31.113Z] [INFO] [5/90] UPDATING Product: kahverengi-modalli-more-sustainable-kayik-yaka-relaxed-rahat-kesim-orme-bluz-twoaw25bz00282-kahverengi
+[2026-01-08T03:22:46.521Z] [INFO] [6/90] CREATING Product: yag-yesili-buzgu-drape-detayli-dokumlu-asimetrik-yaka-orme-bluz-twoaw26bz00138-yag-yesil
+[2026-01-08T03:23:01.197Z] [INFO] [7/90] CREATING Product: koyu-kahverengi-buzgu-drape-detayli-dokumlu-asimetrik-yaka-orme-bluz-twoaw26bz00138-koyu-kahverengi
+[2026-01-08T03:23:16.281Z] [INFO] [8/90] UPDATING Product: ekru-viskon-yumusak-kumasli-fitted-buzgu-drape-detayli-kayik-yaka-esnek-orme-bluz-twoaw25bz00225-ekru
+[2026-01-08T03:23:35.320Z] [INFO] [9/90] UPDATING Product: siyah-ottoman-dik-yaka-dugmeli-uzun-kol-vucuda-oturan-orme-bluz-twoaw26bz00191-siyah
+[2026-01-08T03:23:54.162Z] [INFO] [10/90] CREATING Product: siyah-duz-premium-yumusak-kumasli-fitted-vucuda-oturan-kayik-yaka-orme-bluz-twoaw24bz00227-siyah-1001
+[2026-01-08T03:24:14.162Z] [INFO] [11/90] CREATING Product: cok-renkli-cizgili-acik-omuzlu-sal-aksesuar-detayli-regular-normal-kalip-orme-bluz-twoaw26bz00308--ok
+[2026-01-08T03:24:31.743Z] [INFO] [12/90] UPDATING Product: siyah-tek-yirtmac-detayli-pamuklu-buzgulu-bisiklet-yaka-orme-bluz-twoaw24bz00388-siyah
+[2026-01-08T03:24:48.709Z] [ERROR] [12/90] FAILED Product 746266445: JSON value expected but got '<' at position 0
+[2026-01-08T03:24:53.215Z] [INFO] [13/90] UPDATING Product: siyah-transparan-dik-yaka-esnek-normal-boy-orme-bluz-twoaw26bz00266-siyah
+[2026-01-08T03:25:08.136Z] [INFO] [14/90] UPDATING Product: siyah-viskon-yumusak-kumasli-asimetrik-esnek-orme-bluz-twoaw25bz00233-siyah
+[2026-01-08T03:25:28.876Z] [INFO] [15/90] UPDATING Product: kahverengi-buzgulu-kare-yaka-vucuda-oturan-esnek-orme-bluz-twoss24bz00487-kahverengi
+[2026-01-08T03:25:50.313Z] [INFO] [16/90] CREATING Product: teen-lacivert-ekose-kareli-fitted-vucuda-oturan-dokuma-detayli-orme-bluz-twoaw26bz00008-lacivert
+[2026-01-08T03:26:05.991Z] [INFO] [17/90] UPDATING Product: antrasit-regular-normal-kalip-yarim-patli-selanik-kalin-orme-bluz-twoaw26bz00252-antrasit
+[2026-01-08T03:26:17.403Z] [INFO] [18/90] UPDATING Product: siyah-aksesuar-detayli-dusuk-omuz-yilbasi-dokuma-bluz-twoaw26bz00280-siyah
+[2026-01-08T03:26:29.995Z] [INFO] [19/90] UPDATING Product: siyah-dantel-detayli-kare-yaka-orme-party-yilbasi-bluz-tpraw26bz00045-siyah
+[2026-01-08T03:26:43.116Z] [INFO] [20/90] CREATING Product: koyu-kahverengi-firfir-detayli-dokuma-bluz-twoaw26bz00290-koyu-kahverengi
+[2026-01-08T03:27:01.945Z] [INFO] [21/90] UPDATING Product: antrasit-dik-yaka-buzgu-drape-detayli-regular-normal-kalip-orme-bluz-twoaw25bz00221-antrasit
+[2026-01-08T03:27:25.773Z] [INFO] [22/90] CREATING Product: tas-dugmeli-bisiklet-yaka-vucuda-oturan-fitilli-esnek-orme-bluz-twoaw26bz00104-tas
+[2026-01-08T03:27:42.662Z] [INFO] [23/90] UPDATING Product: siyah-citcitli-fitted-vucuda-oturan-fitilli-esnek-orme-bluz-twoaw25bz00080-siyah
+[2026-01-08T03:28:08.712Z] [INFO] [24/90] CREATING Product: ozel-koleksiyon-siyah-degaje-yaka-asimetrik-kesim-saten-party-yilbasi-bluz-tpraw26bz00044--zel
+[2026-01-08T03:28:30.275Z] [INFO] [25/90] UPDATING Product: kahverengi-kolsuz-kusakli-dokuma-bluz-twoaw26bz00057-siyah
+[2026-01-08T03:28:44.416Z] [INFO] [26/90] UPDATING Product: kahverengi-kolsuz-kusakli-dokuma-bluz-twoaw26bz00057-beyaz
+[2026-01-08T03:28:58.083Z] [INFO] [27/90] UPDATING Product: siyah-fitted-vucuda-oturan-asimetrik-yaka-detayli-yumusak-kumasli-esnek-orme-bluz-twoaw26bz00088-bordo
+[2026-01-08T03:29:14.366Z] [INFO] [28/90] UPDATING Product: siyah-fitted-vucuda-oturan-asimetrik-yaka-detayli-yumusak-kumasli-esnek-orme-bluz-twoaw26bz00088-kahverengi
+[2026-01-08T03:29:30.148Z] [INFO] [29/90] CREATING Product: siyah-fitted-vucuda-oturan-asimetrik-yaka-detayli-yumusak-kumasli-esnek-orme-bluz-twoaw26bz00088-tas
+[2026-01-08T03:29:44.948Z] [INFO] [30/90] CREATING Product: siyah-fitted-vucuda-oturan-asimetrik-yaka-detayli-yumusak-kumasli-esnek-orme-bluz-twoaw26bz00088-yag-yesil
+[2026-01-08T03:29:59.404Z] [INFO] [31/90] UPDATING Product: ekru-dantelli-baglamali-v-yaka-dokuma-bluz-twoaw26bz00053-siyah
+[2026-01-08T03:30:22.937Z] [INFO] [32/90] UPDATING Product: tas-pamuklu-esnek-kayik-yaka-fitted-vucuda-oturan-esnek-orme-bluz-twoaw24bz00166-bordo
+[2026-01-08T03:30:39.751Z] [INFO] [33/90] UPDATING Product: tas-pamuklu-esnek-kayik-yaka-fitted-vucuda-oturan-esnek-orme-bluz-twoaw24bz00166-kahverengi
+[2026-01-08T03:30:57.666Z] [INFO] [34/90] UPDATING Product: tas-pamuklu-esnek-kayik-yaka-fitted-vucuda-oturan-esnek-orme-bluz-twoaw24bz00166-siyah
+[2026-01-08T03:31:21.297Z] [INFO] [35/90] CREATING Product: tas-pamuklu-esnek-kayik-yaka-fitted-vucuda-oturan-esnek-orme-bluz-twoaw24bz00166-kirmizi-c
+[2026-01-08T03:31:43.002Z] [INFO] [36/90] CREATING Product: tas-pamuklu-esnek-kayik-yaka-fitted-vucuda-oturan-esnek-orme-bluz-twoaw24bz00166-zumrut-yesili
+[2026-01-08T03:32:04.834Z] [INFO] [37/90] UPDATING Product: tas-pamuklu-esnek-kayik-yaka-fitted-vucuda-oturan-esnek-orme-bluz-twoaw24bz00166-saks
+[2026-01-08T03:32:28.407Z] [INFO] [38/90] CREATING Product: kahverengi-modalli-more-sustainable-kayik-yaka-relaxed-rahat-kesim-orme-bluz-twoaw25bz00282-indigo
+[2026-01-08T03:32:52.071Z] [INFO] [39/90] UPDATING Product: kahverengi-modalli-more-sustainable-kayik-yaka-relaxed-rahat-kesim-orme-bluz-twoaw25bz00282-antrasit
+[2026-01-08T03:33:13.362Z] [INFO] [40/90] CREATING Product: kahverengi-modalli-more-sustainable-kayik-yaka-relaxed-rahat-kesim-orme-bluz-twoaw25bz00282-murdum
+[2026-01-08T03:33:30.055Z] [INFO] [41/90] CREATING Product: kahverengi-modalli-more-sustainable-kayik-yaka-relaxed-rahat-kesim-orme-bluz-twoaw25bz00282-yesil
+[2026-01-08T03:33:42.829Z] [INFO] [42/90] UPDATING Product: yag-yesili-buzgu-drape-detayli-dokumlu-asimetrik-yaka-orme-bluz-twoaw26bz00138-siyah
+[2026-01-08T03:33:55.436Z] [INFO] [43/90] CREATING Product: yag-yesili-buzgu-drape-detayli-dokumlu-asimetrik-yaka-orme-bluz-twoaw26bz00138-kirmizi-c
+[2026-01-08T03:34:10.305Z] [INFO] [44/90] UPDATING Product: ekru-viskon-yumusak-kumasli-fitted-buzgu-drape-detayli-kayik-yaka-esnek-orme-bluz-twoaw25bz00225-antrasit
+[2026-01-08T03:34:31.274Z] [INFO] [45/90] UPDATING Product: ekru-viskon-yumusak-kumasli-fitted-buzgu-drape-detayli-kayik-yaka-esnek-orme-bluz-twoaw25bz00225-siyah
+[2026-01-08T03:34:50.631Z] [INFO] [46/90] CREATING Product: ekru-viskon-yumusak-kumasli-fitted-buzgu-drape-detayli-kayik-yaka-esnek-orme-bluz-twoaw25bz00225-kirmizi-c
+[2026-01-08T03:35:10.593Z] [INFO] [47/90] CREATING Product: ekru-viskon-yumusak-kumasli-fitted-buzgu-drape-detayli-kayik-yaka-esnek-orme-bluz-twoaw25bz00225-yag-yesil
+[2026-01-08T03:35:30.258Z] [INFO] [48/90] UPDATING Product: ekru-viskon-yumusak-kumasli-fitted-buzgu-drape-detayli-kayik-yaka-esnek-orme-bluz-twoaw25bz00225-kahverengi-001
+[2026-01-08T03:35:48.998Z] [INFO] [49/90] UPDATING Product: ekru-viskon-yumusak-kumasli-fitted-buzgu-drape-detayli-kayik-yaka-esnek-orme-bluz-twoaw25bz00225-lacivert-001
+[2026-01-08T03:36:14.315Z] [INFO] [50/90] UPDATING Product: ekru-viskon-yumusak-kumasli-fitted-buzgu-drape-detayli-kayik-yaka-esnek-orme-bluz-twoaw25bz00225-saks
+[2026-01-08T03:36:35.862Z] [INFO] [51/90] UPDATING Product: siyah-ottoman-dik-yaka-dugmeli-uzun-kol-vucuda-oturan-orme-bluz-twoaw26bz00191-bordo
+[2026-01-08T03:36:53.064Z] [INFO] [52/90] UPDATING Product: siyah-duz-premium-yumusak-kumasli-fitted-vucuda-oturan-kayik-yaka-orme-bluz-twoaw24bz00227-siyah
+[2026-01-08T03:37:13.482Z] [INFO] [53/90] CREATING Product: siyah-duz-premium-yumusak-kumasli-fitted-vucuda-oturan-kayik-yaka-orme-bluz-twoaw24bz00227-gul-kurusu
+[2026-01-08T03:37:29.031Z] [INFO] [54/90] UPDATING Product: siyah-duz-premium-yumusak-kumasli-fitted-vucuda-oturan-kayik-yaka-orme-bluz-twoaw24bz00227-kahverengi
+[2026-01-08T03:37:47.977Z] [INFO] [55/90] CREATING Product: siyah-duz-premium-yumusak-kumasli-fitted-vucuda-oturan-kayik-yaka-orme-bluz-twoaw24bz00227-haki-001
+[2026-01-08T03:38:11.693Z] [INFO] [56/90] UPDATING Product: siyah-duz-premium-yumusak-kumasli-fitted-vucuda-oturan-kayik-yaka-orme-bluz-twoaw24bz00227-antrasit
+[2026-01-08T03:38:40.553Z] [INFO] [57/90] CREATING Product: siyah-duz-premium-yumusak-kumasli-fitted-vucuda-oturan-kayik-yaka-orme-bluz-twoaw24bz00227-acik-lacivert
+[2026-01-08T03:39:17.078Z] [INFO] [58/90] UPDATING Product: siyah-duz-premium-yumusak-kumasli-fitted-vucuda-oturan-kayik-yaka-orme-bluz-twoaw24bz00227-lacivert
+[2026-01-08T03:39:53.189Z] [INFO] [59/90] CREATING Product: siyah-duz-premium-yumusak-kumasli-fitted-vucuda-oturan-kayik-yaka-orme-bluz-twoaw24bz00227-kirmizi-c
+[2026-01-08T03:40:16.928Z] [INFO] [60/90] UPDATING Product: siyah-duz-premium-yumusak-kumasli-fitted-vucuda-oturan-kayik-yaka-orme-bluz-twoaw24bz00227-ekru
+[2026-01-08T03:40:40.722Z] [INFO] [61/90] CREATING Product: siyah-duz-premium-yumusak-kumasli-fitted-vucuda-oturan-kayik-yaka-orme-bluz-twoaw24bz00227-murdum
+[2026-01-08T03:40:54.164Z] [INFO] [62/90] CREATING Product: siyah-duz-premium-yumusak-kumasli-fitted-vucuda-oturan-kayik-yaka-orme-bluz-twoaw24bz00227-tas-001
+[2026-01-08T03:41:13.216Z] [INFO] [63/90] UPDATING Product: siyah-duz-premium-yumusak-kumasli-fitted-vucuda-oturan-kayik-yaka-orme-bluz-twoaw24bz00227-haki
+[2026-01-08T03:41:57.085Z] [INFO] [64/90] UPDATING Product: siyah-transparan-dik-yaka-esnek-normal-boy-orme-bluz-twoaw26bz00266-ekru
+[2026-01-08T03:42:09.034Z] [INFO] [65/90] CREATING Product: siyah-transparan-dik-yaka-esnek-normal-boy-orme-bluz-twoaw26bz00266-murdum
+[2026-01-08T03:42:22.034Z] [INFO] [66/90] UPDATING Product: siyah-transparan-dik-yaka-esnek-normal-boy-orme-bluz-twoaw26bz00266-kahverengi
+[2026-01-08T03:42:36.722Z] [INFO] [67/90] CREATING Product: siyah-transparan-dik-yaka-esnek-normal-boy-orme-bluz-twoaw26bz00266-gri-melanj
+[2026-01-08T03:42:53.037Z] [INFO] [68/90] UPDATING Product: siyah-transparan-dik-yaka-esnek-normal-boy-orme-bluz-twoaw26bz00266-antrasit
+[2026-01-08T03:43:08.897Z] [INFO] [69/90] UPDATING Product: siyah-viskon-yumusak-kumasli-asimetrik-esnek-orme-bluz-twoaw25bz00233-bordo
+[2026-01-08T03:43:30.899Z] [INFO] [70/90] CREATING Product: kahverengi-buzgulu-kare-yaka-vucuda-oturan-esnek-orme-bluz-twoss24bz00487-murdum
+[2026-01-08T03:43:58.000Z] [INFO] [71/90] CREATING Product: kahverengi-buzgulu-kare-yaka-vucuda-oturan-esnek-orme-bluz-twoss24bz00487-zumrut-yesili
+[2026-01-08T03:44:23.758Z] [INFO] [72/90] UPDATING Product: kahverengi-buzgulu-kare-yaka-vucuda-oturan-esnek-orme-bluz-twoss24bz00487-siyah
+[2026-01-08T03:44:55.673Z] [INFO] [73/90] UPDATING Product: teen-lacivert-ekose-kareli-fitted-vucuda-oturan-dokuma-detayli-orme-bluz-twoaw26bz00008-kahverengi
+[2026-01-08T03:45:13.424Z] [INFO] [74/90] UPDATING Product: teen-lacivert-ekose-kareli-fitted-vucuda-oturan-dokuma-detayli-orme-bluz-twoaw26bz00008-antrasit
+[2026-01-08T03:45:29.210Z] [INFO] [75/90] UPDATING Product: antrasit-regular-normal-kalip-yarim-patli-selanik-kalin-orme-bluz-twoaw26bz00252-bordo
+[2026-01-08T03:45:42.634Z] [INFO] [76/90] CREATING Product: siyah-aksesuar-detayli-dusuk-omuz-yilbasi-dokuma-bluz-twoaw26bz00280-ordek-basi-yesili
+[2026-01-08T03:45:58.474Z] [INFO] [77/90] CREATING Product: siyah-aksesuar-detayli-dusuk-omuz-yilbasi-dokuma-bluz-twoaw26bz00280-sarap-rengi
+[2026-01-08T03:46:12.720Z] [INFO] [78/90] UPDATING Product: siyah-aksesuar-detayli-dusuk-omuz-yilbasi-dokuma-bluz-twoaw26bz00280-kahverengi
+[2026-01-08T03:46:26.818Z] [INFO] [79/90] CREATING Product: siyah-dantel-detayli-kare-yaka-orme-party-yilbasi-bluz-tpraw26bz00045-koyu-kahverengi
+[2026-01-08T03:46:44.874Z] [INFO] [80/90] UPDATING Product: koyu-kahverengi-firfir-detayli-dokuma-bluz-twoaw26bz00290-siyah
+[2026-01-08T03:47:01.245Z] [INFO] [81/90] CREATING Product: koyu-kahverengi-firfir-detayli-dokuma-bluz-twoaw26bz00290-koyu-bordo
+[2026-01-08T03:47:14.476Z] [INFO] [82/90] UPDATING Product: tas-dugmeli-bisiklet-yaka-vucuda-oturan-fitilli-esnek-orme-bluz-twoaw26bz00104-haki
+[2026-01-08T03:47:30.335Z] [INFO] [83/90] UPDATING Product: tas-dugmeli-bisiklet-yaka-vucuda-oturan-fitilli-esnek-orme-bluz-twoaw26bz00104-siyah
+[2026-01-08T03:47:45.997Z] [INFO] [84/90] CREATING Product: tas-dugmeli-bisiklet-yaka-vucuda-oturan-fitilli-esnek-orme-bluz-twoaw26bz00104-kirmizi-c
+[2026-01-08T03:47:59.253Z] [INFO] [85/90] CREATING Product: siyah-citcitli-fitted-vucuda-oturan-fitilli-esnek-orme-bluz-twoaw25bz00080-acik-kahverengi
+[2026-01-08T03:48:13.246Z] [INFO] [86/90] CREATING Product: siyah-citcitli-fitted-vucuda-oturan-fitilli-esnek-orme-bluz-twoaw25bz00080-lacivert-001
+[2026-01-08T03:48:34.954Z] [INFO] [87/90] CREATING Product: siyah-citcitli-fitted-vucuda-oturan-fitilli-esnek-orme-bluz-twoaw25bz00080-tas
+[2026-01-08T03:48:53.034Z] [INFO] [88/90] CREATING Product: siyah-citcitli-fitted-vucuda-oturan-fitilli-esnek-orme-bluz-twoaw25bz00080-bordo-001
+[2026-01-08T03:49:07.987Z] [INFO] [89/90] CREATING Product: siyah-citcitli-fitted-vucuda-oturan-fitilli-esnek-orme-bluz-twoaw25bz00080-gri-melanj
+[2026-01-08T03:49:37.687Z] [INFO] [90/90] UPDATING Product: siyah-citcitli-fitted-vucuda-oturan-fitilli-esnek-orme-bluz-twoaw25bz00080-antrasit
+[2026-01-08T03:49:52.315Z] [INFO] 
+✅ Created: 39, Updated: 50, Failed: 1
+
+[2026-01-08T03:49:52.317Z] [INFO] ========================================
+[2026-01-08T03:49:52.317Z] [INFO] 🎉 ALL DONE!
+[2026-01-08T03:49:52.318Z] [INFO] Total time: 29 minutes
+[2026-01-08T03:49:52.319Z] [INFO] 
+😴 Resting for 60 minutes before next run...
+[2026-01-08T03:49:52.319Z] [INFO] ========================================
+
