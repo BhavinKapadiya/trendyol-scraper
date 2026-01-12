@@ -83,8 +83,14 @@ async function crawlCategory(categoryUrl, categoryName, fetchDetails = false) {
                     const processedUrls = new Set(productQueue.map(p => p.url));
 
                     for (let i = 0; i < productQueue.length; i++) {
-                        // LIMIT REMOVED: User requested to scrape the entire category.
-                        // if (allProducts.length + i >= 100) { ... }
+                        // LIMIT RE-INTRODUCED: Limit to 1000 products per category for demo.
+                        if (allProducts.length + i >= 1000) {
+                            logger.info('🛑 DEMO LIMIT REACHED: Stopped at 1000 products.');
+                            // Remove unprocessed items
+                            productQueue.splice(i);
+                            hasMore = false;
+                            break;
+                        }
 
                         const product = productQueue[i];
                         logger.info(`[Page ${pageIndex}] [${i + 1}/${productQueue.length}] Fetching details for: ${product.name ? product.name.substring(0, 50) : product.url}...`);
