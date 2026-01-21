@@ -156,10 +156,13 @@ async function scrapeAllCategories() {
 
     let allProducts = [];
 
+    // Limit per category (approx 300 products)
+    const LIMIT_PER_CATEGORY = 300;
+
     for (const category of CATEGORIES) {
         logger.info(`\n📦 Scraping: ${category.name}`);
         try {
-            const products = await crawlCategory(category.url, category.name, FETCH_PRODUCT_DETAILS);
+            const products = await crawlCategory(category.url, category.name, FETCH_PRODUCT_DETAILS, LIMIT_PER_CATEGORY);
             logger.info(`   Found ${products.length} products`);
             allProducts = allProducts.concat(products);
 

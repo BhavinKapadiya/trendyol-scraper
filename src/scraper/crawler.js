@@ -8,7 +8,7 @@ function extractProductId(url) {
     return match ? match[1] : null;
 }
 
-async function crawlCategory(categoryUrl, categoryName, fetchDetails = false) {
+async function crawlCategory(categoryUrl, categoryName, fetchDetails = false, limit = 1000) {
     let browser;
     let allProducts = [];
     let pageIndex = 1;
@@ -84,8 +84,9 @@ async function crawlCategory(categoryUrl, categoryName, fetchDetails = false) {
 
                     for (let i = 0; i < productQueue.length; i++) {
                         // LIMIT RE-INTRODUCED: Limit to 1000 products per category for demo.
-                        if (allProducts.length + i >= 1000) {
-                            logger.info('🛑 DEMO LIMIT REACHED: Stopped at 1000 products.');
+                        // Limit check
+                        if (allProducts.length + i >= limit) {
+                            logger.info(`🛑 LIMIT REACHED: Stopped at ${limit} products for ${categoryName}.`);
                             // Remove unprocessed items
                             productQueue.splice(i);
                             hasMore = false;
@@ -189,23 +190,45 @@ async function crawlProductDetails(url, existingBrowser = null) {
         // Increase navigation timeout to 90 seconds
         await page.setDefaultNavigationTimeout(90000);
 
-        // Block images/fonts to save bandwidth
-        // DISABLED FOR DEBUGGING: Page seems broken without resources
-        // await page.setRequestInterception(true);
-        /*
+        // Resource Blocking (Enabled for reliability/speed)
+        await page.setRequestInterception(true);
         page.on('request', (req) => {
-            if (['image', 'font', 'stylesheet'].includes(req.resourceType())) {
+            if (['image', 'font', 'stylesheet', 'media'].includes(req.resourceType())) {
                 req.abort();
             } else {
                 req.continue();
             }
         });
-        */
 
         await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36');
 
         logger.info(`Fetching details for: ${url.substring(0, 50)}...`);
-        await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60000 });
+        
+        // RETRY LOGIC for Connection Closed / Timeouts
+        const MAX_RETRIES = 3;
+        let lastError = null;
+
+        for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+            try {
+                if (attempt > 1) logger.info(`   🔄 Retry attempt ${attempt}/${MAX_RETRIES} for ${url}...`);
+                await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60000 });
+                lastError = null;
+                break; // Success
+            } catch (err) {
+                lastError = err;
+                if (err.message.includes('Connection closed') || err.message.includes('Timeout')) {
+                     // Wait before retry
+                     await new Promise(r => setTimeout(r, 5000));
+                     // If browser crashed, we might need a new page, but usually page.goto throws.
+                     // Ideally we'd restart browser but let's try simple retry first.
+                     continue; 
+                } else {
+                    throw err; // Other errors, rethrow
+                }
+            }
+        }
+
+        if (lastError) throw lastError;
 
         // 1. Try to close "Select Country" popup if it exists
         try {
