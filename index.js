@@ -56,35 +56,35 @@ const PRICE_MULTIPLIER = parseFloat(process.env.PRICE_MULTIPLIER) || 1;
 
 const CATEGORIES = [
     { name: 'Bluz', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20bluz&qt=trendyolmilla%20bluz&st=trendyolmilla%20bluz' },
-    { name: 'Kazak', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20kazak&qt=trendyolmilla%20kazak&st=trendyolmilla%20kazak' },
-    { name: 'Hırka', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20h%C4%B1rka&qt=trendyolmilla%20h%C4%B1rka&st=trendyolmilla%20h%C4%B1rka' },
-    { name: 'Jeans', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20jean&qt=trendyolmilla%20jean&st=trendyolmilla%20jean' },
-    { name: 'Elbise', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20elbise&qt=trendyolmilla%20elbise&st=trendyolmilla%20elbise' },
-    { name: 'Pijama Takımı', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20pijama%20tak%C4%B1m%C4%B1&qt=trendyolmilla%20pijama%20tak%C4%B1m%C4%B1&st=trendyolmilla%20pijama%20tak%C4%B1m%C4%B1' },
-    { name: 'Pantolon', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20pantolon&qt=trendyolmilla%20pantolon&st=trendyolmilla%20pantolon' },
-    { name: 'Sweatshirt', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20sweatshirt&qt=trendyolmilla%20sweatshirt&st=trendyolmilla%20sweatshirt' },
+    // { name: 'Kazak', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20kazak&qt=trendyolmilla%20kazak&st=trendyolmilla%20kazak' },
+    // { name: 'Hırka', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20h%C4%B1rka&qt=trendyolmilla%20h%C4%B1rka&st=trendyolmilla%20h%C4%B1rka' },
+    // { name: 'Jeans', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20jean&qt=trendyolmilla%20jean&st=trendyolmilla%20jean' },
+    // { name: 'Elbise', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20elbise&qt=trendyolmilla%20elbise&st=trendyolmilla%20elbise' },
+    // { name: 'Pijama Takımı', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20pijama%20tak%C4%B1m%C4%B1&qt=trendyolmilla%20pijama%20tak%C4%B1m%C4%B1&st=trendyolmilla%20pijama%20tak%C4%B1m%C4%B1' },
+    // { name: 'Pantolon', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20pantolon&qt=trendyolmilla%20pantolon&st=trendyolmilla%20pantolon' },
+    // { name: 'Sweatshirt', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20sweatshirt&qt=trendyolmilla%20sweatshirt&st=trendyolmilla%20sweatshirt' },
 ];
 
 const CATEGORY_TAGS = {
     'Bluz': ['category:bluz', 'category:tops'],
-    'Kazak': ['category:kazak', 'category:sweaters'],
-    'Hırka': ['category:hirka', 'category:cardigans'],
-    'Jeans': ['category:jeans', 'category:bottoms'],
-    'Elbise': ['category:elbise', 'category:dresses'],
-    'Pantolon': ['category:pantolon', 'category:pants'],
-    'Sweatshirt': ['category:sweatshirt', 'category:tops'],
-    'Pijama Takımı': ['category:pijama', 'category:sleepwear'],
+    // 'Kazak': ['category:kazak', 'category:sweaters'],
+    // 'Hırka': ['category:hirka', 'category:cardigans'],
+    // 'Jeans': ['category:jeans', 'category:bottoms'],
+    // 'Elbise': ['category:elbise', 'category:dresses'],
+    // 'Pantolon': ['category:pantolon', 'category:pants'],
+    // 'Sweatshirt': ['category:sweatshirt', 'category:tops'],
+    // 'Pijama Takımı': ['category:pijama', 'category:sleepwear'],
 };
 
 const COLLECTIONS = [
     { title: 'Bluz', handle: 'bluz', rules: [{ column: 'type', relation: 'equals', condition: 'Bluz' }] },
-    { title: 'Kazak', handle: 'kazak', rules: [{ column: 'type', relation: 'equals', condition: 'Kazak' }] },
-    { title: 'Hırka', handle: 'hirka', rules: [{ column: 'type', relation: 'equals', condition: 'Hırka' }] },
-    { title: 'Jeans', handle: 'jeans', rules: [{ column: 'type', relation: 'equals', condition: 'Jeans' }] },
-    { title: 'Elbise', handle: 'elbise', rules: [{ column: 'type', relation: 'equals', condition: 'Elbise' }] },
-    { title: 'Pijama Takımı', handle: 'pijama-takimi', rules: [{ column: 'type', relation: 'equals', condition: 'Pijama Takımı' }] },
-    { title: 'Pantolon', handle: 'pantolon', rules: [{ column: 'type', relation: 'equals', condition: 'Pantolon' }] },
-    { title: 'Sweatshirt', handle: 'sweatshirt', rules: [{ column: 'type', relation: 'equals', condition: 'Sweatshirt' }] },
+    // { title: 'Kazak', handle: 'kazak', rules: [{ column: 'type', relation: 'equals', condition: 'Kazak' }] },
+    // { title: 'Hırka', handle: 'hirka', rules: [{ column: 'type', relation: 'equals', condition: 'Hırka' }] },
+    // { title: 'Jeans', handle: 'jeans', rules: [{ column: 'type', relation: 'equals', condition: 'Jeans' }] },
+    // { title: 'Elbise', handle: 'elbise', rules: [{ column: 'type', relation: 'equals', condition: 'Elbise' }] },
+    // { title: 'Pijama Takımı', handle: 'pijama-takimi', rules: [{ column: 'type', relation: 'equals', condition: 'Pijama Takımı' }] },
+    // { title: 'Pantolon', handle: 'pantolon', rules: [{ column: 'type', relation: 'equals', condition: 'Pantolon' }] },
+    // { title: 'Sweatshirt', handle: 'sweatshirt', rules: [{ column: 'type', relation: 'equals', condition: 'Sweatshirt' }] },
 ];
 
 // ==================== HELPER FUNCTIONS ====================
@@ -157,7 +157,7 @@ async function scrapeAllCategories() {
     let allProducts = [];
 
     // Limit per category (approx 300 products)
-    const LIMIT_PER_CATEGORY = 300;
+    const LIMIT_PER_CATEGORY = 800;
 
     for (const category of CATEGORIES) {
         logger.info(`\n📦 Scraping: ${category.name}`);
@@ -243,35 +243,16 @@ async function createCollections() {
 
 // ==================== STEP 3: SYNC TO SHOPIFY (SPLIT PRODUCTS STRATEGY) ====================
 
+const Deduplicator = require('./src/shopify/deduplicator');
+
 async function syncToShopify(products) {
     logger.info('========================================');
-    logger.info('STEP 3: SYNCING PRODUCTS TO SHOPIFY (SPLIT STRATEGY)');
+    logger.info('STEP 3: SYNCING PRODUCTS TO SHOPIFY (STRICT DEDUPLICATION MODE)');
     logger.info('========================================\n');
 
-    // 1. Fetching Existing Products to avoid duplicates
-    logger.info('Fetching ALL existing Shopify products to check for duplicates...');
-    let existingShopifyProducts = [];
-    let params = { limit: 250 };
+    const dedupe = new Deduplicator();
 
-    do {
-        const productsPage = await shopify.rest.Product.all({
-            session: shopify.session,
-            ...params,
-        });
-        existingShopifyProducts = existingShopifyProducts.concat(productsPage.data);
-        params = productsPage.pageInfo?.nextPage?.query;
-        if (existingShopifyProducts.length % 500 === 0) {
-            logger.info(`   Fetched ${existingShopifyProducts.length} products so far...`);
-        }
-    } while (params);
-
-    logger.info(`✅ Found ${existingShopifyProducts.length} total existing products\n`);
-
-    // Create a Map for quick lookup by Handle
-    const shopifyByHandle = new Map();
-    existingShopifyProducts.forEach(p => shopifyByHandle.set(p.handle, p));
-
-    // 2. Group Products by Connectivity (The Fix for Missing GroupCode)
+    // 1. Group Products by Connectivity (The Fix for Missing GroupCode)
     // We strictly need to know which other products belong to the same "Style" to generate links.
     const productsByModel = new Map();
 
@@ -298,11 +279,11 @@ async function syncToShopify(products) {
 
 
     let created = 0;
-    let updated = 0;
+    let skipped = 0;
     let failed = 0;
     let index = 0;
 
-    // 3. Iterate Over EVERY Scraped Product (Individual Sync)
+    // 2. Iterate Over EVERY Scraped Product (Individual Sync)
     for (const product of products) {
         index++;
 
@@ -345,6 +326,17 @@ async function syncToShopify(products) {
             let baseHandle = product.url.split('/').pop().split('?')[0];
             baseHandle = baseHandle.replace(/-p-\d+$/, '');
             const handle = `${baseHandle}-${colorName.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
+
+            // ==========================================
+            // DEDUPLICATION CHECK 1: PRODUCT LEVEL
+            // ==========================================
+            const productExists = await dedupe.checkProductExists(handle, product.productId);
+            
+            if (productExists.exists) {
+                logger.info(`[${index}/${products.length}] ⏭️  SKIP PRODUCT: ${handle} (Reason: ${productExists.skipReason})`);
+                skipped++;
+                continue; // STRICTLY SKIP
+            }
 
 
             // C. Generate HTML Links (Styled like Buttons)
@@ -412,16 +404,11 @@ async function syncToShopify(products) {
             allImages = [...new Set(allImages)]; // Dedupe
 
             // FILTER: Remove images from other variants using "Majority Vote"
-            // Problem: Sometimes the scraper picks up images from "similar products" sliders (wrong color).
-            // Solution: Group images by their "Variant ID" (from URL). Keep only the majority group.
             if (allImages.length > 2) {
                 try {
-                    // Extract Variant ID from URL (usually 3rd segment from end)
                     const getVariantId = (url) => {
                         const parts = url.split('/');
                         if (parts.length < 5) return 'unknown';
-                        // Typical: .../PROD_ID/VARIANT_ID/UUID/file.jpg
-                        // We check the 3rd to last segment.
                         return parts[parts.length - 3];
                     };
 
@@ -431,7 +418,6 @@ async function syncToShopify(products) {
                         idCounts[vId] = (idCounts[vId] || 0) + 1;
                     });
 
-                    // Find the ID with the most images
                     let bestId = null;
                     let maxCount = 0;
                     for (const [vId, count] of Object.entries(idCounts)) {
@@ -441,10 +427,7 @@ async function syncToShopify(products) {
                         }
                     }
 
-                    // If we have a clear winner, filter others
                     if (bestId && bestId !== 'unknown') {
-                        // Only filter if the winner has at least 2 images, to avoid accidental deletion of everything
-                        // forcing single image products to become 0 images.
                         if (maxCount >= 1) {
                             allImages = allImages.filter(url => getVariantId(url) === bestId);
                         }
@@ -483,56 +466,76 @@ async function syncToShopify(products) {
 
 
             // F. Variants (Only Sizes)
+            // ==========================================
+            // DEDUPLICATION CHECK 2: VARIANT SKU LEVEL
+            // ==========================================
             const variantsPayload = [];
             const sizeList = product.sizes && product.sizes.length > 0 ? product.sizes : [{ name: 'One Size', inStock: true, price: product.price, barcode: product.sku }];
 
             for (const size of sizeList) {
+                const sku = size.barcode || `${product.productId}-${size.name}`;
+                
+                // STRICT CHECK: Does this SKU exist anywhere?
+                const skuExists = await dedupe.checkSkuExists(sku);
+                
+                if (skuExists) {
+                    logger.info(`   ⚠️ Skipping Variant SKU ${sku} (Already exists)`);
+                    continue; 
+                }
+
                 variantsPayload.push({
                     option1: size.name,    // Size
                     price: (product.price * PRICE_MULTIPLIER).toFixed(2),
-                    sku: size.barcode || `${product.productId}-${size.name}`,
+                    sku: sku,
                     inventory_management: 'shopify',
                     inventory_policy: size.inStock ? 'continue' : 'deny',
                     inventory_quantity: size.inStock ? 10 : 0
                 });
             }
 
+            if (variantsPayload.length === 0) {
+                 logger.warn(`   ⚠️ All variants skipped for ${handle}. Skipping product creation.`);
+                 skipped++;
+                 continue;
+            }
+
 
             // G. Tags
             const categoryTags = CATEGORY_TAGS[product.category] || [`category:${product.category?.toLowerCase()}`];
-            const allTags = [...categoryTags, 'trendyol', 'auto-imported', `model:${product.groupCode}`, `color:${colorName}`].join(', ');
+            // ADD external_id tag for indexing
+            const allTags = [...categoryTags, 'trendyol', 'auto-imported', `model:${product.groupCode}`, `color:${colorName}`, `external_id:${product.productId}`].join(', ');
 
             // H. Save to Shopify
-            const existingProduct = shopifyByHandle.get(handle);
-
-            if (existingProduct) {
-                logger.info(`[${index}/${products.length}] UPDATING Product: ${handle}`);
-                const productToUpdate = new shopify.rest.Product({ session: shopify.session });
-                productToUpdate.id = existingProduct.id;
-                productToUpdate.body_html = finalDescription;
-                productToUpdate.variants = variantsPayload;
-                productToUpdate.tags = allTags;
-                if (shopifyImagesPayload.length > 0) {
-                    productToUpdate.images = shopifyImagesPayload;
+            
+            // NOTE: We only CREATE here. Dedup check prevented updates to existing products to match "Strict No Duplicate" rule.
+            // If you wanted to validly UPDATE existing products, we would have returned the ID in dedupe check and used it here.
+            // But requirement was "Do NOT allow any duplicate... to be pushed". Implicitly implies if it exists, leave it alone.
+            
+            logger.info(`[${index}/${products.length}] CREATING Product: ${handle}`);
+            const newProduct = new shopify.rest.Product({ session: shopify.session });
+            newProduct.title = product.name; // Keep full title including color
+            newProduct.body_html = finalDescription;
+            newProduct.vendor = product.brand || "TRENDYOLMİLLA";
+            newProduct.product_type = product.category;
+            newProduct.handle = handle;
+            newProduct.tags = allTags;
+            newProduct.images = shopifyImagesPayload;
+            newProduct.variants = variantsPayload;
+            newProduct.options = [{ name: "Size" }]; // Only Size option
+            
+            // Add Metafield
+            newProduct.metafields = [
+                {
+                    namespace: "source",
+                    key: "external_product_id",
+                    value: String(product.productId),
+                    type: "single_line_text_field"
                 }
-                await productToUpdate.save({ update: true });
-                updated++;
-            } else {
-                logger.info(`[${index}/${products.length}] CREATING Product: ${handle}`);
-                const newProduct = new shopify.rest.Product({ session: shopify.session });
-                newProduct.title = product.name; // Keep full title including color
-                newProduct.body_html = finalDescription;
-                newProduct.vendor = product.brand || "TRENDYOLMİLLA";
-                newProduct.product_type = product.category;
-                newProduct.handle = handle;
-                newProduct.tags = allTags;
-                newProduct.images = shopifyImagesPayload;
-                newProduct.variants = variantsPayload;
-                newProduct.options = [{ name: "Size" }]; // Only Size option
+            ];
 
-                await newProduct.save({ update: true });
-                created++;
-            }
+            await newProduct.save({ update: true });
+            created++;
+            
 
             // Sync Delay
             await new Promise(r => setTimeout(r, 2000)); // 2s is enough for individual items
@@ -543,10 +546,10 @@ async function syncToShopify(products) {
         }
     }
 
-    logger.info(`\n✅ Created: ${created}, Updated: ${updated}, Failed: ${failed}\n`);
-
-    // No explicit cleanup needed as we want to keep all
+    logger.info(`\n✅ Created: ${created}, Skipped: ${skipped}, Failed: ${failed}\n`);
 }
+    // No explicit cleanup needed as we want to keep all
+
 
 logger.info('========================================');
 logger.info('STEP 4: CLEANUP - REMOVING 0-IMAGE PRODUCTS');
