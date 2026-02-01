@@ -56,35 +56,35 @@ const PRICE_MULTIPLIER = parseFloat(process.env.PRICE_MULTIPLIER) || 1;
 
 const CATEGORIES = [
     { name: 'Bluz', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20bluz&qt=trendyolmilla%20bluz&st=trendyolmilla%20bluz' },
-    { name: 'Kazak', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20kazak&qt=trendyolmilla%20kazak&st=trendyolmilla%20kazak' },
-    { name: 'Hırka', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20h%C4%B1rka&qt=trendyolmilla%20h%C4%B1rka&st=trendyolmilla%20h%C4%B1rka' },
-    { name: 'Jeans', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20jean&qt=trendyolmilla%20jean&st=trendyolmilla%20jean' },
-    { name: 'Elbise', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20elbise&qt=trendyolmilla%20elbise&st=trendyolmilla%20elbise' },
-    { name: 'Pijama Takımı', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20pijama%20tak%C4%B1m%C4%B1&qt=trendyolmilla%20pijama%20tak%C4%B1m%C4%B1&st=trendyolmilla%20pijama%20tak%C4%B1m%C4%B1' },
-    { name: 'Pantolon', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20pantolon&qt=trendyolmilla%20pantolon&st=trendyolmilla%20pantolon' },
-    { name: 'Sweatshirt', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20sweatshirt&qt=trendyolmilla%20sweatshirt&st=trendyolmilla%20sweatshirt' },
+    // { name: 'Kazak', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20kazak&qt=trendyolmilla%20kazak&st=trendyolmilla%20kazak' },
+    // { name: 'Hırka', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20h%C4%B1rka&qt=trendyolmilla%20h%C4%B1rka&st=trendyolmilla%20h%C4%B1rka' },
+    // { name: 'Jeans', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20jean&qt=trendyolmilla%20jean&st=trendyolmilla%20jean' },
+    // { name: 'Elbise', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20elbise&qt=trendyolmilla%20elbise&st=trendyolmilla%20elbise' },
+    // { name: 'Pijama Takımı', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20pijama%20tak%C4%B1m%C4%B1&qt=trendyolmilla%20pijama%20tak%C4%B1m%C4%B1&st=trendyolmilla%20pijama%20tak%C4%B1m%C4%B1' },
+    // { name: 'Pantolon', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20pantolon&qt=trendyolmilla%20pantolon&st=trendyolmilla%20pantolon' },
+    // { name: 'Sweatshirt', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20sweatshirt&qt=trendyolmilla%20sweatshirt&st=trendyolmilla%20sweatshirt' },
 ];
 
 const CATEGORY_TAGS = {
     'Bluz': ['category:bluz', 'category:tops'],
-    'Kazak': ['category:kazak', 'category:sweaters'],
-    'Hırka': ['category:hirka', 'category:cardigans'],
-    'Jeans': ['category:jeans', 'category:bottoms'],
-    'Elbise': ['category:elbise', 'category:dresses'],
-    'Pantolon': ['category:pantolon', 'category:pants'],
-    'Sweatshirt': ['category:sweatshirt', 'category:tops'],
-    'Pijama Takımı': ['category:pijama', 'category:sleepwear'],
+    // 'Kazak': ['category:kazak', 'category:sweaters'],
+    // 'Hırka': ['category:hirka', 'category:cardigans'],
+    // 'Jeans': ['category:jeans', 'category:bottoms'],
+    // 'Elbise': ['category:elbise', 'category:dresses'],
+    // 'Pantolon': ['category:pantolon', 'category:pants'],
+    // 'Sweatshirt': ['category:sweatshirt', 'category:tops'],
+    // 'Pijama Takımı': ['category:pijama', 'category:sleepwear'],
 };
 
 const COLLECTIONS = [
     { title: 'Bluz', handle: 'bluz', rules: [{ column: 'type', relation: 'equals', condition: 'Bluz' }] },
-    { title: 'Kazak', handle: 'kazak', rules: [{ column: 'type', relation: 'equals', condition: 'Kazak' }] },
-    { title: 'Hırka', handle: 'hirka', rules: [{ column: 'type', relation: 'equals', condition: 'Hırka' }] },
-    { title: 'Jeans', handle: 'jeans', rules: [{ column: 'type', relation: 'equals', condition: 'Jeans' }] },
-    { title: 'Elbise', handle: 'elbise', rules: [{ column: 'type', relation: 'equals', condition: 'Elbise' }] },
-    { title: 'Pijama Takımı', handle: 'pijama-takimi', rules: [{ column: 'type', relation: 'equals', condition: 'Pijama Takımı' }] },
-    { title: 'Pantolon', handle: 'pantolon', rules: [{ column: 'type', relation: 'equals', condition: 'Pantolon' }] },
-    { title: 'Sweatshirt', handle: 'sweatshirt', rules: [{ column: 'type', relation: 'equals', condition: 'Sweatshirt' }] },
+    // { title: 'Kazak', handle: 'kazak', rules: [{ column: 'type', relation: 'equals', condition: 'Kazak' }] },
+    // { title: 'Hırka', handle: 'hirka', rules: [{ column: 'type', relation: 'equals', condition: 'Hırka' }] },
+    // { title: 'Jeans', handle: 'jeans', rules: [{ column: 'type', relation: 'equals', condition: 'Jeans' }] },
+    // { title: 'Elbise', handle: 'elbise', rules: [{ column: 'type', relation: 'equals', condition: 'Elbise' }] },
+    // { title: 'Pijama Takımı', handle: 'pijama-takimi', rules: [{ column: 'type', relation: 'equals', condition: 'Pijama Takımı' }] },
+    // { title: 'Pantolon', handle: 'pantolon', rules: [{ column: 'type', relation: 'equals', condition: 'Pantolon' }] },
+    // { title: 'Sweatshirt', handle: 'sweatshirt', rules: [{ column: 'type', relation: 'equals', condition: 'Sweatshirt' }] },
 ];
 
 // ==================== HELPER FUNCTIONS ====================
@@ -156,10 +156,13 @@ async function scrapeAllCategories() {
 
     let allProducts = [];
 
+    // Limit per category
+    const LIMIT_PER_CATEGORY = 300;
+
     for (const category of CATEGORIES) {
         logger.info(`\n📦 Scraping: ${category.name}`);
         try {
-            const products = await crawlCategory(category.url, category.name, FETCH_PRODUCT_DETAILS);
+            const products = await crawlCategory(category.url, category.name, FETCH_PRODUCT_DETAILS, LIMIT_PER_CATEGORY);
             logger.info(`   Found ${products.length} products`);
             allProducts = allProducts.concat(products);
 
