@@ -8,7 +8,7 @@ function extractProductId(url) {
     return match ? match[1] : null;
 }
 
-async function crawlCategory(categoryUrl, categoryName, fetchDetails = false) {
+async function crawlCategory(categoryUrl, categoryName, fetchDetails = false, limit = 1000) {
     let browser;
     let allProducts = [];
     let pageIndex = 1;
@@ -79,9 +79,9 @@ async function crawlCategory(categoryUrl, categoryName, fetchDetails = false) {
                     logger.info(`Fetching details for ${newProducts.length} new products...`);
 
                     for (let i = 0; i < newProducts.length; i++) {
-                        // TEST LIMIT: Stop IMMEDIATELY if we hit 100
-                        if (allProducts.length + i >= 100) {
-                            logger.info('🛑 TEST LIMIT REACHED: Stopped at exactly 100 products.');
+                        // Respect the passed limit
+                        if (allProducts.length + i >= limit) {
+                            logger.info(`🛑 LIMIT REACHED: Stopped at exactly ${limit} products.`);
                             newProducts.splice(i);
                             hasMore = false;
                             break;
@@ -459,74 +459,34 @@ async function crawlProductDetails(url, existingBrowser = null) {
             return { product: domProduct, isFallback: true };
         });
 
-        if (page) await page.close();
-        if (!existingBrowser && browser) await browser.close();
 
-        if (detailData && (detailData.product || detailData.isFallback)) {
-            const prod = detailData.product || {};
 
-            // CLEAN DATA EXTRACTION
-            // 1. Description: DOM > Product Description > Empty
-            let finalDescription = prod.description || '';
 
-            // 2. Images: Product Images > Fallback Image
-            let finalImages = [];
-            if (prod.images && Array.isArray(prod.images)) {
-                finalImages = prod.images;
-            } else if (prod.image) {
-                finalImages = [prod.image];
+
+        if (detailData) {
+            // Merge the browser-extracted color into the product details if not already present
+            if (detailData.extractedColor) {
+               if (!detailData.product) detailData.product = {};
+               detailData.product.fallbackColor = detailData.extractedColor;
             }
-
-            // 3. Sizes/Variants
-            let finalSizes = [];
-            if (prod.variants && Array.isArray(prod.variants)) {
-                finalSizes = prod.variants.map(v => ({
-                    name: v.value,
-                    inStock: v.inStock,
-                    barcode: v.barcode,
-                    price: v.price?.value
-                }));
-            }
-
-            // Return CLEAN structure
-            // domDescription is not available here, it's used inside evaluate to populate prod.description
-            const descriptionToUse = prod.description || '';
-
-            // 4. Price: Robust extraction
-
-            let finalPrice = 0;
-            if (typeof prod.price === 'number') {
-                finalPrice = prod.price;
-            } else if (prod.price) {
-                finalPrice = prod.price.sellingPrice?.value
-                    || prod.price.discountedPrice?.value
-                    || prod.price.value
-                    || 0;
-            }
-
-            return {
-                productId: prod.productId || prod.id,
-                name: prod.name,
-                category: prod.category?.name || 'Unknown',
-                brand: prod.brand?.name || "Trendyol",
-                price: finalPrice,
-                description: descriptionToUse,
-                images: finalImages,
-                sizes: finalSizes,
-                url: url
-            };
         }
 
-        logger.warn(`No product detail data found for ${url}`);
-        return null;
+        const cleanedDetails = extractProductDetails(detailData);
+        return cleanedDetails;
 
     } catch (error) {
-        logger.error(`Failed to fetch details for ${url}: ${error.message} `);
+        logger.error(`Error crawling product details for ${url}: ${error.message}`);
+        return null; // Return null to indicate failure
+    } finally {
         if (page) await page.close();
-        if (!existingBrowser && browser) await browser.close();
-        return null;
+        // Do NOT close browser here if it was passed in
+        if (!existingBrowser && browser) {
+            await browser.close();
+        }
     }
 }
+
+
 
 async function autoScroll(page) {
     await page.evaluate(async () => {

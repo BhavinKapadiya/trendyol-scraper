@@ -90,11 +90,38 @@ function extractProductDetails(detailData) {
         const sku = product.productCode || null;
 
         // Extract color from slicingAttributes
+        // Extract color from slicingAttributes or Attributes or Fallback
         let color = null;
-        if (product.slicingAttributes) {
+        
+        // 1. Try explicit fallback from Crawler DOM extraction
+        if (detailData.extractedColor || (product.fallbackColor)) {
+             color = detailData.extractedColor || product.fallbackColor;
+        }
+
+        // 2. Try Attributes (Array search)
+        if (!color && product.attributes && Array.isArray(product.attributes)) {
+            const colorAttr = product.attributes.find(a => a.key === 'Renk' || a.name === 'Renk');
+            if (colorAttr) {
+                color = colorAttr.value.name || colorAttr.value;
+            }
+        }
+
+        // 3. Try Slicing Attributes (Legacy/Standard)
+        if (!color && product.slicingAttributes) {
             color = product.slicingAttributes.DsmColor ||
                 product.slicingAttributes.color ||
                 null;
+        }
+
+        // Clean up color (remove codes like "-1001" if purely numeric/code-like suffix, but keep valid names)
+        // Example: "Siyah-1001" -> "Siyah"
+        if (color && color.includes('-')) {
+             // Heuristic: If suffix is digits, strip it
+             const parts = color.split('-');
+             if (parts.length > 1 && /^\d+$/.test(parts[parts.length - 1])) {
+                 parts.pop();
+                 color = parts.join('-');
+             }
         }
 
         // Extract sizes and availability from variants
@@ -141,7 +168,7 @@ function extractProductDetails(detailData) {
         // Get description if available (prioritize DOM extraction)
         const description = product.domDescription || product.description || null;
 
-        // Extract all images with high-resolution URLs
+        // Resulting extracted images
         const images = [];
         if (product.images && Array.isArray(product.images)) {
             product.images.forEach(img => {
@@ -164,8 +191,19 @@ function extractProductDetails(detailData) {
             });
         }
 
+        // EXTRACT GROUP CODE (For merging color variants)
+        const groupCode = product.productGroupId ||
+            product.productCode ||
+            product.contentGroup ||
+            product.modelCode ||
+            (product.attributes ? product.attributes.find(a => a.key === 'modelCode')?.value : null) ||
+            sku; // Fallback to SKU if nothing else found
+
+
+
         return {
             sku,
+            groupCode,
             color,
             sizes,
             availability: hasStock,
