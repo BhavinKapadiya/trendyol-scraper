@@ -1,5 +1,5 @@
 const { startBrowser } = require('./browser');
-const { extractProductData, extractProductDetails } = require('./extractor');
+const { extractProductData, extractProductDetails, extractVariantLinks } = require('./extractor');
 const logger = require('../utils/logger');
 
 // Extract product ID from URL
@@ -8,11 +8,14 @@ function extractProductId(url) {
     return match ? match[1] : null;
 }
 
-async function crawlCategory(categoryUrl, categoryName, fetchDetails = false, limit = 1000) {
+async function crawlCategory(categoryUrl, categoryName, fetchDetails = false, limit = 1000, batchSize = 10) {
     let browser;
     let allProducts = [];
     let pageIndex = 1;
     let hasMore = true;
+    
+    // Track seen product IDs globally to avoid duplicates
+    const seenProductIds = new Set();
 
     try {
         browser = await startBrowser();
@@ -74,49 +77,122 @@ async function crawlCategory(categoryUrl, categoryName, fetchDetails = false, li
                     break;
                 }
 
-                // If fetchDetails is enabled, visit each NEW product page for detailed data
+                // ==================== BATCHED VARIANT DISCOVERY ====================
+                // If fetchDetails is enabled, process products in batches to discover and queue variants
                 if (fetchDetails && newProducts.length > 0) {
-                    logger.info(`Fetching details for ${newProducts.length} new products...`);
+                    logger.info(`Fetching details for ${newProducts.length} new products (Batched Variant Discovery)...`);
 
-                    for (let i = 0; i < newProducts.length; i++) {
-                        // Respect the passed limit
-                        if (allProducts.length + i >= limit) {
-                            logger.info(`🛑 LIMIT REACHED: Stopped at exactly ${limit} products.`);
-                            newProducts.splice(i);
-                            hasMore = false;
-                            break;
-                        }
-
-                        const product = newProducts[i];
-                        logger.info(`[Page ${pageIndex}] [${i + 1}/${newProducts.length}] Fetching details for: ${product.name.substring(0, 50)}...`);
-
-                        try {
-                            const details = await crawlProductDetails(product.url, browser);
-                            if (details) {
-                                // Merge detail data, prioritize images from details
-                                newProducts[i] = {
-                                    ...product,
-                                    ...details,
-                                    // Use detail images if available, otherwise fall back to category image as array
-                                    // Use detail images if available, otherwise fall back to category image as array
-                                    images: details.images && details.images.length > 0
-                                        ? details.images
-                                        : (product.image ? [product.image] : [])
-                                };
-
-
+                    // Process in batches
+                    for (let batchStart = 0; batchStart < newProducts.length; batchStart += batchSize) {
+                        const batchEnd = Math.min(batchStart + batchSize, newProducts.length);
+                        const batch = newProducts.slice(batchStart, batchEnd);
+                        
+                        logger.info(`\n📦 BATCH ${Math.floor(batchStart / batchSize) + 1}: Processing products ${batchStart + 1}-${batchEnd}...`);
+                        
+                        const variantQueue = [];
+                        
+                        // PHASE 1: Discover variants from batch
+                        for (let i = 0; i < batch.length; i++) {
+                            // Respect limit
+                            const currentTotal = allProducts.length + batchStart + i;
+                            if (currentTotal >= limit) {
+                                logger.info(`🛑 LIMIT REACHED: Stopped at exactly ${limit} products.`);
+                                hasMore = false;
+                                break;
                             }
-                        } catch (error) {
-                            logger.error(`Failed to fetch details for ${product.url}: ${error.message}`);
+                            
+                            const product = batch[i];
+                            logger.info(`   [${batchStart + i + 1}/${newProducts.length}] Fetching details for: ${product.name.substring(0, 50)}...`);
+                            
+                            try {
+                                // Fetch product page HTML to extract variants
+                                const detailPage = await browser.newPage();
+                                await detailPage.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36');
+                                await detailPage.goto(product.url, { waitUntil: 'networkidle2', timeout: 30000 });
+                                const detailHtml = await detailPage.content();
+                                await detailPage.close();
+                                
+                                // Extract variant links from JSON-LD
+                                const variants = extractVariantLinks(detailHtml);
+                                
+                                // Add variants to queue (skip if already seen)
+                                variants.forEach(v => {
+                                    if (!seenProductIds.has(v.productId)) {
+                                        variantQueue.push({ ...v, category: categoryName });
+                                        seenProductIds.add(v.productId);
+                                    }
+                                });
+                                
+                                // Also extract details for current product
+                                const details = await crawlProductDetails(product.url, browser);
+                                if (details) {
+                                    batch[i] = {
+                                        ...product,
+                                        ...details,
+                                        images: details.images && details.images.length > 0
+                                            ? details.images
+                                            : (product.image ? [product.image] : [])
+                                    };
+                                    seenProductIds.add(product.productId);
+                                }
+                                
+                            } catch (error) {
+                                logger.error(`   Failed to fetch details for ${product.url}: ${error.message}`);
+                            }
+
+                            // Small delay between requests
+                            await new Promise(resolve => setTimeout(resolve, 1000));
                         }
-
-                        // Small delay between requests to be respectful
-                        await new Promise(resolve => setTimeout(resolve, 1000));
+                        
+                        // PHASE 2: Process variant queue
+                        if (variantQueue.length > 0) {
+                            logger.info(`\n🔄 QUEUE PROCESSING: ${variantQueue.length} variants discovered, fetching details...`);
+                            
+                            for (let i = 0; i < variantQueue.length; i++) {
+                                // Respect limit
+                                if (allProducts.length + batch.length + i >= limit) {
+                                    logger.info(`🛑 LIMIT REACHED during queue processing: Stopped at ${limit} products.`);
+                                    hasMore = false;
+                                    break;
+                                }
+                                
+                                const variantInfo = variantQueue[i];
+                                logger.info(`   [Queue ${i + 1}/${variantQueue.length}] Fetching: ${variantInfo.color} variant...`);
+                                
+                                try {
+                                    const details = await crawlProductDetails(variantInfo.url, browser);
+                                    if (details) {
+                                        allProducts.push({
+                                            category: variantInfo.category,
+                                            name: variantInfo.name,
+                                            productId: variantInfo.productId,
+                                            url: variantInfo.url,
+                                            timestamp: new Date().toISOString(),
+                                            ...details
+                                        });
+                                    }
+                                } catch (error) {
+                                    logger.error(`   Failed to fetch variant: ${error.message}`);
+                                }
+                                
+                                await new Promise(resolve => setTimeout(resolve, 1000));
+                            }
+                            
+                            logger.info(`✅ Queue processed. Total products collected: ${allProducts.length}`);
+                        }
+                        
+                        // Add batch products to allProducts
+                        allProducts.push(...batch);
+                        
+                        if (!hasMore) break; // Exit if limit reached
                     }
+                }  else if (!fetchDetails) {
+                    // Original behavior: just add products without details
+                    allProducts.push(...newProducts);
                 }
-
-                allProducts.push(...newProducts);
+                
                 pageIndex++;
+
 
             } catch (pageError) {
                 logger.error(`Error processing page ${pageIndex}: ${pageError.message}`);

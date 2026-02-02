@@ -1,24 +1,261 @@
 [
   {
     "category": "Bluz",
-    "name": "Haki Fitted/Vücuda Oturan Asimetrik Yaka Çift Görünümlü Büzgülü Tül Örme Bluz TWOSS26BZ00071",
-    "price": 594.99,
-    "rating": 5,
-    "popularity": "20K",
-    "image": "https://cdn.dsmcdn.com/mnresize/400/-/ty1817/prod/PLM/20260126/2019922/2020919/2045844/977f9d41-5692-4c0a-9010-6ced9d2e0b08/1_org_zoom.jpg",
-    "url": "https://www.trendyol-milla.com/trendyolmilla/haki-fitted-vucuda-oturan-asimetrik-yaka-cift-gorunumlu-buzgulu-tul-orme-bluz-twoss26bz00071-p-1053635578?boutiqueId=651724&merchantId=968",
-    "timestamp": "2026-02-01T15:45:09.014Z",
-    "productId": "1053635578"
+    "name": "Trendyolmilla Koyu Kahverengi Dantel Detaylı Kare Yaka Örme Party Bluz TPRAW26BZ00045",
+    "productId": "1045546185",
+    "url": "https://www.trendyol-milla.com/trendyolmilla/koyu-kahverengi-dantel-detayli-kare-yaka-orme-party-bluz-tpraw26bz00045-p-1045546185",
+    "timestamp": "2026-02-02T11:03:12.790Z",
+    "sku": "TPRAW26BZ00045",
+    "groupCode": 745383639,
+    "color": "Koyu Kahverengi",
+    "sizes": [
+      {
+        "name": "32",
+        "inStock": false,
+        "barcode": "8684737996816",
+        "price": 369.99
+      },
+      {
+        "name": "34",
+        "inStock": true,
+        "barcode": "8684737996762",
+        "price": 369.99
+      },
+      {
+        "name": "36",
+        "inStock": false,
+        "barcode": "8684737996779",
+        "price": 369.99
+      },
+      {
+        "name": "38",
+        "inStock": true,
+        "barcode": "8684737996786",
+        "price": 369.99
+      },
+      {
+        "name": "40",
+        "inStock": true,
+        "barcode": "8684737996793",
+        "price": 369.99
+      },
+      {
+        "name": "42",
+        "inStock": true,
+        "barcode": "8684737996809",
+        "price": 369.99
+      }
+    ],
+    "availability": true,
+    "stockCount": null,
+    "brand": "Trendyol Collection",
+    "description": "Model Bilgisi: Modelin Ölçüleri: Boy: 180cm(5'11'') Göğüs 83cm(32In) Bel: 59cm(23In) Kalça: 89cm(35in)<br>Mankenin üzerindeki ürünS/36/8 bedendir.<br>Materyal Bileşeni: 95% Polyester,5% Elastan<br>Kumaş Tipi: Örme<br>Ürününüzü daha uzun süreli kullanabilmeniz ve ürününüze uygun bakım yapabilmeniz için lütfen aşağıda belirtilen yıkama talimatına uyunuz.<br>Stüdyo çekimlerinde renkler ışık farklılığından dolayı değişiklik gösterebilir.",
+    "images": [
+      "https://cdn.dsmcdn.com/ty1796/prod/PLM/20251204/2018925/2030889/2022913/e7fcba2b-725a-49fd-90e9-24f1abc970ae/1_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/ty1796/prod/PLM/20251204/2018925/2030889/2022913/38e1a81e-03ec-44c6-b5bb-4f82125a9001/0_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/ty1794/prod/PLM/20251204/2018925/2030889/2022913/db6926e0-4282-4a64-81f1-d40815b7945e/2_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/ty1795/prod/PLM/20251204/2018925/2030889/2022913/322b9394-0e4b-48fd-ba5e-8503ae0f3fd3/3_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/ty1794/prod/PLM/20251203/2018925/2030889/2021916/b0f59f93-51b3-4e5f-afb8-ed7ea32322bb/0_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/ty1796/prod/PLM/20251203/2018925/2030889/2021916/9568c788-213b-4174-b32d-c1de7d5e658a/1_org_zoom.jpg"
+    ],
+    "price": 369.99,
+    "rating": 4.228070175438597,
+    "popularity": 41961,
+    "image": "https://cdn.dsmcdn.com/ty1796/prod/PLM/20251204/2018925/2030889/2022913/e7fcba2b-725a-49fd-90e9-24f1abc970ae/1_org_zoom.jpg"
+  },
+  {
+    "category": "Bluz",
+    "name": "Trendyolmilla Siyah Beyaz Çizgili Premium Yumuşak Kumaşlı Fitted Kayık Yaka Esnek Örme Bluz TWOAW24BZ00227",
+    "productId": "755253562",
+    "url": "https://www.trendyol-milla.com/trendyolmilla/siyah-beyaz-cizgili-premium-yumusak-kumasli-fitted-kayik-yaka-esnek-orme-bluz-twoaw24bz00227-p-755253562",
+    "timestamp": "2026-02-02T11:03:27.213Z",
+    "sku": "TWOAW24BZ00227",
+    "groupCode": 556129078,
+    "color": "Siyah",
+    "sizes": [
+      {
+        "name": "2xs",
+        "inStock": true,
+        "barcode": "8683050101471",
+        "price": 271.99
+      },
+      {
+        "name": "xs",
+        "inStock": true,
+        "barcode": "8683049231769",
+        "price": 271.99
+      },
+      {
+        "name": "s",
+        "inStock": true,
+        "barcode": "8683049231776",
+        "price": 271.99
+      },
+      {
+        "name": "m",
+        "inStock": true,
+        "barcode": "8683049231783",
+        "price": 271.99
+      },
+      {
+        "name": "l",
+        "inStock": true,
+        "barcode": "8683049231790",
+        "price": 271.99
+      },
+      {
+        "name": "xl",
+        "inStock": true,
+        "barcode": "8683049231806",
+        "price": 271.99
+      }
+    ],
+    "availability": true,
+    "stockCount": null,
+    "brand": "Trendyol Collection",
+    "description": "Model Bilgisi: Modelin Ölçüleri: Boy: 176cm(5'9'') Göğüs: 83cm(32in) Bel: 60cm(23in) Kalça: 89cm(35in)<br>Mankenin üzerindeki ürün S/36/8 bedendir.<br>Materyal Bileşeni: 96% Viskoz,4% Elastan<br>Kumaş Tipi: Örme<br>Model Ön Boyu: 54,0 cm<br>Ürününüzü daha uzun süreli kullanabilmeniz ve ürününüze uygun bakım yapabilmeniz için lütfen aşağıda belirtilen yıkama talimatına uyunuz.<br>Stüdyo çekimlerinde renkler ışık farklılığından dolayı değişiklik gösterebilir.",
+    "images": [
+      "https://cdn.dsmcdn.com/ty1008/product/media/images/prod/PIM/20231005/06/98a6af60-0917-4602-8718-b0e25f0d1d53/1_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/ty1008/product/media/images/prod/PIM/20231005/06/f7965141-bad5-4aae-b974-63fb6cf16f8e/1_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/ty1010/product/media/images/prod/PIM/20231005/06/e44b82af-a546-45dd-9677-1e9a388884c6/1_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/ty1009/product/media/images/prod/PIM/20231005/06/4d7be627-040b-45a9-8763-3c9db5814ea7/1_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/ty1010/product/media/images/prod/PIM/20231004/18/a7f54b90-bfac-4291-9702-0f0da2f1f09a/1_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/ty1007/product/media/images/prod/PIM/20230928/18/cdc711f9-b2a8-4bc8-8238-9d4f31ab5627/1_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/ty1007/product/media/images/prod/PIM/20230928/18/62610f91-be42-4e11-bb57-514484158876/1_org_zoom.jpg"
+    ],
+    "price": 271.99,
+    "rating": 4.675543190249073,
+    "popularity": 378683,
+    "image": "https://cdn.dsmcdn.com/ty1008/product/media/images/prod/PIM/20231005/06/98a6af60-0917-4602-8718-b0e25f0d1d53/1_org_zoom.jpg"
+  },
+  {
+    "category": "Bluz",
+    "name": "Trendyolmilla Bordo Düz Premium Yumuşak Kumaşlı Fitted/Vücuda Oturan Kayık Yaka Örme Bluz TWOAW24BZ00227",
+    "productId": "855372415",
+    "url": "https://www.trendyol-milla.com/trendyolmilla/bordo-duz-premium-yumusak-kumasli-fitted-vucuda-oturan-kayik-yaka-orme-bluz-twoaw24bz00227-p-855372415",
+    "timestamp": "2026-02-02T11:03:41.595Z",
+    "sku": "TWOAW24BZ00227",
+    "groupCode": 556129078,
+    "color": "Bordo",
+    "sizes": [
+      {
+        "name": "xs",
+        "inStock": true,
+        "barcode": "8683050625069",
+        "price": 255.99
+      },
+      {
+        "name": "s",
+        "inStock": true,
+        "barcode": "8683050625076",
+        "price": 255.99
+      },
+      {
+        "name": "m",
+        "inStock": true,
+        "barcode": "8683050625083",
+        "price": 255.99
+      },
+      {
+        "name": "l",
+        "inStock": true,
+        "barcode": "8683050625090",
+        "price": 255.99
+      },
+      {
+        "name": "xl",
+        "inStock": true,
+        "barcode": "8683050625106",
+        "price": 255.99
+      }
+    ],
+    "availability": true,
+    "stockCount": null,
+    "brand": "Trendyol Collection",
+    "description": "Model Bilgisi: Modelin Ölçüleri: Boy: 179cm(5'10') Göğüs 80cm(31in) Bel: 60cm(23in) Kalça: 90cm(35in)<br>Mankenin üzerindeki ürün S/36/8 bedendir.<br>Materyal Bileşeni: 96% Viskoz,4% Elastan<br>Kumaş Tipi: Örme<br>Model Ön Boyu: 54,0 cm<br>Ürününüzü daha uzun süreli kullanabilmeniz ve ürününüze uygun bakım yapabilmeniz için lütfen aşağıda belirtilen yıkama talimatına uyunuz.<br>Stüdyo çekimlerinde renkler ışık farklılığından dolayı değişiklik gösterebilir.",
+    "images": [
+      "https://cdn.dsmcdn.com/ty1572/product/media/images/prod/PIM/20240927/07/2b2a74de-ee34-4ee1-a55d-c9edc485b371/1_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/ty1573/product/media/images/prod/PIM/20240927/07/9c1fea9f-768f-4f71-a819-a59618d56715/1_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/ty1572/product/media/images/prod/PIM/20240927/07/af3eea3b-74d2-42ea-8f77-b0b5202380be/1_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/ty1573/product/media/images/prod/PIM/20240927/07/7d507ec4-d734-47e9-a7a8-6b823a055b6d/1_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/ty1574/product/media/images/prod/PIM/20240927/07/0d92f40b-4ab0-4417-9978-880f57cce884/1_org_zoom.jpg"
+    ],
+    "price": 255.99,
+    "rating": 4.439276485788113,
+    "popularity": 34352,
+    "image": "https://cdn.dsmcdn.com/ty1572/product/media/images/prod/PIM/20240927/07/2b2a74de-ee34-4ee1-a55d-c9edc485b371/1_org_zoom.jpg"
+  },
+  {
+    "category": "Bluz",
+    "name": "Siyah Dantel Detaylı Kare Yaka Örme Party Bluz TPRAW26BZ00045",
+    "price": 369.99,
+    "rating": 4.181395348837209,
+    "popularity": 242788,
+    "image": "https://cdn.dsmcdn.com/ty1766/prod/PLM/20250930/2018925/2027898/2048835/f95de22d-bb8e-4a27-84a1-c967e483c99e/1_org_zoom.jpg",
+    "url": "https://www.trendyol-milla.com/trendyolmilla/siyah-dantel-detayli-kare-yaka-orme-party-bluz-tpraw26bz00045-p-979591005?boutiqueId=651724&merchantId=968",
+    "timestamp": "2026-02-02T11:01:13.667Z",
+    "productId": "979591005",
+    "sku": "TPRAW26BZ00045",
+    "groupCode": 745383639,
+    "color": "Siyah",
+    "sizes": [
+      {
+        "name": "32",
+        "inStock": true,
+        "barcode": "8684737978522",
+        "price": 369.99
+      },
+      {
+        "name": "34",
+        "inStock": true,
+        "barcode": "8684737827684",
+        "price": 369.99
+      },
+      {
+        "name": "36",
+        "inStock": true,
+        "barcode": "8684737827691",
+        "price": 369.99
+      },
+      {
+        "name": "38",
+        "inStock": true,
+        "barcode": "8684737827707",
+        "price": 369.99
+      },
+      {
+        "name": "40",
+        "inStock": true,
+        "barcode": "8684737827714",
+        "price": 369.99
+      },
+      {
+        "name": "42",
+        "inStock": true,
+        "barcode": "8684737827721",
+        "price": 369.99
+      }
+    ],
+    "availability": true,
+    "stockCount": null,
+    "brand": "TRENDYOLMİLLA",
+    "description": "Model Bilgisi: Modelin Ölçüleri: Boy: 179cm(5'10') Göğüs 80cm(31in) Bel: 60cm(23in) Kalça: 90cm(35in)<br>Mankenin üzerindeki ürün S/36/8 bedendir.<br>Materyal Bileşeni: 95% Polyester,5% Elastan<br>Kumaş Tipi: Örme<br>Ürününüzü daha uzun süreli kullanabilmeniz ve ürününüze uygun bakım yapabilmeniz için lütfen aşağıda belirtilen yıkama talimatına uyunuz.<br>Stüdyo çekimlerinde renkler ışık farklılığından dolayı değişiklik gösterebilir.",
+    "images": [
+      "https://cdn.dsmcdn.com/ty1766/prod/PLM/20250930/2018925/2027898/2048835/f95de22d-bb8e-4a27-84a1-c967e483c99e/1_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/ty1764/prod/PLM/20250930/2018925/2027898/2048835/c18e1ebe-b4a3-4dcf-9397-f0f0daaa8bfb/0_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/ty1766/prod/PLM/20250930/2018925/2027898/2048835/41be72b9-d773-4fac-8d27-1143765db69d/2_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/ty1764/prod/PLM/20250930/2018925/2027898/2048835/536c33d6-d271-40e0-ae10-2b73622f5231/3_org_zoom.jpg"
+    ]
   },
   {
     "category": "Bluz",
     "name": "Siyah Düz Premium Yumuşak Kumaşlı Fitted/Vücuda Oturan Kayık Yaka Örme Bluz TWOAW24BZ00227",
     "price": 339.99,
-    "rating": 4.569894397708968,
-    "popularity": "549K",
-    "image": "https://cdn.dsmcdn.com/mnresize/400/-/ty1000059/product/media/images/prod/PIM/20260107/07/0d27730b-c977-4193-8c16-ef4077ee9c63/1_org_zoom.jpg",
+    "rating": 4.570125223613596,
+    "popularity": 549293,
+    "image": "https://cdn.dsmcdn.com/ty1000059/product/media/images/prod/PIM/20260107/07/0d27730b-c977-4193-8c16-ef4077ee9c63/1_org_zoom.jpg",
     "url": "https://www.trendyol-milla.com/trendyolmilla/siyah-duz-premium-yumusak-kumasli-fitted-vucuda-oturan-kayik-yaka-orme-bluz-twoaw24bz00227-p-855372419?boutiqueId=651724&merchantId=968",
-    "timestamp": "2026-02-01T15:45:09.014Z",
+    "timestamp": "2026-02-02T11:01:13.667Z",
     "productId": "855372419",
     "sku": "TWOAW24BZ00227",
     "groupCode": 556129078,
@@ -78,64 +315,58 @@
   },
   {
     "category": "Bluz",
-    "name": "Siyah Dantel Detaylı Kare Yaka Örme Party Bluz TPRAW26BZ00045",
-    "price": 369.99,
-    "rating": 4.181395348837209,
-    "popularity": "242K",
-    "image": "https://cdn.dsmcdn.com/mnresize/400/-/ty1766/prod/PLM/20250930/2018925/2027898/2048835/f95de22d-bb8e-4a27-84a1-c967e483c99e/1_org_zoom.jpg",
-    "url": "https://www.trendyol-milla.com/trendyolmilla/siyah-dantel-detayli-kare-yaka-orme-party-bluz-tpraw26bz00045-p-979591005?boutiqueId=651724&merchantId=968",
-    "timestamp": "2026-02-01T15:45:09.014Z",
-    "productId": "979591005",
-    "sku": "TPRAW26BZ00045",
-    "groupCode": 745383639,
-    "color": "Siyah",
+    "name": "Haki Fitted/Vücuda Oturan Asimetrik Yaka Çift Görünümlü Büzgülü Tül Örme Bluz TWOSS26BZ00071",
+    "price": 594.99,
+    "rating": 5,
+    "popularity": 24905,
+    "image": "https://cdn.dsmcdn.com/ty1817/prod/PLM/20260126/2019922/2020919/2045844/977f9d41-5692-4c0a-9010-6ced9d2e0b08/1_org_zoom.jpg",
+    "url": "https://www.trendyol-milla.com/trendyolmilla/haki-fitted-vucuda-oturan-asimetrik-yaka-cift-gorunumlu-buzgulu-tul-orme-bluz-twoss26bz00071-p-1053635578?boutiqueId=651724&merchantId=968",
+    "timestamp": "2026-02-02T11:01:13.667Z",
+    "productId": "1053635578",
+    "sku": "TWOSS26BZ00071",
+    "groupCode": 796660954,
+    "color": "Haki",
     "sizes": [
       {
-        "name": "32",
+        "name": "xs",
         "inStock": true,
-        "barcode": "8684737978522",
-        "price": 369.99
+        "barcode": "8684738047494",
+        "price": 594.99
       },
       {
-        "name": "34",
+        "name": "s",
         "inStock": true,
-        "barcode": "8684737827684",
-        "price": 369.99
+        "barcode": "8684738047500",
+        "price": 594.99
       },
       {
-        "name": "36",
+        "name": "m",
         "inStock": true,
-        "barcode": "8684737827691",
-        "price": 369.99
+        "barcode": "8684738047517",
+        "price": 594.99
       },
       {
-        "name": "38",
+        "name": "l",
         "inStock": true,
-        "barcode": "8684737827707",
-        "price": 369.99
+        "barcode": "8684738047524",
+        "price": 594.99
       },
       {
-        "name": "40",
+        "name": "xl",
         "inStock": true,
-        "barcode": "8684737827714",
-        "price": 369.99
-      },
-      {
-        "name": "42",
-        "inStock": true,
-        "barcode": "8684737827721",
-        "price": 369.99
+        "barcode": "8684738047531",
+        "price": 594.99
       }
     ],
     "availability": true,
     "stockCount": null,
-    "brand": "TRENDYOLMİLLA",
-    "description": "Model Bilgisi: Modelin Ölçüleri: Boy: 179cm(5'10') Göğüs 80cm(31in) Bel: 60cm(23in) Kalça: 90cm(35in)<br>Mankenin üzerindeki ürün S/36/8 bedendir.<br>Materyal Bileşeni: 95% Polyester,5% Elastan<br>Kumaş Tipi: Örme<br>Ürününüzü daha uzun süreli kullanabilmeniz ve ürününüze uygun bakım yapabilmeniz için lütfen aşağıda belirtilen yıkama talimatına uyunuz.<br>Stüdyo çekimlerinde renkler ışık farklılığından dolayı değişiklik gösterebilir.",
+    "brand": "Trendyol Collection",
+    "description": "Model Bilgisi: Modelin Ölçüleri: Boy: 180cm(5'11'') Göğüs 81cm(31In) Bel: 58cm(22In) Kalça: 87cm(34in)<br>Mankenin üzerindeki ürünS/36/8 bedendir.<br>Materyal Bileşeni: 92% Polyester,8% Elastan<br>Kumaş Tipi: Örme<br>Model Ön Boyu: 46,0 cm<br>Ürününüzü daha uzun süreli kullanabilmeniz ve ürününüze uygun bakım yapabilmeniz için lütfen aşağıda belirtilen yıkama talimatına uyunuz.<br>Stüdyo çekimlerinde renkler ışık farklılığından dolayı değişiklik gösterebilir.",
     "images": [
-      "https://cdn.dsmcdn.com/ty1766/prod/PLM/20250930/2018925/2027898/2048835/f95de22d-bb8e-4a27-84a1-c967e483c99e/1_org_zoom.jpg",
-      "https://cdn.dsmcdn.com/ty1764/prod/PLM/20250930/2018925/2027898/2048835/c18e1ebe-b4a3-4dcf-9397-f0f0daaa8bfb/0_org_zoom.jpg",
-      "https://cdn.dsmcdn.com/ty1766/prod/PLM/20250930/2018925/2027898/2048835/41be72b9-d773-4fac-8d27-1143765db69d/2_org_zoom.jpg",
-      "https://cdn.dsmcdn.com/ty1764/prod/PLM/20250930/2018925/2027898/2048835/536c33d6-d271-40e0-ae10-2b73622f5231/3_org_zoom.jpg"
+      "https://cdn.dsmcdn.com/ty1817/prod/PLM/20260126/2019922/2020919/2045844/977f9d41-5692-4c0a-9010-6ced9d2e0b08/1_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/ty1816/prod/PLM/20260126/2019922/2020919/2045844/3773480b-0f8a-4d25-8336-6e9e530960cc/0_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/ty1816/prod/PLM/20260126/2019922/2020919/2045844/92d62c9f-c9ad-4952-8284-6acb3b129b4d/2_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/ty1816/prod/PLM/20260126/2019922/2020919/2045844/4042e132-34d1-4e3a-a1b5-3643c57a550b/3_org_zoom.jpg"
     ]
   },
   {
@@ -143,10 +374,10 @@
     "name": "Kırmızı Örme Bluz TWOAW26BZ00293",
     "price": 407.99,
     "rating": 0,
-    "popularity": "4K",
-    "image": "https://cdn.dsmcdn.com/mnresize/400/-/ty1820/prod/PLM/20260130/2019922/2020919/2049832/cbe71dcb-c543-48ba-a44e-0e39f324ee3b/0_org_zoom.jpg",
+    "popularity": 5115,
+    "image": "https://cdn.dsmcdn.com/ty1820/prod/PLM/20260130/2019922/2020919/2049832/cbe71dcb-c543-48ba-a44e-0e39f324ee3b/0_org_zoom.jpg",
     "url": "https://www.trendyol-milla.com/trendyolmilla/kirmizi-orme-bluz-twoaw26bz00293-p-1081321107?boutiqueId=651724&merchantId=968",
-    "timestamp": "2026-02-01T15:45:09.014Z",
+    "timestamp": "2026-02-02T11:01:13.667Z",
     "productId": "1081321107",
     "sku": "TWOAW26BZ00293",
     "groupCode": 753475217,
@@ -200,58 +431,58 @@
   },
   {
     "category": "Bluz",
-    "name": "Çok Renkli Çizgili Açık Omuzlu Şal Aksesuar Detaylı Regular/Normal Kalıp Örme Bluz TWOAW26BZ00308",
-    "price": 531.99,
-    "rating": 4.794871794871795,
-    "popularity": "50K",
-    "image": "https://cdn.dsmcdn.com/mnresize/400/-/ty1783/prod/PLM/20251104/2018925/2029892/2022913/b1b0a343-1a67-42a2-bc6a-5bbf1cea883f/0_org_zoom.jpg",
-    "url": "https://www.trendyol-milla.com/trendyolmilla/cok-renkli-cizgili-acik-omuzlu-sal-aksesuar-detayli-regular-normal-kalip-orme-bluz-twoaw26bz00308-p-992009189?boutiqueId=651724&merchantId=968",
-    "timestamp": "2026-02-01T15:45:09.014Z",
-    "productId": "992009189",
-    "sku": "TWOAW26BZ00308",
-    "groupCode": 756311461,
-    "color": "Çok Renkli",
+    "name": "Lacivert Örme Bluz TWOAW26BZ00252",
+    "price": 378.99,
+    "rating": 0,
+    "popularity": 2592,
+    "image": "https://cdn.dsmcdn.com/ty1817/prod/PLM/20260128/2019922/2020919/2047838/15287ced-ec48-4970-8eb8-85f5e5e57a44/0_org_zoom.jpg",
+    "url": "https://www.trendyol-milla.com/trendyolmilla/lacivert-orme-bluz-twoaw26bz00252-p-1065856015?boutiqueId=651724&merchantId=968",
+    "timestamp": "2026-02-02T11:01:13.667Z",
+    "productId": "1065856015",
+    "sku": "TWOAW26BZ00252",
+    "groupCode": 740954666,
+    "color": "Lacivert",
     "sizes": [
       {
         "name": "xs",
         "inStock": true,
-        "barcode": "8684737895133",
-        "price": 531.99
+        "barcode": "8684738158008",
+        "price": 378.99
       },
       {
         "name": "s",
         "inStock": true,
-        "barcode": "8684737895140",
-        "price": 531.99
+        "barcode": "8684738157988",
+        "price": 378.99
       },
       {
         "name": "m",
         "inStock": true,
-        "barcode": "8684737895157",
-        "price": 531.99
+        "barcode": "8684738158015",
+        "price": 378.99
       },
       {
         "name": "l",
         "inStock": true,
-        "barcode": "8684737895164",
-        "price": 531.99
+        "barcode": "8684738158022",
+        "price": 378.99
       },
       {
         "name": "xl",
         "inStock": true,
-        "barcode": "8684737895171",
-        "price": 531.99
+        "barcode": "8684738157995",
+        "price": 378.99
       }
     ],
     "availability": true,
     "stockCount": null,
     "brand": "Trendyol Collection",
-    "description": "Model Bilgisi: Modelin Ölçüleri: Boy: 175cm(5'9'') Göğüs: 81cm(31in) Bel: 60cm(23in) Kalça: 88cm(34in)<br>Mankenin üzerindeki ürün S/36/8 bedendir.<br>Materyal Bileşeni: 98% Viskoz,2% Elastan<br>Kumaş Tipi: Örme<br>Model Ön Boyu: 52,0 cm<br>Ürününüzü daha uzun süreli kullanabilmeniz ve ürününüze uygun bakım yapabilmeniz için lütfen aşağıda belirtilen yıkama talimatına uyunuz.<br>Stüdyo çekimlerinde renkler ışık farklılığından dolayı değişiklik gösterebilir.",
+    "description": "Model Bilgisi: Modelin Ölçüleri: Boy: 180cm(5'11'') Göğüs 81cm(31In) Bel: 58cm(22In) Kalça: 87cm(34in)<br>Mankenin üzerindeki ürünS/36/8 bedendir.<br>Materyal Bileşeni: 70% Polyester,30% Pamuk<br>Kumaş Tipi: Örme<br>Model Ön Boyu: 55,0 cm<br>Ürününüzü daha uzun süreli kullanabilmeniz ve ürününüze uygun bakım yapabilmeniz için lütfen aşağıda belirtilen yıkama talimatına uyunuz.<br>Stüdyo çekimlerinde renkler ışık farklılığından dolayı değişiklik gösterebilir.",
     "images": [
-      "https://cdn.dsmcdn.com/ty1783/prod/PLM/20251104/2018925/2029892/2022913/b1b0a343-1a67-42a2-bc6a-5bbf1cea883f/0_org_zoom.jpg",
-      "https://cdn.dsmcdn.com/ty1783/prod/PLM/20251104/2018925/2029892/2022913/4db8c283-cde1-4918-92d3-3954fe8b6e6a/1_org_zoom.jpg",
-      "https://cdn.dsmcdn.com/ty1783/prod/PLM/20251104/2018925/2029892/2022913/69eba808-717a-4c1b-b748-729b70441cee/2_org_zoom.jpg",
-      "https://cdn.dsmcdn.com/ty1782/prod/PLM/20251104/2018925/2029892/2022913/430fb314-2bf1-4104-b541-088c179b1af9/3_org_zoom.jpg"
+      "https://cdn.dsmcdn.com/ty1817/prod/PLM/20260128/2019922/2020919/2047838/15287ced-ec48-4970-8eb8-85f5e5e57a44/0_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/ty1817/prod/PLM/20260128/2019922/2020919/2047838/e03ab83d-0b88-4dfa-8305-a53b7e5da49c/1_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/ty1815/prod/PLM/20260128/2019922/2020919/2047838/4796183b-3204-489c-aaef-97f6c0a3368c/2_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/ty1815/prod/PLM/20260128/2019922/2020919/2047838/e765b76b-7ab9-4508-bf6d-33f409d92ed5/3_org_zoom.jpg"
     ]
   }
 ]

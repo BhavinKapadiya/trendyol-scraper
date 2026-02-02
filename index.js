@@ -56,35 +56,35 @@ const PRICE_MULTIPLIER = parseFloat(process.env.PRICE_MULTIPLIER) || 1;
 
 const CATEGORIES = [
     { name: 'Bluz', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20bluz&qt=trendyolmilla%20bluz&st=trendyolmilla%20bluz' },
-    // { name: 'Kazak', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20kazak&qt=trendyolmilla%20kazak&st=trendyolmilla%20kazak' },
-    // { name: 'Hırka', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20h%C4%B1rka&qt=trendyolmilla%20h%C4%B1rka&st=trendyolmilla%20h%C4%B1rka' },
-    // { name: 'Jeans', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20jean&qt=trendyolmilla%20jean&st=trendyolmilla%20jean' },
-    // { name: 'Elbise', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20elbise&qt=trendyolmilla%20elbise&st=trendyolmilla%20elbise' },
-    // { name: 'Pijama Takımı', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20pijama%20tak%C4%B1m%C4%B1&qt=trendyolmilla%20pijama%20tak%C4%B1m%C4%B1&st=trendyolmilla%20pijama%20tak%C4%B1m%C4%B1' },
-    // { name: 'Pantolon', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20pantolon&qt=trendyolmilla%20pantolon&st=trendyolmilla%20pantolon' },
-    // { name: 'Sweatshirt', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20sweatshirt&qt=trendyolmilla%20sweatshirt&st=trendyolmilla%20sweatshirt' },
+    { name: 'Kazak', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20kazak&qt=trendyolmilla%20kazak&st=trendyolmilla%20kazak' },
+    { name: 'Hırka', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20h%C4%B1rka&qt=trendyolmilla%20h%C4%B1rka&st=trendyolmilla%20h%C4%B1rka' },
+    { name: 'Jeans', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20jean&qt=trendyolmilla%20jean&st=trendyolmilla%20jean' },
+    { name: 'Elbise', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20elbise&qt=trendyolmilla%20elbise&st=trendyolmilla%20elbise' },
+    { name: 'Pijama Takımı', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20pijama%20tak%C4%B1m%C4%B1&qt=trendyolmilla%20pijama%20tak%C4%B1m%C4%B1&st=trendyolmilla%20pijama%20tak%C4%B1m%C4%B1' },
+    { name: 'Pantolon', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20pantolon&qt=trendyolmilla%20pantolon&st=trendyolmilla%20pantolon' },
+    { name: 'Sweatshirt', url: 'https://www.trendyol-milla.com/sr?q=trendyolmilla%20sweatshirt&qt=trendyolmilla%20sweatshirt&st=trendyolmilla%20sweatshirt' },
 ];
 
 const CATEGORY_TAGS = {
     'Bluz': ['category:bluz', 'category:tops'],
-    // 'Kazak': ['category:kazak', 'category:sweaters'],
-    // 'Hırka': ['category:hirka', 'category:cardigans'],
-    // 'Jeans': ['category:jeans', 'category:bottoms'],
-    // 'Elbise': ['category:elbise', 'category:dresses'],
-    // 'Pantolon': ['category:pantolon', 'category:pants'],
-    // 'Sweatshirt': ['category:sweatshirt', 'category:tops'],
-    // 'Pijama Takımı': ['category:pijama', 'category:sleepwear'],
+    'Kazak': ['category:kazak', 'category:sweaters'],
+    'Hırka': ['category:hirka', 'category:cardigans'],
+    'Jeans': ['category:jeans', 'category:bottoms'],
+    'Elbise': ['category:elbise', 'category:dresses'],
+    'Pantolon': ['category:pantolon', 'category:pants'],
+    'Sweatshirt': ['category:sweatshirt', 'category:tops'],
+    'Pijama Takımı': ['category:pijama', 'category:sleepwear'],
 };
 
 const COLLECTIONS = [
     { title: 'Bluz', handle: 'bluz', rules: [{ column: 'type', relation: 'equals', condition: 'Bluz' }] },
-    // { title: 'Kazak', handle: 'kazak', rules: [{ column: 'type', relation: 'equals', condition: 'Kazak' }] },
-    // { title: 'Hırka', handle: 'hirka', rules: [{ column: 'type', relation: 'equals', condition: 'Hırka' }] },
-    // { title: 'Jeans', handle: 'jeans', rules: [{ column: 'type', relation: 'equals', condition: 'Jeans' }] },
-    // { title: 'Elbise', handle: 'elbise', rules: [{ column: 'type', relation: 'equals', condition: 'Elbise' }] },
-    // { title: 'Pijama Takımı', handle: 'pijama-takimi', rules: [{ column: 'type', relation: 'equals', condition: 'Pijama Takımı' }] },
-    // { title: 'Pantolon', handle: 'pantolon', rules: [{ column: 'type', relation: 'equals', condition: 'Pantolon' }] },
-    // { title: 'Sweatshirt', handle: 'sweatshirt', rules: [{ column: 'type', relation: 'equals', condition: 'Sweatshirt' }] },
+    { title: 'Kazak', handle: 'kazak', rules: [{ column: 'type', relation: 'equals', condition: 'Kazak' }] },
+    { title: 'Hırka', handle: 'hirka', rules: [{ column: 'type', relation: 'equals', condition: 'Hırka' }] },
+    { title: 'Jeans', handle: 'jeans', rules: [{ column: 'type', relation: 'equals', condition: 'Jeans' }] },
+    { title: 'Elbise', handle: 'elbise', rules: [{ column: 'type', relation: 'equals', condition: 'Elbise' }] },
+    { title: 'Pijama Takımı', handle: 'pijama-takimi', rules: [{ column: 'type', relation: 'equals', condition: 'Pijama Takımı' }] },
+    { title: 'Pantolon', handle: 'pantolon', rules: [{ column: 'type', relation: 'equals', condition: 'Pantolon' }] },
+    { title: 'Sweatshirt', handle: 'sweatshirt', rules: [{ column: 'type', relation: 'equals', condition: 'Sweatshirt' }] },
 ];
 
 // ==================== HELPER FUNCTIONS ====================
@@ -156,13 +156,14 @@ async function scrapeAllCategories() {
 
     let allProducts = [];
 
-    // Limit per category
-    const LIMIT_PER_CATEGORY = 300;
+    // Limit per category and batch size for variant discovery
+    const LIMIT_PER_CATEGORY = 250; // 250 products per category for production
+    const BATCH_SIZE = 10; // Process 10 products at a time, then queue variants
 
     for (const category of CATEGORIES) {
         logger.info(`\n📦 Scraping: ${category.name}`);
         try {
-            const products = await crawlCategory(category.url, category.name, FETCH_PRODUCT_DETAILS, LIMIT_PER_CATEGORY);
+            const products = await crawlCategory(category.url, category.name, FETCH_PRODUCT_DETAILS, LIMIT_PER_CATEGORY, BATCH_SIZE);
             logger.info(`   Found ${products.length} products`);
             allProducts = allProducts.concat(products);
 
@@ -253,30 +254,38 @@ function groupVariants(products) {
             groups.set(key, {
                 ...p, // Base info from first variant
                 _variants: [], // Store all merged variants here
-                _images: [],   // Store all merged images here
+                _imagesByColor: new Map(), // ⭐ NEW: Store images by color
                 _colors: new Set()
             });
         }
 
         const group = groups.get(key);
         
-        // Add images
-        if (p.images) {
+        // Add images BY COLOR (not all merged together)
+        const color = p.color || p.extractedColor || 'Default';
+        
+        if (p.images && p.images.length > 0) {
+            if (!group._imagesByColor.has(color)) {
+                group._imagesByColor.set(color, []);
+            }
+            // Add images for this specific color
             p.images.forEach(img => {
-                if (!group._images.includes(img)) group._images.push(img);
+                const colorImages = group._imagesByColor.get(color);
+                if (!colorImages.includes(img)) {
+                    colorImages.push(img);
+                }
             });
         }
 
         // Add this specific color variant
-        const color = p.color || p.extractedColor || 'Default';
         group._colors.add(color);
 
         // Process sizes for this color
         if (p.sizes && p.sizes.length > 0) {
             p.sizes.forEach(size => {
                 group._variants.push({
+                    color: color,  // ⭐ Color is now first
                     size: size.name,
-                    color: color,
                     price: size.price || p.price,
                     sku: size.barcode || `${p.sku}-${size.name}-${color}`,
                     inStock: size.inStock,
@@ -286,8 +295,8 @@ function groupVariants(products) {
         } else {
             // Single variant product (no sizes)
             group._variants.push({
+                color: color,  // ⭐ Color is now first
                 size: 'One Size',
-                color: color,
                 price: p.price,
                 sku: p.sku || `${p.productId}-${color}`,
                 inStock: true,
@@ -347,13 +356,25 @@ async function syncToShopify(products) {
         const existingProduct = shopifyByHandle[handle] || allShopifyProducts.find(p => p.title === product.name);
 
         try {
-            // IMAGES (Merge all unique images)
+            // ⭐ PHASE 2: Collect ALL images from ALL colors
+            const allImageUrls = [];
+            const imageUrlToColor = new Map(); // Track which color each image belongs to
+            
+            for (const [color, images] of product._imagesByColor) {
+                images.forEach(url => {
+                    if (!allImageUrls.includes(url)) {
+                        allImageUrls.push(url);
+                        imageUrlToColor.set(url, color);
+                    }
+                });
+            }
+            
             // Limit to 20 images max to avoid timeouts
-            const uniqueImages = [...new Set(product._images)].slice(0, 20);
+            const uniqueImages = allImageUrls.slice(0, 20);
             
             let shopifyImages = [];
             if (uniqueImages.length > 0) {
-                // Download images
+                // Download and upload ALL images
                 for (const url of uniqueImages) {
                     let attempts = 0;
                     const maxRetries = 3;
@@ -376,7 +397,10 @@ async function syncToShopify(products) {
                             if (imageRes.ok) {
                                 const arrayBuffer = await imageRes.arrayBuffer();
                                 const base64 = Buffer.from(arrayBuffer).toString('base64');
-                                shopifyImages.push({ attachment: base64 });
+                                shopifyImages.push({ 
+                                    attachment: base64,
+                                    _sourceUrl: url  // Track original URL for variant mapping
+                                });
                                 success = true;
                             } else {
                                 throw new Error(`Status ${imageRes.status}`);
@@ -386,7 +410,10 @@ async function syncToShopify(products) {
                             if (attempts === maxRetries) {
                                 logger.error(`   [Image Fail] ${url} failed.`);
                                 // Push URL as fallback
-                                shopifyImages.push({ src: url });
+                                shopifyImages.push({ 
+                                    src: url,
+                                    _sourceUrl: url
+                                });
                             } else {
                                 await new Promise(r => setTimeout(r, 1000));
                             }
@@ -400,10 +427,10 @@ async function syncToShopify(products) {
             const allTags = [...categoryTags, 'trendyol', 'auto-imported'].join(', ');
 
             // Prepare variants (Shopify Format)
-            // Options: [Size, Color]
+            // ⭐ Options: [Color, Size] - Color is now primary!
             const shopifyVariants = product._variants.map(v => ({
-                option1: v.size,
-                option2: v.color,
+                option1: v.color,  // ⭐ SWAPPED: Color first
+                option2: v.size,   // ⭐ SWAPPED: Size second
                 price: (v.price * PRICE_MULTIPLIER).toFixed(2),
                 sku: v.sku,
                 inventory_management: 'shopify',
@@ -450,10 +477,54 @@ async function syncToShopify(products) {
                 newProduct.images = shopifyImages;
                 newProduct.variants = shopifyVariants;
                 
-                // Define Options
-                newProduct.options = [{ name: "Size" }, { name: "Color" }];
+                // ⭐ Define Options - Color is now PRIMARY!
+                newProduct.options = [{ name: "Color" }, { name: "Size" }];
 
+                // Save product first (this uploads images and assigns IDs)
                 await newProduct.save({ update: true });
+                
+                // ⭐ PHASE 2: Now assign image_id to each variant based on its color
+                // Fetch the created product back to get image IDs
+                const createdProduct = await shopify.rest.Product.find({
+                    session: shopify.session,
+                    id: newProduct.id
+                });
+                
+                // Create mapping: sourceUrl → Shopify image ID
+                const urlToImageId = new Map();
+                if (createdProduct.images && createdProduct.images.length > 0) {
+                    createdProduct.images.forEach((img, index) => {
+                        // Match by position since we can't store custom data
+                        const sourceUrl = shopifyImages[index]?._sourceUrl;
+                        if (sourceUrl && img.id) {
+                            urlToImageId.set(sourceUrl, img.id);
+                        }
+                    });
+                }
+                
+                // Update each variant with its color-specific image
+                if (createdProduct.variants && createdProduct.variants.length > 0) {
+                    for (const variant of createdProduct.variants) {
+                        const variantColor = variant.option1; // Color is option1 now!
+                        
+                        // Get images for this color
+                        const colorImages = product._imagesByColor.get(variantColor);
+                        if (colorImages && colorImages.length > 0) {
+                            // Assign first image of this color to the variant
+                            const firstImageUrl = colorImages[0];
+                            const imageId = urlToImageId.get(firstImageUrl);
+                            
+                            if (imageId) {
+                                // Update variant with image_id
+                                const variantToUpdate = new shopify.rest.Variant({ session: shopify.session });
+                                variantToUpdate.id = variant.id;
+                                variantToUpdate.image_id = imageId;
+                                await variantToUpdate.save({ update: true });
+                            }
+                        }
+                    }
+                }
+                
                 created++;
             }
 

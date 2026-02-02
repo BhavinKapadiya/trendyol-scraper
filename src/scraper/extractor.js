@@ -77,6 +77,53 @@ function extractProductData(html, categoryName, hydrationData) {
     return products;
 }
 
+// Extract variant links from JSON-LD ProductGroup schema
+function extractVariantLinks(htmlContent) {
+    try {
+        const $ = cheerio.load(htmlContent);
+        const jsonLdScripts = $('script[type="application/ld+json"]');
+        
+        for (let i = 0; i < jsonLdScripts.length; i++) {
+            try {
+                const scriptContent = $(jsonLdScripts[i]).html();
+                if (!scriptContent) continue;
+                
+                const json = JSON.parse(scriptContent);
+                
+                // Check if this is a ProductGroup with variants
+                if (json['@type'] === 'ProductGroup' && json.hasVariant && Array.isArray(json.hasVariant)) {
+                    logger.info(`   [Variant Discovery] Found ${json.hasVariant.length} color variants in ProductGroup`);
+                    
+                    const variants = json.hasVariant.map(variant => {
+                        const url = variant.url || variant['@id'] || variant.offers?.url;
+                        if (!url) {
+                            logger.warn(`   [Variant Discovery] Variant missing URL: ${JSON.stringify(variant).substring(0, 100)}`);
+                        }
+                        return {
+                            productId: variant.sku,
+                            url: url,
+                            color: variant.color,
+                            name: variant.name
+                        };
+                    }).filter(v => v.url); // Only return variants with valid URLs
+                    
+                    logger.info(`   [Variant Discovery] ${variants.length} variants have valid URLs`);
+                    return variants;
+                }
+            } catch (parseError) {
+                // Skip invalid JSON-LD blocks
+                continue;
+            }
+        }
+        
+        // No variants found
+        return [];
+    } catch (error) {
+        logger.error(`Error extracting variant links: ${error.message}`);
+        return [];
+    }
+}
+
 // Extract detailed product information from product detail page
 function extractProductDetails(detailData) {
     try {
@@ -199,7 +246,36 @@ function extractProductDetails(detailData) {
             (product.attributes ? product.attributes.find(a => a.key === 'modelCode')?.value : null) ||
             sku; // Fallback to SKU if nothing else found
 
+        // EXTRACT PRICE (for queue variants) - Always return a number!
+        let price = null;
+        if (product.price) {
+            // Try to extract numeric value from various price structures
+            const priceValue = product.price.sellingPrice?.value || 
+                              product.price.originalPrice?.value || 
+                              product.price.discountedPrice?.value ||
+                              product.price.value ||  // If price is object with value property
+                              product.price;          // If price is already a number
+            
+            // Ensure it's a number
+            price = typeof priceValue === 'number' ? priceValue : parseFloat(priceValue) || null;
+        } else if (product.winnerVariant?.price) {
+            const priceValue = product.winnerVariant.price.sellingPrice?.value || 
+                              product.winnerVariant.price.value;
+            price = typeof priceValue === 'number' ? priceValue : parseFloat(priceValue) || null;
+        }
 
+        // EXTRACT RATING (for queue variants)
+        const rating = product.ratingScore?.averageRating || 
+                      product.rating || 
+                      0;
+
+        // EXTRACT POPULARITY (for queue variants)  
+        const popularity = product.socialProof?.find(s => s.key === 'favoriteCount')?.value || 
+                          product.favoriteCount ||
+                          'N/A';
+
+        // Use first image as main image if images array exists
+        const image = images.length > 0 ? images[0] : null;
 
         return {
             sku,
@@ -210,7 +286,11 @@ function extractProductDetails(detailData) {
             stockCount,
             brand,
             description,
-            images
+            images,
+            price,
+            rating,
+            popularity,
+            image
         };
 
     } catch (error) {
@@ -218,5 +298,4 @@ function extractProductDetails(detailData) {
         return null;
     }
 }
-
-module.exports = { extractProductData, extractProductDetails };
+module.exports = { extractProductData, extractProductDetails, extractVariantLinks };

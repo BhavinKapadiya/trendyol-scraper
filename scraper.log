@@ -40114,3 +40114,752 @@ If you report this error, please include this id: c1fc3e78-19ca-4ca0-a80e-bf397b
 😴 Resting for 60 minutes before next run...
 [2026-02-01T15:53:03.801Z] [INFO] ========================================
 
+[2026-02-02T09:51:51.403Z] [INFO] Loaded REST resources: 74 resources
+[2026-02-02T09:51:51.415Z] [INFO] 
+🚀 TRENDYOL SCRAPER + SHOPIFY SYNC - STARTING
+
+[2026-02-02T09:51:51.429Z] [INFO] Started at: 2026-02-02T09:51:51.429Z
+[2026-02-02T09:51:51.429Z] [INFO] 💰 Price Multiplier: 3x (set in .env file)
+
+[2026-02-02T09:51:51.430Z] [INFO] ========================================
+[2026-02-02T09:51:51.431Z] [INFO] STEP 1: SCRAPING PRODUCTS FROM TRENDYOL
+[2026-02-02T09:51:51.431Z] [INFO] ========================================
+
+[2026-02-02T09:51:51.432Z] [INFO] 
+📦 Scraping: Bluz
+[2026-02-02T09:51:51.433Z] [INFO] Starting browser...
+[2026-02-02T09:51:52.357Z] [INFO] Navigating to Bluz (Page 1): https://www.trendyol-milla.com/sr?q=trendyolmilla%20bluz&qt=trendyolmilla%20bluz&st=trendyolmilla%20bluz&pi=1
+[2026-02-02T09:52:11.349Z] [INFO] Extracted 24 products from Bluz (Page 1)
+[2026-02-02T09:52:11.349Z] [INFO] Fetching details for 24 new products (Batched Variant Discovery)...
+[2026-02-02T09:52:11.639Z] [INFO] 
+📦 BATCH 1: Processing products 1-5...
+[2026-02-02T09:52:11.659Z] [INFO]    [1/24] Fetching details for: Kırmızı Örme Bluz TWOAW26BZ00293...
+[2026-02-02T09:52:23.053Z] [INFO]    [Variant Discovery] Found 2 color variants in ProductGroup
+[2026-02-02T09:52:23.089Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/kirmi...
+[2026-02-02T09:52:37.440Z] [INFO]    [2/24] Fetching details for: Siyah Dantel Detaylı Kare Yaka Örme Party Bluz TPR...
+[2026-02-02T09:52:42.115Z] [INFO]    [Variant Discovery] Found 1 color variants in ProductGroup
+[2026-02-02T09:52:42.159Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/siyah...
+[2026-02-02T09:52:56.408Z] [INFO]    [3/24] Fetching details for: Siyah Düz Premium Yumuşak Kumaşlı Fitted/Vücuda Ot...
+[2026-02-02T09:53:01.057Z] [INFO]    [Variant Discovery] Found 13 color variants in ProductGroup
+[2026-02-02T09:53:01.099Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/siyah...
+[2026-02-02T09:53:15.299Z] [INFO]    [4/24] Fetching details for: Haki Fitted/Vücuda Oturan Asimetrik Yaka Çift Görü...
+[2026-02-02T09:53:20.088Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/haki-...
+[2026-02-02T09:53:34.269Z] [INFO]    [5/24] Fetching details for: Lacivert Örme Bluz TWOAW26BZ00252...
+[2026-02-02T09:53:38.957Z] [INFO]    [Variant Discovery] Found 2 color variants in ProductGroup
+[2026-02-02T09:53:39.006Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/laciv...
+[2026-02-02T09:53:53.300Z] [INFO] 
+🔄 QUEUE PROCESSING: 18 variants discovered, fetching details...
+[2026-02-02T09:53:53.301Z] [INFO]    [Queue 1/18] Fetching: gri variant...
+[2026-02-02T09:53:53.366Z] [ERROR] Error crawling product details for undefined: Cannot read properties of undefined (reading 'substring')
+[2026-02-02T09:53:54.371Z] [INFO]    [Queue 2/18] Fetching: siyah variant...
+[2026-02-02T09:53:54.412Z] [ERROR] Error crawling product details for undefined: Cannot read properties of undefined (reading 'substring')
+[2026-02-02T09:53:55.417Z] [INFO]    [Queue 3/18] Fetching: koyu-kahverengi variant...
+[2026-02-02T09:53:55.482Z] [ERROR] Error crawling product details for undefined: Cannot read properties of undefined (reading 'substring')
+[2026-02-02T09:53:56.488Z] [INFO]    [Queue 4/18] Fetching: siyah variant...
+[2026-02-02T09:53:56.538Z] [ERROR] Error crawling product details for undefined: Cannot read properties of undefined (reading 'substring')
+[2026-02-02T09:53:57.545Z] [INFO]    [Queue 5/18] Fetching: bordo variant...
+[2026-02-02T09:53:57.598Z] [ERROR] Error crawling product details for undefined: Cannot read properties of undefined (reading 'substring')
+[2026-02-02T09:53:58.603Z] [INFO] 🛑 LIMIT REACHED during queue processing: Stopped at 10 products.
+[2026-02-02T09:53:58.604Z] [INFO] ✅ Queue processed. Total products collected: 0
+[2026-02-02T09:53:58.705Z] [INFO]    Found 5 products
+[2026-02-02T09:53:58.706Z] [INFO]    [Checkpoint] Saved 5 products so far.
+[2026-02-02T09:53:58.718Z] [INFO] 
+✅ Total scraped: 5, After deduplication: 5
+[2026-02-02T09:53:58.719Z] [INFO] ✅ Valid products: 5
+[2026-02-02T09:53:58.720Z] [INFO] 💾 Saved to products.json
+
+[2026-02-02T09:53:58.721Z] [INFO] ========================================
+[2026-02-02T09:53:58.722Z] [INFO] STEP 2: CREATING SHOPIFY COLLECTIONS
+[2026-02-02T09:53:58.722Z] [INFO] ========================================
+
+[2026-02-02T09:54:00.290Z] [INFO] ⏭️  Bluz - Already exists
+[2026-02-02T09:54:00.290Z] [INFO] 
+[2026-02-02T09:54:00.291Z] [INFO] ========================================
+[2026-02-02T09:54:00.292Z] [INFO] STEP 3: SYNCING PRODUCTS TO SHOPIFY
+[2026-02-02T09:54:00.292Z] [INFO] ========================================
+
+[2026-02-02T09:54:00.293Z] [INFO] Grouping 5 scraped items by Model Code...
+[2026-02-02T09:54:00.294Z] [INFO] ℹ️  Merged into 5 unique Shopify products.
+[2026-02-02T09:54:00.294Z] [INFO] Fetching ALL existing Shopify products to check for duplicates...
+[2026-02-02T09:54:00.766Z] [INFO]    Fetched 0 products so far...
+[2026-02-02T09:54:00.767Z] [INFO] ✅ Found 0 total existing products
+
+[2026-02-02T09:54:05.877Z] [INFO] [1/5] CREATING: Kırmızı Örme Bluz TWOAW26BZ00293... (1 colors)
+[2026-02-02T09:55:10.625Z] [INFO] Loaded REST resources: 74 resources
+[2026-02-02T09:55:10.627Z] [INFO] 
+🚀 TRENDYOL SCRAPER + SHOPIFY SYNC - STARTING
+
+[2026-02-02T09:55:10.627Z] [INFO] Started at: 2026-02-02T09:55:10.627Z
+[2026-02-02T09:55:10.628Z] [INFO] 💰 Price Multiplier: 3x (set in .env file)
+
+[2026-02-02T09:55:10.628Z] [INFO] ========================================
+[2026-02-02T09:55:10.629Z] [INFO] STEP 1: SCRAPING PRODUCTS FROM TRENDYOL
+[2026-02-02T09:55:10.629Z] [INFO] ========================================
+
+[2026-02-02T09:55:10.630Z] [INFO] 
+📦 Scraping: Bluz
+[2026-02-02T09:55:10.631Z] [INFO] Starting browser...
+[2026-02-02T09:55:11.061Z] [INFO] Navigating to Bluz (Page 1): https://www.trendyol-milla.com/sr?q=trendyolmilla%20bluz&qt=trendyolmilla%20bluz&st=trendyolmilla%20bluz&pi=1
+[2026-02-02T09:55:33.479Z] [INFO] Extracted 24 products from Bluz (Page 1)
+[2026-02-02T09:55:33.480Z] [INFO] Fetching details for 24 new products (Batched Variant Discovery)...
+[2026-02-02T09:55:33.480Z] [INFO] 
+📦 BATCH 1: Processing products 1-5...
+[2026-02-02T09:55:33.481Z] [INFO]    [1/24] Fetching details for: Kırmızı Örme Bluz TWOAW26BZ00293...
+[2026-02-02T09:55:44.941Z] [INFO]    [Variant Discovery] Found 2 color variants in ProductGroup
+[2026-02-02T09:55:44.942Z] [INFO]    [Variant Discovery] 2 variants have valid URLs
+[2026-02-02T09:55:45.012Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/kirmi...
+[2026-02-02T09:55:59.124Z] [INFO]    [2/24] Fetching details for: Siyah Dantel Detaylı Kare Yaka Örme Party Bluz TPR...
+[2026-02-02T09:56:03.410Z] [INFO]    [Variant Discovery] Found 1 color variants in ProductGroup
+[2026-02-02T09:56:03.411Z] [INFO]    [Variant Discovery] 1 variants have valid URLs
+[2026-02-02T09:56:03.461Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/siyah...
+[2026-02-02T09:56:17.761Z] [INFO]    [3/24] Fetching details for: Siyah Düz Premium Yumuşak Kumaşlı Fitted/Vücuda Ot...
+[2026-02-02T09:56:21.958Z] [INFO]    [Variant Discovery] Found 13 color variants in ProductGroup
+[2026-02-02T09:56:21.958Z] [INFO]    [Variant Discovery] 13 variants have valid URLs
+[2026-02-02T09:56:22.011Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/siyah...
+[2026-02-02T09:56:36.141Z] [INFO]    [4/24] Fetching details for: Haki Fitted/Vücuda Oturan Asimetrik Yaka Çift Görü...
+[2026-02-02T09:56:41.336Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/haki-...
+[2026-02-02T09:56:56.613Z] [INFO]    [5/24] Fetching details for: Lacivert Örme Bluz TWOAW26BZ00252...
+[2026-02-02T09:57:00.813Z] [INFO]    [Variant Discovery] Found 2 color variants in ProductGroup
+[2026-02-02T09:57:00.813Z] [INFO]    [Variant Discovery] 2 variants have valid URLs
+[2026-02-02T09:57:00.872Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/laciv...
+[2026-02-02T09:57:15.274Z] [INFO] 
+🔄 QUEUE PROCESSING: 18 variants discovered, fetching details...
+[2026-02-02T09:57:15.275Z] [INFO]    [Queue 1/18] Fetching: gri variant...
+[2026-02-02T09:57:15.332Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/gri-i...
+[2026-02-02T09:57:29.597Z] [INFO]    [Queue 2/18] Fetching: siyah variant...
+[2026-02-02T09:57:29.650Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/siyah...
+[2026-02-02T09:57:43.927Z] [INFO]    [Queue 3/18] Fetching: koyu-kahverengi variant...
+[2026-02-02T09:57:43.982Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/koyu-...
+[2026-02-02T09:57:58.431Z] [INFO] 🛑 LIMIT REACHED during queue processing: Stopped at 10 products.
+[2026-02-02T09:57:58.431Z] [INFO] ✅ Queue processed. Total products collected: 3
+[2026-02-02T09:57:58.514Z] [INFO]    Found 8 products
+[2026-02-02T09:57:58.514Z] [INFO]    [Checkpoint] Saved 8 products so far.
+[2026-02-02T09:57:58.545Z] [INFO] 
+✅ Total scraped: 8, After deduplication: 8
+[2026-02-02T09:57:58.546Z] [WARN] Invalid product skipped: Trendyolmilla Gri İspanyol Kol Büzgü Det... - Invalid price
+[2026-02-02T09:57:58.547Z] [WARN] Invalid product skipped: Trendyolmilla Siyah İspanyol Kol Büzgü D... - Invalid price
+[2026-02-02T09:57:58.548Z] [WARN] Invalid product skipped: Trendyolmilla Koyu Kahverengi Dantel Det... - Invalid price
+[2026-02-02T09:57:58.548Z] [INFO] ✅ Valid products: 5
+[2026-02-02T09:57:58.549Z] [INFO] 💾 Saved to products.json
+
+[2026-02-02T09:57:58.549Z] [INFO] ========================================
+[2026-02-02T09:57:58.550Z] [INFO] STEP 2: CREATING SHOPIFY COLLECTIONS
+[2026-02-02T09:57:58.551Z] [INFO] ========================================
+
+[2026-02-02T09:57:59.431Z] [INFO] ⏭️  Bluz - Already exists
+[2026-02-02T09:57:59.432Z] [INFO] 
+[2026-02-02T09:57:59.433Z] [INFO] ========================================
+[2026-02-02T09:57:59.433Z] [INFO] STEP 3: SYNCING PRODUCTS TO SHOPIFY
+[2026-02-02T09:57:59.434Z] [INFO] ========================================
+
+[2026-02-02T09:57:59.434Z] [INFO] Grouping 5 scraped items by Model Code...
+[2026-02-02T09:57:59.435Z] [INFO] ℹ️  Merged into 5 unique Shopify products.
+[2026-02-02T09:57:59.436Z] [INFO] Fetching ALL existing Shopify products to check for duplicates...
+[2026-02-02T09:57:59.983Z] [INFO]    Fetched 1 products so far...
+[2026-02-02T09:57:59.984Z] [INFO] ✅ Found 1 total existing products
+
+[2026-02-02T09:58:05.827Z] [INFO] [1/5] UPDATING: Kırmızı Örme Bluz TWOAW26BZ00293... (1 colors)
+[2026-02-02T09:58:11.799Z] [INFO] [2/5] CREATING: Siyah Dantel Detaylı Kare Yaka Örme Party Bluz TPR... (1 colors)
+[2026-02-02T09:58:38.543Z] [INFO] [3/5] CREATING: Siyah Düz Premium Yumuşak Kumaşlı Fitted/Vücuda Ot... (1 colors)
+[2026-02-02T09:59:54.048Z] [INFO] Loaded REST resources: 74 resources
+[2026-02-02T09:59:54.062Z] [INFO] 
+🚀 TRENDYOL SCRAPER + SHOPIFY SYNC - STARTING
+
+[2026-02-02T09:59:54.062Z] [INFO] Started at: 2026-02-02T09:59:54.062Z
+[2026-02-02T09:59:54.063Z] [INFO] 💰 Price Multiplier: 3x (set in .env file)
+
+[2026-02-02T09:59:54.064Z] [INFO] ========================================
+[2026-02-02T09:59:54.064Z] [INFO] STEP 1: SCRAPING PRODUCTS FROM TRENDYOL
+[2026-02-02T09:59:54.065Z] [INFO] ========================================
+
+[2026-02-02T09:59:54.065Z] [INFO] 
+📦 Scraping: Bluz
+[2026-02-02T09:59:54.066Z] [INFO] Starting browser...
+[2026-02-02T09:59:54.856Z] [INFO] Navigating to Bluz (Page 1): https://www.trendyol-milla.com/sr?q=trendyolmilla%20bluz&qt=trendyolmilla%20bluz&st=trendyolmilla%20bluz&pi=1
+[2026-02-02T10:00:05.139Z] [INFO] Extracted 24 products from Bluz (Page 1)
+[2026-02-02T10:00:05.139Z] [INFO] Fetching details for 24 new products (Batched Variant Discovery)...
+[2026-02-02T10:00:05.140Z] [INFO] 
+📦 BATCH 1: Processing products 1-5...
+[2026-02-02T10:00:05.140Z] [INFO]    [1/24] Fetching details for: Kırmızı Örme Bluz TWOAW26BZ00293...
+[2026-02-02T10:00:12.653Z] [INFO]    [Variant Discovery] Found 2 color variants in ProductGroup
+[2026-02-02T10:00:12.653Z] [INFO]    [Variant Discovery] 2 variants have valid URLs
+[2026-02-02T10:00:12.693Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/kirmi...
+[2026-02-02T10:00:26.839Z] [INFO]    [2/24] Fetching details for: Siyah Dantel Detaylı Kare Yaka Örme Party Bluz TPR...
+[2026-02-02T10:00:31.055Z] [INFO]    [Variant Discovery] Found 1 color variants in ProductGroup
+[2026-02-02T10:00:31.055Z] [INFO]    [Variant Discovery] 1 variants have valid URLs
+[2026-02-02T10:00:31.102Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/siyah...
+[2026-02-02T10:00:45.336Z] [INFO]    [3/24] Fetching details for: Siyah Düz Premium Yumuşak Kumaşlı Fitted/Vücuda Ot...
+[2026-02-02T10:00:49.509Z] [INFO]    [Variant Discovery] Found 13 color variants in ProductGroup
+[2026-02-02T10:00:49.510Z] [INFO]    [Variant Discovery] 13 variants have valid URLs
+[2026-02-02T10:00:49.557Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/siyah...
+[2026-02-02T10:01:03.668Z] [INFO]    [4/24] Fetching details for: Haki Fitted/Vücuda Oturan Asimetrik Yaka Çift Görü...
+[2026-02-02T10:01:08.499Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/haki-...
+[2026-02-02T10:01:22.568Z] [INFO]    [5/24] Fetching details for: Lacivert Örme Bluz TWOAW26BZ00252...
+[2026-02-02T10:01:26.831Z] [INFO]    [Variant Discovery] Found 2 color variants in ProductGroup
+[2026-02-02T10:01:26.832Z] [INFO]    [Variant Discovery] 2 variants have valid URLs
+[2026-02-02T10:01:26.870Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/laciv...
+[2026-02-02T10:01:40.988Z] [INFO] 
+🔄 QUEUE PROCESSING: 18 variants discovered, fetching details...
+[2026-02-02T10:01:40.989Z] [INFO]    [Queue 1/18] Fetching: gri variant...
+[2026-02-02T10:01:41.312Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/gri-i...
+[2026-02-02T10:01:55.435Z] [INFO]    [Queue 2/18] Fetching: siyah variant...
+[2026-02-02T10:01:55.500Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/siyah...
+[2026-02-02T10:02:09.845Z] [INFO]    [Queue 3/18] Fetching: koyu-kahverengi variant...
+[2026-02-02T10:02:09.908Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/koyu-...
+[2026-02-02T10:02:24.240Z] [INFO] 🛑 LIMIT REACHED during queue processing: Stopped at 10 products.
+[2026-02-02T10:02:24.241Z] [INFO] ✅ Queue processed. Total products collected: 3
+[2026-02-02T10:02:24.614Z] [INFO]    Found 8 products
+[2026-02-02T10:02:24.615Z] [INFO]    [Checkpoint] Saved 8 products so far.
+[2026-02-02T10:02:24.628Z] [INFO] 
+✅ Total scraped: 8, After deduplication: 8
+[2026-02-02T10:02:24.629Z] [WARN] Invalid product skipped: Trendyolmilla Gri İspanyol Kol Büzgü Det... - Invalid price
+[2026-02-02T10:02:24.630Z] [WARN] Invalid product skipped: Trendyolmilla Siyah İspanyol Kol Büzgü D... - Invalid price
+[2026-02-02T10:02:24.630Z] [WARN] Invalid product skipped: Trendyolmilla Koyu Kahverengi Dantel Det... - Invalid price
+[2026-02-02T10:02:24.631Z] [INFO] ✅ Valid products: 5
+[2026-02-02T10:02:24.646Z] [INFO] 💾 Saved to products.json
+
+[2026-02-02T10:02:24.647Z] [INFO] ========================================
+[2026-02-02T10:02:24.648Z] [INFO] STEP 2: CREATING SHOPIFY COLLECTIONS
+[2026-02-02T10:02:24.648Z] [INFO] ========================================
+
+[2026-02-02T10:02:25.336Z] [INFO] ⏭️  Bluz - Already exists
+[2026-02-02T10:02:25.336Z] [INFO] 
+[2026-02-02T10:02:25.337Z] [INFO] ========================================
+[2026-02-02T10:02:25.337Z] [INFO] STEP 3: SYNCING PRODUCTS TO SHOPIFY
+[2026-02-02T10:02:25.338Z] [INFO] ========================================
+
+[2026-02-02T10:02:25.339Z] [INFO] Grouping 5 scraped items by Model Code...
+[2026-02-02T10:02:25.339Z] [INFO] ℹ️  Merged into 5 unique Shopify products.
+[2026-02-02T10:02:25.340Z] [INFO] Fetching ALL existing Shopify products to check for duplicates...
+[2026-02-02T10:02:25.889Z] [INFO]    Fetched 2 products so far...
+[2026-02-02T10:02:25.889Z] [INFO] ✅ Found 2 total existing products
+
+[2026-02-02T10:02:31.306Z] [INFO] [1/5] UPDATING: Kırmızı Örme Bluz TWOAW26BZ00293... (1 colors)
+[2026-02-02T10:02:36.245Z] [INFO] [2/5] UPDATING: Siyah Dantel Detaylı Kare Yaka Örme Party Bluz TPR... (1 colors)
+[2026-02-02T10:02:43.910Z] [INFO] [3/5] CREATING: Siyah Düz Premium Yumuşak Kumaşlı Fitted/Vücuda Ot... (1 colors)
+[2026-02-02T10:03:42.157Z] [INFO] [4/5] CREATING: Haki Fitted/Vücuda Oturan Asimetrik Yaka Çift Görü... (1 colors)
+[2026-02-02T10:03:56.772Z] [INFO] [5/5] CREATING: Lacivert Örme Bluz TWOAW26BZ00252... (1 colors)
+[2026-02-02T10:04:26.866Z] [INFO] 
+✅ Created: 4, Updated: 1, Failed: 0
+
+[2026-02-02T10:04:26.867Z] [INFO] ========================================
+[2026-02-02T10:04:26.868Z] [INFO] 🎉 ALL DONE!
+[2026-02-02T10:04:26.869Z] [INFO] Total time: 9 minutes
+[2026-02-02T10:04:26.869Z] [INFO] 
+😴 Resting for 60 minutes before next run...
+[2026-02-02T10:04:26.870Z] [INFO] ========================================
+
+[2026-02-02T10:05:01.536Z] [INFO] Loaded REST resources: 74 resources
+[2026-02-02T10:05:01.538Z] [INFO] 
+🚀 TRENDYOL SCRAPER + SHOPIFY SYNC - STARTING
+
+[2026-02-02T10:05:01.538Z] [INFO] Started at: 2026-02-02T10:05:01.538Z
+[2026-02-02T10:05:01.552Z] [INFO] 💰 Price Multiplier: 3x (set in .env file)
+
+[2026-02-02T10:05:01.553Z] [INFO] ========================================
+[2026-02-02T10:05:01.553Z] [INFO] STEP 1: SCRAPING PRODUCTS FROM TRENDYOL
+[2026-02-02T10:05:01.554Z] [INFO] ========================================
+
+[2026-02-02T10:05:01.555Z] [INFO] 
+📦 Scraping: Bluz
+[2026-02-02T10:05:01.555Z] [INFO] Starting browser...
+[2026-02-02T10:05:01.992Z] [INFO] Navigating to Bluz (Page 1): https://www.trendyol-milla.com/sr?q=trendyolmilla%20bluz&qt=trendyolmilla%20bluz&st=trendyolmilla%20bluz&pi=1
+[2026-02-02T10:05:21.312Z] [INFO] Extracted 24 products from Bluz (Page 1)
+[2026-02-02T10:05:21.313Z] [INFO] Fetching details for 24 new products (Batched Variant Discovery)...
+[2026-02-02T10:05:21.327Z] [INFO] 
+📦 BATCH 1: Processing products 1-5...
+[2026-02-02T10:05:21.327Z] [INFO]    [1/24] Fetching details for: Kırmızı Örme Bluz TWOAW26BZ00293...
+[2026-02-02T10:05:28.911Z] [INFO]    [Variant Discovery] Found 2 color variants in ProductGroup
+[2026-02-02T10:05:28.911Z] [INFO]    [Variant Discovery] 2 variants have valid URLs
+[2026-02-02T10:05:28.952Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/kirmi...
+[2026-02-02T10:05:43.556Z] [INFO]    [2/24] Fetching details for: Siyah Dantel Detaylı Kare Yaka Örme Party Bluz TPR...
+[2026-02-02T10:05:47.823Z] [INFO]    [Variant Discovery] Found 1 color variants in ProductGroup
+[2026-02-02T10:05:47.823Z] [INFO]    [Variant Discovery] 1 variants have valid URLs
+[2026-02-02T10:05:47.870Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/siyah...
+[2026-02-02T10:06:02.052Z] [INFO]    [3/24] Fetching details for: Siyah Düz Premium Yumuşak Kumaşlı Fitted/Vücuda Ot...
+[2026-02-02T10:06:06.303Z] [INFO]    [Variant Discovery] Found 13 color variants in ProductGroup
+[2026-02-02T10:06:06.303Z] [INFO]    [Variant Discovery] 13 variants have valid URLs
+[2026-02-02T10:06:06.343Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/siyah...
+[2026-02-02T10:06:20.534Z] [INFO]    [4/24] Fetching details for: Haki Fitted/Vücuda Oturan Asimetrik Yaka Çift Görü...
+[2026-02-02T10:06:25.063Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/haki-...
+[2026-02-02T10:06:39.358Z] [INFO]    [5/24] Fetching details for: Lacivert Örme Bluz TWOAW26BZ00252...
+[2026-02-02T10:06:43.913Z] [INFO]    [Variant Discovery] Found 2 color variants in ProductGroup
+[2026-02-02T10:06:43.913Z] [INFO]    [Variant Discovery] 2 variants have valid URLs
+[2026-02-02T10:06:43.953Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/laciv...
+[2026-02-02T10:06:58.130Z] [INFO] 
+🔄 QUEUE PROCESSING: 18 variants discovered, fetching details...
+[2026-02-02T10:06:58.131Z] [INFO]    [Queue 1/18] Fetching: gri variant...
+[2026-02-02T10:06:58.193Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/gri-i...
+[2026-02-02T10:07:12.404Z] [INFO]    [Queue 2/18] Fetching: siyah variant...
+[2026-02-02T10:07:12.467Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/siyah...
+[2026-02-02T10:07:27.097Z] [INFO]    [Queue 3/18] Fetching: koyu-kahverengi variant...
+[2026-02-02T10:07:27.163Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/koyu-...
+[2026-02-02T10:07:41.371Z] [INFO] 🛑 LIMIT REACHED during queue processing: Stopped at 10 products.
+[2026-02-02T10:07:41.371Z] [INFO] ✅ Queue processed. Total products collected: 3
+[2026-02-02T10:07:41.739Z] [INFO]    Found 8 products
+[2026-02-02T10:07:41.772Z] [INFO]    [Checkpoint] Saved 8 products so far.
+[2026-02-02T10:07:41.772Z] [INFO] 
+✅ Total scraped: 8, After deduplication: 8
+[2026-02-02T10:07:41.773Z] [WARN] Invalid product skipped: Trendyolmilla Gri İspanyol Kol Büzgü Det... - Invalid price
+[2026-02-02T10:07:41.774Z] [WARN] Invalid product skipped: Trendyolmilla Siyah İspanyol Kol Büzgü D... - Invalid price
+[2026-02-02T10:07:41.774Z] [WARN] Invalid product skipped: Trendyolmilla Koyu Kahverengi Dantel Det... - Invalid price
+[2026-02-02T10:07:41.775Z] [INFO] ✅ Valid products: 5
+[2026-02-02T10:07:41.776Z] [INFO] 💾 Saved to products.json
+
+[2026-02-02T10:07:41.776Z] [INFO] ========================================
+[2026-02-02T10:07:41.777Z] [INFO] STEP 2: CREATING SHOPIFY COLLECTIONS
+[2026-02-02T10:07:41.778Z] [INFO] ========================================
+
+[2026-02-02T10:07:42.429Z] [INFO] ⏭️  Bluz - Already exists
+[2026-02-02T10:07:42.429Z] [INFO] 
+[2026-02-02T10:07:42.430Z] [INFO] ========================================
+[2026-02-02T10:07:42.430Z] [INFO] STEP 3: SYNCING PRODUCTS TO SHOPIFY
+[2026-02-02T10:07:42.431Z] [INFO] ========================================
+
+[2026-02-02T10:07:42.431Z] [INFO] Grouping 5 scraped items by Model Code...
+[2026-02-02T10:07:42.432Z] [INFO] ℹ️  Merged into 5 unique Shopify products.
+[2026-02-02T10:07:42.432Z] [INFO] Fetching ALL existing Shopify products to check for duplicates...
+[2026-02-02T10:07:42.960Z] [INFO]    Fetched 0 products so far...
+[2026-02-02T10:07:42.960Z] [INFO] ✅ Found 0 total existing products
+
+[2026-02-02T10:07:50.921Z] [INFO] [1/5] CREATING: Kırmızı Örme Bluz TWOAW26BZ00293... (1 colors)
+[2026-02-02T10:08:25.636Z] [INFO] [2/5] CREATING: Siyah Dantel Detaylı Kare Yaka Örme Party Bluz TPR... (1 colors)
+[2026-02-02T10:08:50.399Z] [INFO] [3/5] CREATING: Siyah Düz Premium Yumuşak Kumaşlı Fitted/Vücuda Ot... (1 colors)
+[2026-02-02T10:12:18.551Z] [INFO] [4/5] CREATING: Haki Fitted/Vücuda Oturan Asimetrik Yaka Çift Görü... (1 colors)
+[2026-02-02T10:12:40.042Z] [INFO] [5/5] CREATING: Lacivert Örme Bluz TWOAW26BZ00252... (1 colors)
+[2026-02-02T10:13:07.711Z] [INFO] 
+✅ Created: 5, Updated: 0, Failed: 0
+
+[2026-02-02T10:13:07.812Z] [INFO] ========================================
+[2026-02-02T10:13:07.823Z] [INFO] 🎉 ALL DONE!
+[2026-02-02T10:13:07.824Z] [INFO] Total time: 8 minutes
+[2026-02-02T10:13:07.825Z] [INFO] 
+😴 Resting for 60 minutes before next run...
+[2026-02-02T10:13:07.825Z] [INFO] ========================================
+
+[2026-02-02T10:21:46.973Z] [INFO] Loaded REST resources: 74 resources
+[2026-02-02T10:21:46.984Z] [INFO] 
+🚀 TRENDYOL SCRAPER + SHOPIFY SYNC - STARTING
+
+[2026-02-02T10:21:46.984Z] [INFO] Started at: 2026-02-02T10:21:46.984Z
+[2026-02-02T10:21:46.985Z] [INFO] 💰 Price Multiplier: 3x (set in .env file)
+
+[2026-02-02T10:21:46.985Z] [INFO] ========================================
+[2026-02-02T10:21:46.986Z] [INFO] STEP 1: SCRAPING PRODUCTS FROM TRENDYOL
+[2026-02-02T10:21:46.986Z] [INFO] ========================================
+
+[2026-02-02T10:21:46.987Z] [INFO] 
+📦 Scraping: Bluz
+[2026-02-02T10:21:46.988Z] [INFO] Starting browser...
+[2026-02-02T10:21:47.692Z] [INFO] Navigating to Bluz (Page 1): https://www.trendyol-milla.com/sr?q=trendyolmilla%20bluz&qt=trendyolmilla%20bluz&st=trendyolmilla%20bluz&pi=1
+[2026-02-02T10:22:04.617Z] [INFO] Extracted 24 products from Bluz (Page 1)
+[2026-02-02T10:22:04.618Z] [INFO] Fetching details for 24 new products (Batched Variant Discovery)...
+[2026-02-02T10:22:04.618Z] [INFO] 
+📦 BATCH 1: Processing products 1-5...
+[2026-02-02T10:22:04.619Z] [INFO]    [1/24] Fetching details for: Siyah Düz Premium Yumuşak Kumaşlı Fitted/Vücuda Ot...
+[2026-02-02T10:22:16.857Z] [INFO]    [Variant Discovery] Found 13 color variants in ProductGroup
+[2026-02-02T10:22:16.858Z] [INFO]    [Variant Discovery] 13 variants have valid URLs
+[2026-02-02T10:22:17.183Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/siyah...
+[2026-02-02T10:22:31.379Z] [INFO]    [2/24] Fetching details for: Siyah Dantel Detaylı Kare Yaka Örme Party Bluz TPR...
+[2026-02-02T10:22:35.620Z] [INFO]    [Variant Discovery] Found 1 color variants in ProductGroup
+[2026-02-02T10:22:35.620Z] [INFO]    [Variant Discovery] 1 variants have valid URLs
+[2026-02-02T10:22:35.668Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/siyah...
+[2026-02-02T10:22:50.030Z] [INFO]    [3/24] Fetching details for: Kırmızı Örme Bluz TWOAW26BZ00293...
+[2026-02-02T10:22:54.926Z] [INFO]    [Variant Discovery] Found 2 color variants in ProductGroup
+[2026-02-02T10:22:54.926Z] [INFO]    [Variant Discovery] 2 variants have valid URLs
+[2026-02-02T10:22:54.975Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/kirmi...
+[2026-02-02T10:23:09.079Z] [INFO]    [4/24] Fetching details for: Haki Fitted/Vücuda Oturan Asimetrik Yaka Çift Görü...
+[2026-02-02T10:23:13.963Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/haki-...
+[2026-02-02T10:23:27.992Z] [INFO]    [5/24] Fetching details for: Lacivert Örme Bluz TWOAW26BZ00252...
+[2026-02-02T10:23:32.265Z] [INFO]    [Variant Discovery] Found 2 color variants in ProductGroup
+[2026-02-02T10:23:32.266Z] [INFO]    [Variant Discovery] 2 variants have valid URLs
+[2026-02-02T10:23:32.312Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/laciv...
+[2026-02-02T10:23:35.229Z] [INFO] Loaded REST resources: 74 resources
+[2026-02-02T10:23:35.242Z] [INFO] 
+🚀 TRENDYOL SCRAPER + SHOPIFY SYNC - STARTING
+
+[2026-02-02T10:23:35.247Z] [INFO] Started at: 2026-02-02T10:23:35.247Z
+[2026-02-02T10:23:35.247Z] [INFO] 💰 Price Multiplier: 3x (set in .env file)
+
+[2026-02-02T10:23:35.248Z] [INFO] ========================================
+[2026-02-02T10:23:35.248Z] [INFO] STEP 1: SCRAPING PRODUCTS FROM TRENDYOL
+[2026-02-02T10:23:35.249Z] [INFO] ========================================
+
+[2026-02-02T10:23:35.249Z] [INFO] 
+📦 Scraping: Bluz
+[2026-02-02T10:23:35.250Z] [INFO] Starting browser...
+[2026-02-02T10:23:35.737Z] [INFO] Navigating to Bluz (Page 1): https://www.trendyol-milla.com/sr?q=trendyolmilla%20bluz&qt=trendyolmilla%20bluz&st=trendyolmilla%20bluz&pi=1
+[2026-02-02T10:23:45.329Z] [INFO] Extracted 24 products from Bluz (Page 1)
+[2026-02-02T10:23:45.331Z] [INFO] Fetching details for 24 new products (Batched Variant Discovery)...
+[2026-02-02T10:23:45.625Z] [INFO] 
+📦 BATCH 1: Processing products 1-5...
+[2026-02-02T10:23:45.625Z] [INFO]    [1/24] Fetching details for: Siyah Düz Premium Yumuşak Kumaşlı Fitted/Vücuda Ot...
+[2026-02-02T10:23:46.321Z] [INFO] 
+🔄 QUEUE PROCESSING: 18 variants discovered, fetching details...
+[2026-02-02T10:23:46.322Z] [INFO]    [Queue 1/18] Fetching: siyah variant...
+[2026-02-02T10:23:46.386Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/siyah...
+[2026-02-02T10:23:55.668Z] [INFO]    [Variant Discovery] Found 13 color variants in ProductGroup
+[2026-02-02T10:23:55.772Z] [INFO]    [Variant Discovery] 13 variants have valid URLs
+[2026-02-02T10:23:55.817Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/siyah...
+[2026-02-02T10:24:00.433Z] [INFO]    [Queue 2/18] Fetching: bordo variant...
+[2026-02-02T10:24:00.469Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/bordo...
+[2026-02-02T10:24:09.992Z] [INFO]    [2/24] Fetching details for: Siyah Dantel Detaylı Kare Yaka Örme Party Bluz TPR...
+[2026-02-02T10:24:14.426Z] [INFO]    [Variant Discovery] Found 1 color variants in ProductGroup
+[2026-02-02T10:24:14.427Z] [INFO]    [Variant Discovery] 1 variants have valid URLs
+[2026-02-02T10:24:14.467Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/siyah...
+[2026-02-02T10:24:14.483Z] [INFO]    [Queue 3/18] Fetching: murdum variant...
+[2026-02-02T10:24:14.598Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/murdu...
+[2026-02-02T10:24:28.679Z] [INFO] 🛑 LIMIT REACHED during queue processing: Stopped at 10 products.
+[2026-02-02T10:24:28.679Z] [INFO] ✅ Queue processed. Total products collected: 3
+[2026-02-02T10:24:28.699Z] [INFO]    [3/24] Fetching details for: Kırmızı Örme Bluz TWOAW26BZ00293...
+[2026-02-02T10:24:28.793Z] [INFO]    Found 8 products
+[2026-02-02T10:24:28.813Z] [INFO]    [Checkpoint] Saved 8 products so far.
+[2026-02-02T10:24:28.813Z] [INFO] 
+✅ Total scraped: 8, After deduplication: 8
+[2026-02-02T10:24:28.814Z] [INFO] ✅ Valid products: 8
+[2026-02-02T10:24:28.828Z] [INFO] 💾 Saved to products.json
+
+[2026-02-02T10:24:28.828Z] [INFO] ========================================
+[2026-02-02T10:24:28.829Z] [INFO] STEP 2: CREATING SHOPIFY COLLECTIONS
+[2026-02-02T10:24:28.830Z] [INFO] ========================================
+
+[2026-02-02T10:24:30.694Z] [INFO] ⏭️  Bluz - Already exists
+[2026-02-02T10:24:30.695Z] [INFO] 
+[2026-02-02T10:24:30.696Z] [INFO] ========================================
+[2026-02-02T10:24:30.696Z] [INFO] STEP 3: SYNCING PRODUCTS TO SHOPIFY
+[2026-02-02T10:24:30.697Z] [INFO] ========================================
+
+[2026-02-02T10:24:30.697Z] [INFO] Grouping 8 scraped items by Model Code...
+[2026-02-02T10:24:30.698Z] [INFO] ℹ️  Merged into 5 unique Shopify products.
+[2026-02-02T10:24:30.698Z] [INFO] Fetching ALL existing Shopify products to check for duplicates...
+[2026-02-02T10:24:31.183Z] [INFO]    Fetched 0 products so far...
+[2026-02-02T10:24:31.183Z] [INFO] ✅ Found 0 total existing products
+
+[2026-02-02T10:24:32.964Z] [INFO]    [Variant Discovery] Found 2 color variants in ProductGroup
+[2026-02-02T10:24:32.964Z] [INFO]    [Variant Discovery] 2 variants have valid URLs
+[2026-02-02T10:24:33.003Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/kirmi...
+[2026-02-02T10:24:47.170Z] [INFO]    [4/24] Fetching details for: Haki Fitted/Vücuda Oturan Asimetrik Yaka Çift Görü...
+[2026-02-02T10:24:50.591Z] [INFO] [1/5] CREATING: Trendyolmilla Siyah Beyaz Çizgili Premium Yumuşak ... (3 colors)
+[2026-02-02T10:24:51.516Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/haki-...
+[2026-02-02T10:25:05.702Z] [INFO]    [5/24] Fetching details for: Lacivert Örme Bluz TWOAW26BZ00252...
+[2026-02-02T10:25:09.962Z] [INFO]    [Variant Discovery] Found 2 color variants in ProductGroup
+[2026-02-02T10:25:09.962Z] [INFO]    [Variant Discovery] 2 variants have valid URLs
+[2026-02-02T10:25:10.000Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/laciv...
+[2026-02-02T10:25:24.200Z] [INFO] 
+🔄 QUEUE PROCESSING: 18 variants discovered, fetching details...
+[2026-02-02T10:25:24.201Z] [INFO]    [Queue 1/18] Fetching: siyah variant...
+[2026-02-02T10:25:24.530Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/siyah...
+[2026-02-02T10:25:38.789Z] [INFO]    [Queue 2/18] Fetching: bordo variant...
+[2026-02-02T10:25:38.853Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/bordo...
+[2026-02-02T10:25:53.299Z] [INFO]    [Queue 3/18] Fetching: murdum variant...
+[2026-02-02T10:25:53.362Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/murdu...
+[2026-02-02T10:26:07.765Z] [INFO] 🛑 LIMIT REACHED during queue processing: Stopped at 10 products.
+[2026-02-02T10:26:07.765Z] [INFO] ✅ Queue processed. Total products collected: 3
+[2026-02-02T10:26:08.132Z] [INFO]    Found 8 products
+[2026-02-02T10:26:08.132Z] [INFO]    [Checkpoint] Saved 8 products so far.
+[2026-02-02T10:26:08.167Z] [INFO] 
+✅ Total scraped: 8, After deduplication: 8
+[2026-02-02T10:26:08.168Z] [INFO] ✅ Valid products: 8
+[2026-02-02T10:26:08.180Z] [INFO] 💾 Saved to products.json
+
+[2026-02-02T10:26:08.181Z] [INFO] ========================================
+[2026-02-02T10:26:08.182Z] [INFO] STEP 2: CREATING SHOPIFY COLLECTIONS
+[2026-02-02T10:26:08.182Z] [INFO] ========================================
+
+[2026-02-02T10:26:09.128Z] [INFO] ⏭️  Bluz - Already exists
+[2026-02-02T10:26:09.129Z] [INFO] 
+[2026-02-02T10:26:09.130Z] [INFO] ========================================
+[2026-02-02T10:26:09.130Z] [INFO] STEP 3: SYNCING PRODUCTS TO SHOPIFY
+[2026-02-02T10:26:09.131Z] [INFO] ========================================
+
+[2026-02-02T10:26:09.131Z] [INFO] Grouping 8 scraped items by Model Code...
+[2026-02-02T10:26:09.132Z] [INFO] ℹ️  Merged into 5 unique Shopify products.
+[2026-02-02T10:26:09.133Z] [INFO] Fetching ALL existing Shopify products to check for duplicates...
+[2026-02-02T10:26:09.613Z] [INFO]    Fetched 0 products so far...
+[2026-02-02T10:26:09.614Z] [INFO] ✅ Found 0 total existing products
+
+[2026-02-02T10:26:19.671Z] [INFO] [1/5] CREATING: Trendyolmilla Siyah Beyaz Çizgili Premium Yumuşak ... (3 colors)
+[2026-02-02T10:29:52.654Z] [ERROR] [1/5] FAILED: Admin API Client: fetch failed
+[2026-02-02T10:29:55.231Z] [INFO] [2/5] CREATING: Siyah Dantel Detaylı Kare Yaka Örme Party Bluz TPR... (1 colors)
+[2026-02-02T10:30:23.172Z] [INFO] [3/5] CREATING: Kırmızı Örme Bluz TWOAW26BZ00293... (1 colors)
+[2026-02-02T10:31:20.902Z] [ERROR] [1/5] FAILED: Admin API Client: fetch failed
+[2026-02-02T10:31:23.693Z] [INFO] [2/5] CREATING: Siyah Dantel Detaylı Kare Yaka Örme Party Bluz TPR... (1 colors)
+[2026-02-02T10:31:28.073Z] [INFO] [4/5] CREATING: Haki Fitted/Vücuda Oturan Asimetrik Yaka Çift Görü... (1 colors)
+[2026-02-02T10:31:39.574Z] [INFO] [5/5] CREATING: Lacivert Örme Bluz TWOAW26BZ00252... (1 colors)
+[2026-02-02T10:32:02.377Z] [INFO] [3/5] CREATING: Kırmızı Örme Bluz TWOAW26BZ00293... (1 colors)
+[2026-02-02T10:32:26.037Z] [INFO] 
+✅ Created: 4, Updated: 0, Failed: 1
+
+[2026-02-02T10:32:26.038Z] [INFO] ========================================
+[2026-02-02T10:32:27.648Z] [INFO] 🎉 ALL DONE!
+[2026-02-02T10:32:27.740Z] [INFO] Total time: 11 minutes
+[2026-02-02T10:32:27.741Z] [INFO] 
+😴 Resting for 60 minutes before next run...
+[2026-02-02T10:32:27.742Z] [INFO] ========================================
+
+[2026-02-02T10:36:04.250Z] [INFO] Loaded REST resources: 74 resources
+[2026-02-02T10:36:04.252Z] [INFO] 
+🚀 TRENDYOL SCRAPER + SHOPIFY SYNC - STARTING
+
+[2026-02-02T10:36:04.252Z] [INFO] Started at: 2026-02-02T10:36:04.252Z
+[2026-02-02T10:36:04.253Z] [INFO] 💰 Price Multiplier: 3x (set in .env file)
+
+[2026-02-02T10:36:04.253Z] [INFO] ========================================
+[2026-02-02T10:36:04.254Z] [INFO] STEP 1: SCRAPING PRODUCTS FROM TRENDYOL
+[2026-02-02T10:36:04.255Z] [INFO] ========================================
+
+[2026-02-02T10:36:04.255Z] [INFO] 
+📦 Scraping: Bluz
+[2026-02-02T10:36:04.256Z] [INFO] Starting browser...
+[2026-02-02T10:36:04.683Z] [INFO] Navigating to Bluz (Page 1): https://www.trendyol-milla.com/sr?q=trendyolmilla%20bluz&qt=trendyolmilla%20bluz&st=trendyolmilla%20bluz&pi=1
+[2026-02-02T10:36:25.735Z] [INFO] Extracted 24 products from Bluz (Page 1)
+[2026-02-02T10:36:25.735Z] [INFO] Fetching details for 24 new products (Batched Variant Discovery)...
+[2026-02-02T10:36:26.020Z] [INFO] 
+📦 BATCH 1: Processing products 1-5...
+[2026-02-02T10:36:26.021Z] [INFO]    [1/24] Fetching details for: Kırmızı Örme Bluz TWOAW26BZ00293...
+[2026-02-02T10:36:37.264Z] [INFO]    [Variant Discovery] Found 2 color variants in ProductGroup
+[2026-02-02T10:36:37.264Z] [INFO]    [Variant Discovery] 2 variants have valid URLs
+[2026-02-02T10:36:37.598Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/kirmi...
+[2026-02-02T10:36:52.065Z] [INFO]    [2/24] Fetching details for: Siyah Düz Premium Yumuşak Kumaşlı Fitted/Vücuda Ot...
+[2026-02-02T10:36:56.487Z] [INFO]    [Variant Discovery] Found 13 color variants in ProductGroup
+[2026-02-02T10:36:56.487Z] [INFO]    [Variant Discovery] 13 variants have valid URLs
+[2026-02-02T10:36:56.531Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/siyah...
+[2026-02-02T10:37:10.717Z] [INFO]    [3/24] Fetching details for: Siyah Dantel Detaylı Kare Yaka Örme Party Bluz TPR...
+[2026-02-02T10:37:15.983Z] [INFO]    [Variant Discovery] Found 1 color variants in ProductGroup
+[2026-02-02T10:37:15.983Z] [INFO]    [Variant Discovery] 1 variants have valid URLs
+[2026-02-02T10:37:16.028Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/siyah...
+[2026-02-02T10:37:31.065Z] [INFO]    [4/24] Fetching details for: Haki Fitted/Vücuda Oturan Asimetrik Yaka Çift Görü...
+[2026-02-02T10:37:38.904Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/haki-...
+[2026-02-02T10:37:53.208Z] [INFO]    [5/24] Fetching details for: Lacivert Örme Bluz TWOAW26BZ00252...
+[2026-02-02T10:38:00.330Z] [INFO]    [Variant Discovery] Found 2 color variants in ProductGroup
+[2026-02-02T10:38:00.331Z] [INFO]    [Variant Discovery] 2 variants have valid URLs
+[2026-02-02T10:38:00.371Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/laciv...
+[2026-02-02T10:38:14.577Z] [INFO] 
+🔄 QUEUE PROCESSING: 18 variants discovered, fetching details...
+[2026-02-02T10:38:14.577Z] [INFO]    [Queue 1/18] Fetching: gri variant...
+[2026-02-02T10:38:14.906Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/gri-i...
+[2026-02-02T10:38:29.024Z] [INFO]    [Queue 2/18] Fetching: siyah variant...
+[2026-02-02T10:38:29.069Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/siyah...
+[2026-02-02T10:38:43.367Z] [INFO]    [Queue 3/18] Fetching: siyah variant...
+[2026-02-02T10:38:43.430Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/siyah...
+[2026-02-02T10:38:57.496Z] [INFO] 🛑 LIMIT REACHED during queue processing: Stopped at 10 products.
+[2026-02-02T10:38:57.497Z] [INFO] ✅ Queue processed. Total products collected: 3
+[2026-02-02T10:38:57.586Z] [INFO]    Found 8 products
+[2026-02-02T10:38:57.601Z] [INFO]    [Checkpoint] Saved 8 products so far.
+[2026-02-02T10:38:57.601Z] [INFO] 
+✅ Total scraped: 8, After deduplication: 8
+[2026-02-02T10:38:57.602Z] [INFO] ✅ Valid products: 8
+[2026-02-02T10:38:57.625Z] [INFO] 💾 Saved to products.json
+
+[2026-02-02T10:38:57.626Z] [INFO] ========================================
+[2026-02-02T10:38:57.627Z] [INFO] STEP 2: CREATING SHOPIFY COLLECTIONS
+[2026-02-02T10:38:57.628Z] [INFO] ========================================
+
+[2026-02-02T10:38:58.622Z] [INFO] ⏭️  Bluz - Already exists
+[2026-02-02T10:38:58.622Z] [INFO] 
+[2026-02-02T10:38:58.623Z] [INFO] ========================================
+[2026-02-02T10:38:58.624Z] [INFO] STEP 3: SYNCING PRODUCTS TO SHOPIFY
+[2026-02-02T10:38:58.624Z] [INFO] ========================================
+
+[2026-02-02T10:38:58.625Z] [INFO] Grouping 8 scraped items by Model Code...
+[2026-02-02T10:38:58.625Z] [INFO] ℹ️  Merged into 5 unique Shopify products.
+[2026-02-02T10:38:58.626Z] [INFO] Fetching ALL existing Shopify products to check for duplicates...
+[2026-02-02T10:38:59.259Z] [INFO]    Fetched 2 products so far...
+[2026-02-02T10:38:59.260Z] [INFO] ✅ Found 2 total existing products
+
+[2026-02-02T10:39:12.528Z] [INFO] [1/5] CREATING: Trendyolmilla Gri İspanyol Kol Büzgü Detaylı Regul... (3 colors)
+[2026-02-02T10:39:34.254Z] [ERROR] [1/5] FAILED: JSON value expected but got '<' at position 0
+[2026-02-02T10:39:47.351Z] [INFO] [2/5] CREATING: Trendyolmilla Siyah Beyaz Çizgili Premium Yumuşak ... (1 colors)
+[2026-02-02T10:41:13.242Z] [ERROR] [2/5] FAILED: JSON value expected but got '<' at position 0
+[2026-02-02T10:41:16.199Z] [INFO] [3/5] CREATING: Siyah Dantel Detaylı Kare Yaka Örme Party Bluz TPR... (1 colors)
+[2026-02-02T10:41:27.609Z] [INFO] [4/5] CREATING: Haki Fitted/Vücuda Oturan Asimetrik Yaka Çift Görü... (1 colors)
+[2026-02-02T10:41:47.373Z] [INFO] [5/5] UPDATING: Lacivert Örme Bluz TWOAW26BZ00252... (1 colors)
+[2026-02-02T10:41:50.913Z] [INFO] 
+✅ Created: 2, Updated: 1, Failed: 2
+
+[2026-02-02T10:41:50.913Z] [INFO] ========================================
+[2026-02-02T10:41:50.914Z] [INFO] 🎉 ALL DONE!
+[2026-02-02T10:41:50.915Z] [INFO] Total time: 6 minutes
+[2026-02-02T10:41:50.915Z] [INFO] 
+😴 Resting for 60 minutes before next run...
+[2026-02-02T10:41:50.916Z] [INFO] ========================================
+
+[2026-02-02T10:44:40.854Z] [INFO] Loaded REST resources: 74 resources
+[2026-02-02T10:44:40.856Z] [INFO] 
+🚀 TRENDYOL SCRAPER + SHOPIFY SYNC - STARTING
+
+[2026-02-02T10:44:40.856Z] [INFO] Started at: 2026-02-02T10:44:40.856Z
+[2026-02-02T10:44:40.857Z] [INFO] 💰 Price Multiplier: 3x (set in .env file)
+
+[2026-02-02T10:44:40.858Z] [INFO] ========================================
+[2026-02-02T10:44:40.858Z] [INFO] STEP 1: SCRAPING PRODUCTS FROM TRENDYOL
+[2026-02-02T10:44:40.859Z] [INFO] ========================================
+
+[2026-02-02T10:44:40.859Z] [INFO] 
+📦 Scraping: Bluz
+[2026-02-02T10:44:40.860Z] [INFO] Starting browser...
+[2026-02-02T10:44:41.301Z] [INFO] Navigating to Bluz (Page 1): https://www.trendyol-milla.com/sr?q=trendyolmilla%20bluz&qt=trendyolmilla%20bluz&st=trendyolmilla%20bluz&pi=1
+[2026-02-02T10:44:51.553Z] [INFO] Extracted 24 products from Bluz (Page 1)
+[2026-02-02T10:44:51.553Z] [INFO] Fetching details for 24 new products (Batched Variant Discovery)...
+[2026-02-02T10:44:51.838Z] [INFO] 
+📦 BATCH 1: Processing products 1-5...
+[2026-02-02T10:44:51.838Z] [INFO]    [1/24] Fetching details for: Kırmızı Örme Bluz TWOAW26BZ00293...
+[2026-02-02T10:45:01.472Z] [INFO]    [Variant Discovery] Found 2 color variants in ProductGroup
+[2026-02-02T10:45:01.472Z] [INFO]    [Variant Discovery] 2 variants have valid URLs
+[2026-02-02T10:45:01.516Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/kirmi...
+[2026-02-02T10:45:15.741Z] [INFO]    [2/24] Fetching details for: Siyah Düz Premium Yumuşak Kumaşlı Fitted/Vücuda Ot...
+[2026-02-02T10:45:20.039Z] [INFO]    [Variant Discovery] Found 13 color variants in ProductGroup
+[2026-02-02T10:45:20.039Z] [INFO]    [Variant Discovery] 13 variants have valid URLs
+[2026-02-02T10:45:20.078Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/siyah...
+[2026-02-02T10:45:34.617Z] [INFO]    [3/24] Fetching details for: Siyah Dantel Detaylı Kare Yaka Örme Party Bluz TPR...
+[2026-02-02T10:45:38.957Z] [INFO]    [Variant Discovery] Found 1 color variants in ProductGroup
+[2026-02-02T10:45:38.958Z] [INFO]    [Variant Discovery] 1 variants have valid URLs
+[2026-02-02T10:45:39.000Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/siyah...
+[2026-02-02T10:45:53.184Z] [INFO]    [4/24] Fetching details for: Haki Fitted/Vücuda Oturan Asimetrik Yaka Çift Görü...
+[2026-02-02T10:45:58.186Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/haki-...
+[2026-02-02T10:46:12.350Z] [INFO]    [5/24] Fetching details for: Lacivert Örme Bluz TWOAW26BZ00252...
+[2026-02-02T10:46:17.217Z] [INFO]    [Variant Discovery] Found 2 color variants in ProductGroup
+[2026-02-02T10:46:17.217Z] [INFO]    [Variant Discovery] 2 variants have valid URLs
+[2026-02-02T10:46:17.257Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/laciv...
+[2026-02-02T10:46:31.426Z] [INFO] 
+🔄 QUEUE PROCESSING: 18 variants discovered, fetching details...
+[2026-02-02T10:46:31.427Z] [INFO]    [Queue 1/18] Fetching: gri variant...
+[2026-02-02T10:46:31.492Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/gri-i...
+[2026-02-02T10:46:45.920Z] [INFO]    [Queue 2/18] Fetching: siyah variant...
+[2026-02-02T10:46:45.982Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/siyah...
+[2026-02-02T10:47:00.400Z] [INFO]    [Queue 3/18] Fetching: siyah variant...
+[2026-02-02T10:47:00.460Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/siyah...
+[2026-02-02T10:47:15.526Z] [INFO] 🛑 LIMIT REACHED during queue processing: Stopped at 10 products.
+[2026-02-02T10:47:15.527Z] [INFO] ✅ Queue processed. Total products collected: 3
+[2026-02-02T10:47:15.889Z] [INFO]    Found 8 products
+[2026-02-02T10:47:15.889Z] [INFO]    [Checkpoint] Saved 8 products so far.
+[2026-02-02T10:47:15.908Z] [INFO] 
+✅ Total scraped: 8, After deduplication: 8
+[2026-02-02T10:47:15.910Z] [INFO] ✅ Valid products: 8
+[2026-02-02T10:47:15.910Z] [INFO] 💾 Saved to products.json
+
+[2026-02-02T10:47:15.911Z] [INFO] ========================================
+[2026-02-02T10:47:15.912Z] [INFO] STEP 2: CREATING SHOPIFY COLLECTIONS
+[2026-02-02T10:47:15.913Z] [INFO] ========================================
+
+[2026-02-02T10:47:17.429Z] [INFO] ⏭️  Bluz - Already exists
+[2026-02-02T10:47:17.429Z] [INFO] 
+[2026-02-02T10:47:17.430Z] [INFO] ========================================
+[2026-02-02T10:47:17.430Z] [INFO] STEP 3: SYNCING PRODUCTS TO SHOPIFY
+[2026-02-02T10:47:17.431Z] [INFO] ========================================
+
+[2026-02-02T10:47:17.432Z] [INFO] Grouping 8 scraped items by Model Code...
+[2026-02-02T10:47:17.432Z] [INFO] ℹ️  Merged into 5 unique Shopify products.
+[2026-02-02T10:47:17.433Z] [INFO] Fetching ALL existing Shopify products to check for duplicates...
+[2026-02-02T10:47:18.216Z] [INFO]    Fetched 0 products so far...
+[2026-02-02T10:47:18.217Z] [INFO] ✅ Found 0 total existing products
+
+[2026-02-02T10:47:30.580Z] [INFO] [1/5] CREATING: Trendyolmilla Gri İspanyol Kol Büzgü Detaylı Regul... (3 colors)
+[2026-02-02T10:48:14.484Z] [INFO] [2/5] CREATING: Trendyolmilla Siyah Beyaz Çizgili Premium Yumuşak ... (1 colors)
+[2026-02-02T10:53:15.574Z] [ERROR] [2/5] FAILED: Admin API Client: fetch failed
+[2026-02-02T10:53:19.715Z] [INFO] [3/5] CREATING: Siyah Dantel Detaylı Kare Yaka Örme Party Bluz TPR... (1 colors)
+[2026-02-02T10:53:50.193Z] [INFO] [4/5] CREATING: Haki Fitted/Vücuda Oturan Asimetrik Yaka Çift Görü... (1 colors)
+[2026-02-02T10:54:11.829Z] [INFO] [5/5] CREATING: Lacivert Örme Bluz TWOAW26BZ00252... (1 colors)
+[2026-02-02T10:54:57.977Z] [INFO] 
+✅ Created: 4, Updated: 0, Failed: 1
+
+[2026-02-02T10:54:57.978Z] [INFO] ========================================
+[2026-02-02T10:54:59.610Z] [INFO] 🎉 ALL DONE!
+[2026-02-02T10:54:59.702Z] [INFO] Total time: 10 minutes
+[2026-02-02T10:54:59.702Z] [INFO] 
+😴 Resting for 60 minutes before next run...
+[2026-02-02T10:54:59.703Z] [INFO] ========================================
+
+[2026-02-02T11:00:47.815Z] [INFO] Loaded REST resources: 74 resources
+[2026-02-02T11:00:47.817Z] [INFO] 
+🚀 TRENDYOL SCRAPER + SHOPIFY SYNC - STARTING
+
+[2026-02-02T11:00:47.817Z] [INFO] Started at: 2026-02-02T11:00:47.817Z
+[2026-02-02T11:00:47.818Z] [INFO] 💰 Price Multiplier: 3x (set in .env file)
+
+[2026-02-02T11:00:47.818Z] [INFO] ========================================
+[2026-02-02T11:00:47.819Z] [INFO] STEP 1: SCRAPING PRODUCTS FROM TRENDYOL
+[2026-02-02T11:00:47.819Z] [INFO] ========================================
+
+[2026-02-02T11:00:47.820Z] [INFO] 
+📦 Scraping: Bluz
+[2026-02-02T11:00:47.821Z] [INFO] Starting browser...
+[2026-02-02T11:00:48.254Z] [INFO] Navigating to Bluz (Page 1): https://www.trendyol-milla.com/sr?q=trendyolmilla%20bluz&qt=trendyolmilla%20bluz&st=trendyolmilla%20bluz&pi=1
+[2026-02-02T11:01:13.667Z] [INFO] Extracted 24 products from Bluz (Page 1)
+[2026-02-02T11:01:13.992Z] [INFO] Fetching details for 24 new products (Batched Variant Discovery)...
+[2026-02-02T11:01:14.000Z] [INFO] 
+📦 BATCH 1: Processing products 1-5...
+[2026-02-02T11:01:14.000Z] [INFO]    [1/24] Fetching details for: Siyah Dantel Detaylı Kare Yaka Örme Party Bluz TPR...
+[2026-02-02T11:01:25.450Z] [INFO]    [Variant Discovery] Found 1 color variants in ProductGroup
+[2026-02-02T11:01:25.450Z] [INFO]    [Variant Discovery] 1 variants have valid URLs
+[2026-02-02T11:01:25.777Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/siyah...
+[2026-02-02T11:01:39.999Z] [INFO]    [2/24] Fetching details for: Siyah Düz Premium Yumuşak Kumaşlı Fitted/Vücuda Ot...
+[2026-02-02T11:01:48.289Z] [INFO]    [Variant Discovery] Found 13 color variants in ProductGroup
+[2026-02-02T11:01:48.289Z] [INFO]    [Variant Discovery] 13 variants have valid URLs
+[2026-02-02T11:01:48.327Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/siyah...
+[2026-02-02T11:02:02.558Z] [INFO]    [3/24] Fetching details for: Haki Fitted/Vücuda Oturan Asimetrik Yaka Çift Görü...
+[2026-02-02T11:02:07.178Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/haki-...
+[2026-02-02T11:02:22.055Z] [INFO]    [4/24] Fetching details for: Kırmızı Örme Bluz TWOAW26BZ00293...
+[2026-02-02T11:02:26.670Z] [INFO]    [Variant Discovery] Found 2 color variants in ProductGroup
+[2026-02-02T11:02:26.670Z] [INFO]    [Variant Discovery] 2 variants have valid URLs
+[2026-02-02T11:02:26.709Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/kirmi...
+[2026-02-02T11:02:40.690Z] [INFO]    [5/24] Fetching details for: Lacivert Örme Bluz TWOAW26BZ00252...
+[2026-02-02T11:02:45.439Z] [INFO]    [Variant Discovery] Found 2 color variants in ProductGroup
+[2026-02-02T11:02:45.439Z] [INFO]    [Variant Discovery] 2 variants have valid URLs
+[2026-02-02T11:02:45.478Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/laciv...
+[2026-02-02T11:02:59.645Z] [INFO] 
+🔄 QUEUE PROCESSING: 18 variants discovered, fetching details...
+[2026-02-02T11:02:59.645Z] [INFO]    [Queue 1/18] Fetching: koyu-kahverengi variant...
+[2026-02-02T11:02:59.691Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/koyu-...
+[2026-02-02T11:03:13.791Z] [INFO]    [Queue 2/18] Fetching: siyah variant...
+[2026-02-02T11:03:13.853Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/siyah...
+[2026-02-02T11:03:28.214Z] [INFO]    [Queue 3/18] Fetching: bordo variant...
+[2026-02-02T11:03:28.261Z] [INFO] Fetching details for: https://www.trendyol-milla.com/trendyolmilla/bordo...
+[2026-02-02T11:03:42.596Z] [INFO] 🛑 LIMIT REACHED during queue processing: Stopped at 10 products.
+[2026-02-02T11:03:42.597Z] [INFO] ✅ Queue processed. Total products collected: 3
+[2026-02-02T11:03:42.963Z] [INFO]    Found 8 products
+[2026-02-02T11:03:42.964Z] [INFO]    [Checkpoint] Saved 8 products so far.
+[2026-02-02T11:03:42.965Z] [INFO] 
+✅ Total scraped: 8, After deduplication: 8
+[2026-02-02T11:03:42.966Z] [INFO] ✅ Valid products: 8
+[2026-02-02T11:03:42.967Z] [INFO] 💾 Saved to products.json
+
+[2026-02-02T11:03:42.968Z] [INFO] ========================================
+[2026-02-02T11:03:42.969Z] [INFO] STEP 2: CREATING SHOPIFY COLLECTIONS
+[2026-02-02T11:03:42.969Z] [INFO] ========================================
+
+[2026-02-02T11:03:44.368Z] [INFO] ⏭️  Bluz - Already exists
+[2026-02-02T11:03:44.368Z] [INFO] 
+[2026-02-02T11:03:44.369Z] [INFO] ========================================
+[2026-02-02T11:03:44.369Z] [INFO] STEP 3: SYNCING PRODUCTS TO SHOPIFY
+[2026-02-02T11:03:44.370Z] [INFO] ========================================
+
+[2026-02-02T11:03:44.370Z] [INFO] Grouping 8 scraped items by Model Code...
+[2026-02-02T11:03:44.371Z] [INFO] ℹ️  Merged into 5 unique Shopify products.
+[2026-02-02T11:03:44.372Z] [INFO] Fetching ALL existing Shopify products to check for duplicates...
+[2026-02-02T11:03:44.838Z] [INFO]    Fetched 0 products so far...
+[2026-02-02T11:03:44.839Z] [INFO] ✅ Found 0 total existing products
+
+[2026-02-02T11:03:55.687Z] [INFO] [1/5] CREATING: Trendyolmilla Koyu Kahverengi Dantel Detaylı Kare ... (2 colors)
+[2026-02-02T11:05:19.123Z] [INFO] [2/5] CREATING: Trendyolmilla Siyah Beyaz Çizgili Premium Yumuşak ... (2 colors)
+[2026-02-02T11:06:08.331Z] [ERROR] [2/5] FAILED: Received an error response (422 unknown) from Shopify:
+{
+  "product": [
+    "The variant 'Siyah / 2xs' already exists."
+  ]
+}
+If you report this error, please include this id: 6dda06e8-2366-4fc5-af29-2e527e9a0c11-1770030319
+[2026-02-02T11:06:08.332Z] [ERROR] {"errors":{"product":["The variant 'Siyah / 2xs' already exists."]}}
+[2026-02-02T11:06:12.826Z] [INFO] [3/5] CREATING: Haki Fitted/Vücuda Oturan Asimetrik Yaka Çift Görü... (1 colors)
+[2026-02-02T11:06:30.476Z] [INFO] [4/5] CREATING: Kırmızı Örme Bluz TWOAW26BZ00293... (1 colors)
+[2026-02-02T11:07:20.259Z] [INFO] [5/5] CREATING: Lacivert Örme Bluz TWOAW26BZ00252... (1 colors)
+[2026-02-02T11:07:47.516Z] [INFO] 
+✅ Created: 4, Updated: 0, Failed: 1
+
+[2026-02-02T11:07:47.517Z] [INFO] ========================================
+[2026-02-02T11:07:48.248Z] [INFO] 🎉 ALL DONE!
+[2026-02-02T11:07:48.248Z] [INFO] Total time: 7 minutes
+[2026-02-02T11:07:48.249Z] [INFO] 
+😴 Resting for 60 minutes before next run...
+[2026-02-02T11:07:48.249Z] [INFO] ========================================
+
