@@ -157,7 +157,7 @@ async function scrapeAllCategories() {
     let allProducts = [];
 
     // Limit per category and batch size for variant discovery
-    const LIMIT_PER_CATEGORY = 250; // 250 products per category for production
+    const LIMIT_PER_CATEGORY = 400; // 400 products per category for production
     const BATCH_SIZE = 10; // Process 10 products at a time, then queue variants
 
     for (const category of CATEGORIES) {
