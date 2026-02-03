@@ -149,8 +149,9 @@ async function crawlCategory(categoryUrl, categoryName, fetchDetails = false, li
                             logger.info(`\n🔄 QUEUE PROCESSING: ${variantQueue.length} variants discovered, fetching details...`);
                             
                             for (let i = 0; i < variantQueue.length; i++) {
-                                // Respect limit
-                                if (allProducts.length + batch.length + i >= limit) {
+                                // Respect limit - FIX: Don't add batch.length here because batch hasn't been added to allProducts yet!
+                                // It gets added at line 185 AFTER queue processing
+                                if (allProducts.length + i >= limit) {
                                     logger.info(`🛑 LIMIT REACHED during queue processing: Stopped at ${limit} products.`);
                                     hasMore = false;
                                     break;

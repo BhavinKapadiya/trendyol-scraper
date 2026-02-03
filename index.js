@@ -505,22 +505,34 @@ async function syncToShopify(products) {
                 // Update each variant with its color-specific image
                 if (createdProduct.variants && createdProduct.variants.length > 0) {
                     for (const variant of createdProduct.variants) {
-                        const variantColor = variant.option1; // Color is option1 now!
-                        
-                        // Get images for this color
-                        const colorImages = product._imagesByColor.get(variantColor);
-                        if (colorImages && colorImages.length > 0) {
-                            // Assign first image of this color to the variant
-                            const firstImageUrl = colorImages[0];
-                            const imageId = urlToImageId.get(firstImageUrl);
+                        try {
+                            const variantColor = variant.option1; // Color is option1 now!
                             
-                            if (imageId) {
-                                // Update variant with image_id
-                                const variantToUpdate = new shopify.rest.Variant({ session: shopify.session });
-                                variantToUpdate.id = variant.id;
-                                variantToUpdate.image_id = imageId;
-                                await variantToUpdate.save({ update: true });
+                            // Get images for this color
+                            const colorImages = product._imagesByColor.get(variantColor);
+                            if (colorImages && colorImages.length > 0) {
+                                // Assign first image of this color to the variant
+                                const firstImageUrl = colorImages[0];
+                                const imageId = urlToImageId.get(firstImageUrl);
+                                
+                                if (imageId) {
+                                    // Update variant with image_id
+                                    const variantToUpdate = new shopify.rest.Variant({ session: shopify.session });
+                                    variantToUpdate.id = variant.id;
+                                    variantToUpdate.image_id = imageId;
+                                    await variantToUpdate.save({ update: true });
+                   logger.info(`      ✓ Assigned image to ${variantColor} variant`);
+                                } else {
+                                    logger.warn(`      ⚠ No imageId found for ${variantColor} (URL: ${firstImageUrl})`);
+                                }
+                            } else {
+                                logger.warn(`      ⚠ No images found for color: ${variantColor}`);
                             }
+                            
+                            // Small delay to avoid rate limiting
+                            await new Promise(r => setTimeout(r, 500));
+                        } catch (variantError) {
+                            logger.error(`      Failed to assign image to variant ${variant.option1}: ${variantError.message}`);
                         }
                     }
                 }
